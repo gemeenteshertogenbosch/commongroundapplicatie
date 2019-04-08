@@ -111,7 +111,7 @@ class HomeController extends AbstractController
 				'summary'=>'Verwerken instemmingen',
 				'description'=>'Het via tokens of digid vaststellen (ondertekenen) van intenties , verzoeken of documenten',
 				'images'=> [
-						'images/large-images/large_instemmingen.gif'
+						'images/large-images/large_instemeningen.gif'
 				],
 				'links'=> [
 						['name'=>'online demo','url'=>'http://instemmingen.demo.zaakonline.nl/'],
