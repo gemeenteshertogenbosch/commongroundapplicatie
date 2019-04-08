@@ -31,13 +31,11 @@ class HomeController extends AbstractController
 				'summary'=>'Afspraken en Beschikbaarheid',
 				'description'=>'Agendas van objecten uit overige componenten met daaraan gekoppelde afspraken en beschikbaarheid',
 				'images'=> [
-						'images/large-images/large-1.jpg',
-						'images/large-images/large-2.jpg',
-						'images/large-images/large-3.jpg',
+						'images/large-images/large_agenda.gif'
 				],
 				'links'=> [
 						['name'=>'online demo','url'=>'http://agendas.demo.zaakonline.nl/'],
-						['name'=>'docker container','url'=>'https://cloud.docker.com/u/huwelijksplanner/repository/docker/huwelijksplanner/agendas-component'],
+						['name'=>'docker container','url'=>'https://hub.docker.com/r/huwelijksplanner/agendas-component'],
 						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/agendas'],
 						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/agendas/archive/master.zip']
 				]
@@ -49,13 +47,11 @@ class HomeController extends AbstractController
 				'summary'=>'Overheidsmedewerkers',
 				'description'=>'Een overzicht van medewerkers van een (semi)overheidsinstelling',
 				'images'=> [
-						'images/large-images/large-1.jpg',
-						'images/large-images/large-2.jpg',
-						'images/large-images/large-3.jpg',
+						'images/large-images/large_agenda.gif'
 				],
 				'links'=> [
 						['name'=>'online demo','url'=>'http://ambtenaren.demo.zaakonline.nl/'],
-						['name'=>'docker container','url'=>'https://cloud.docker.com/u/huwelijksplanner/repository/docker/huwelijksplanner/ambtenaren-component'],
+						['name'=>'docker container','url'=>'https://hub.docker.com/r/huwelijksplanner/ambtenaren-component'],
 						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/ambtenaren'],
 						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/ambtenaren/archive/master.zip']
 				]
@@ -67,13 +63,11 @@ class HomeController extends AbstractController
 				'summary'=>'Component voor de Basis Registratie Personen',
 				'description'=>'Een mock-up voor het BRP, met rest api en crud mogelijkheden voor het genereren van test data voor andere componenten',
 				'images'=> [
-						'images/large-images/large-1.jpg',
-						'images/large-images/large-2.jpg',
-						'images/large-images/large-3.jpg',
+						'images/large-images/large_betalen.gif'
 				],
 				'links'=> [
 						['name'=>'online demo','url'=>'http://betalen.demo.zaakonline.nl/'],
-						['name'=>'docker container','url'=>'https://cloud.docker.com/u/huwelijksplanner/repository/docker/huwelijksplanner/betalen-component'],
+						['name'=>'docker container','url'=>'https://hub.docker.com/r/huwelijksplanner/betalen-component'],
 						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/betalen'],
 						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/betalen/archive/master.zip']
 				]
@@ -85,13 +79,11 @@ class HomeController extends AbstractController
 				'summary'=>'Component voor de Basis Registratie Personen',
 				'description'=>'Lead Developer',
 				'images'=> [
-						'images/large-images/large-1.jpg',
-						'images/large-images/large-2.jpg',
-						'images/large-images/large-3.jpg',
+						'images/large-images/large_brp.gif'
 				],
 				'links'=> [
 						['name'=>'online demo','url'=>'http://brp.demo.zaakonline.nl/'],
-						['name'=>'docker container','url'=>'https://cloud.docker.com/u/huwelijksplanner/repository/docker/huwelijksplanner/brp-component'],
+						['name'=>'docker container','url'=>'https://hub.docker.com/r/huwelijksplanner/brp-component'],
 						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/mock-basisregistratie-personen'],
 						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/mock-basisregistratie-personen/archive/master.zip']
 				]
@@ -103,13 +95,11 @@ class HomeController extends AbstractController
 				'summary'=>'Berichtenverkeer',
 				'description'=>'Het versturen van SMS, E-Mail, Post of Whatsapp berichten naar burgers aan de hand van vooringestelde sjablonen, en het inzien van dit verkeer',
 				'images'=> [
-						'images/large-images/large-1.jpg',
-						'images/large-images/large-2.jpg',
-						'images/large-images/large-3.jpg',
+						'images/large-images/large_agenda.gif'
 				],
 				'links'=> [
 						['name'=>'online demo','url'=>'http://contactregistraties.demo.zaakonline.nl/'],
-						['name'=>'docker container','url'=>'https://cloud.docker.com/u/huwelijksplanner/repository/docker/huwelijksplanner/contactregistraties-component'],
+						['name'=>'docker container','url'=>'https://hub.docker.com/r/huwelijksplanner/contactregistraties-component'],
 						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/contactregistraties'],
 						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/contactregistraties/archive/master.zip']
 				]
@@ -121,11 +111,11 @@ class HomeController extends AbstractController
 				'summary'=>'Verwerken instemmingen',
 				'description'=>'Het via tokens of digid vaststellen (ondertekenen) van intenties , verzoeken of documenten',
 				'images'=> [
-						'images/large-images/large-1.jpg'
+						'images/large-images/large_instemmingen.gif'
 				],
 				'links'=> [
 						['name'=>'online demo','url'=>'http://instemmingen.demo.zaakonline.nl/'],
-						['name'=>'docker container','url'=>'https://cloud.docker.com/u/huwelijksplanner/repository/docker/huwelijksplanner/instemmingen-component'],
+						['name'=>'docker container','url'=>'https://hub.docker.com/r/huwelijksplanner/instemmingen-component'],
 						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/instemmingen'],
 						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/instemmingen/archive/master.zip']
 				]
@@ -137,13 +127,11 @@ class HomeController extends AbstractController
 				'summary'=>'Overzicht van ruimtes',
 				'description'=>'Een overzicht van te boeken ruimtes, hun kenmerken, beschikbaarheid en agendas',
 				'images'=> [
-						'images/large-images/large-1.jpg',
-						'images/large-images/large-2.jpg',
-						'images/large-images/large-3.jpg',
+						'images/large-images/large_agenda.gif'
 				],
 				'links'=> [
 						['name'=>'online demo','url'=>'http://locaties.demo.zaakonline.nl/'],
-						['name'=>'docker container','url'=>'https://cloud.docker.com/u/huwelijksplanner/repository/docker/huwelijksplanner/locaties-component'],
+						['name'=>'docker container','url'=>'https://hub.docker.com/r/huwelijksplanner/locaties-component'],
 						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/locaties'],
 						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/locaties/archive/master.zip']
 				]
@@ -155,11 +143,11 @@ class HomeController extends AbstractController
 				'summary'=>'Order verwerking',
 				'description'=>'Fullfilment component voor het verwerken van bestellingen, sterk gelieerd aan de betalen en producten en diensten componenten',
 				'images'=> [
-						'images/large-images/large-1.jpg'
+						'images/large-images/large_agenda.gif'
 				],
 				'links'=> [
 						['name'=>'online demo','url'=>'http://orders.demo.zaakonline.nl/'],
-						['name'=>'docker container','url'=>'https://cloud.docker.com/u/huwelijksplanner/repository/docker/huwelijksplanner/orders-component'],
+						['name'=>'docker container','url'=>'https://hub.docker.com/r/huwelijksplanner/orders-component'],
 						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/orders'],
 						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/orders/archive/master.zip']
 				]
@@ -171,13 +159,11 @@ class HomeController extends AbstractController
 				'summary'=>'Producten en diensten catalogus',
 				'description'=>'Een producten en diensten catalogus',
 				'images'=> [
-						'images/large-images/large-1.jpg',
-						'images/large-images/large-2.jpg',
-						'images/large-images/large-3.jpg',
+						'images/large-images/large_agenda.gif'
 				],
 				'links'=> [
 						['name'=>'online demo','url'=>'http://producten-diensten.demo.zaakonline.nl/'],
-						['name'=>'docker container','url'=>'https://cloud.docker.com/u/huwelijksplanner/repository/docker/huwelijksplanner/producten-diensten-component'],
+						['name'=>'docker container','url'=>'https://hub.docker.com/r/huwelijksplanner/producten-diensten-component'],
 						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/producten-diensten'],
 						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/producten-diensten/archive/master.zip']
 				]
@@ -189,11 +175,11 @@ class HomeController extends AbstractController
 				'summary'=>'Afbeeldingen, films en documenten',
 				'description'=>'Dit component verwerkt multimedia voor bijvoorbeeld plaatsingen op websites.',
 				'images'=> [
-						'images/large-images/large-1.jpg'
+						'images/large-images/large_resources.gif'
 				],
 				'links'=> [
 						['name'=>'online demo','url'=>'http://resources.demo.zaakonline.nl/'],
-						['name'=>'docker container','url'=>'https://cloud.docker.com/u/huwelijksplanner/repository/docker/huwelijksplanner/resources-component'],
+						['name'=>'docker container','url'=>'https://hub.docker.com/r/huwelijksplanner/resources-component'],
 						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/resources'],
 						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/resources/archive/master.zip']
 				]
@@ -204,12 +190,12 @@ class HomeController extends AbstractController
 				'name'=>'Trouwen',
 				'summary'=>'Doorgeven huwelijk/partnerschap',
 				'description'=>'Dit component handelt de basis functionaliteiten rond het vormgeven van een huwelijk af, inclusief de keuze van beschikbare ambtenaar, locatie, soort huwelijk en de melding en aanvraag van het huwelijk',
-				'images'=> [
-						'images/large-images/large-1.jpg'
+				'images'=> [						
+						'images/large-images/large_resources.gif'
 				],
 				'links'=> [
 						['name'=>'online demo','url'=>'http://trouwen.demo.zaakonline.nl/'],
-						['name'=>'docker container','url'=>'https://cloud.docker.com/u/huwelijksplanner/repository/docker/huwelijksplanner/trouwen-component'],
+						['name'=>'docker container','url'=>'https://hub.docker.com/r/huwelijksplanner/trouwen-component'],
 						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/trouwen'],
 						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/trouwen/archive/master.zip']
 				]
@@ -221,7 +207,7 @@ class HomeController extends AbstractController
 				'summary'=>'Doorgeven verhuizing',
 				'description'=>'In ontwikkeling',
 				'images'=> [
-						'images/large-images/large-1.jpg'
+						'images/large-images/large_agenda.gif'
 				],
 				'links'=> [
 				]
