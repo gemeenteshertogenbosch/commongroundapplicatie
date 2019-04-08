@@ -46,8 +46,8 @@ class HomeController extends AbstractController
 				'id'=> 2,
 				'icon'=>'fa-lg fas fa-user-tie',
 				'name'=>'Ambtenaren',
-				'summary'=>'Overheids medewerkers',
-				'description'=>'Een overzicht van medewerkers van een (semi) overheids instelling',
+				'summary'=>'Overheidsmedewerkers',
+				'description'=>'Een overzicht van medewerkers van een (semi)overheidsinstelling',
 				'images'=> [
 						'images/large-images/large-1.jpg',
 						'images/large-images/large-2.jpg',
@@ -65,7 +65,7 @@ class HomeController extends AbstractController
 				'icon'=>'fa-lg fas fa-file-invoice-dollar',
 				'name'=>'Betalen',
 				'summary'=>'Component voor de Basis Registratie Personen',
-				'description'=>'Een mock-up voor het BRP met rest api en crud mogenlijkheden voor het genereren van test data voor andere componenten',
+				'description'=>'Een mock-up voor het BRP, met rest api en crud mogelijkheden voor het genereren van test data voor andere componenten',
 				'images'=> [
 						'images/large-images/large-1.jpg',
 						'images/large-images/large-2.jpg',
@@ -100,8 +100,8 @@ class HomeController extends AbstractController
 				'id'=> 6,
 				'icon'=>'fa-lg fas fa-mail-bulk',
 				'name'=>'Contact Registraties',
-				'summary'=>'Berichten verkeer',
-				'description'=>'Het versturen van SMS, E-Mail, Post of whatsapp berichten naar burgers aan de hand van voor insgestelde sjablonen en het inzien van dit verkeer',
+				'summary'=>'Berichtenverkeer',
+				'description'=>'Het versturen van SMS, E-Mail, Post of Whatsapp berichten naar burgers aan de hand van vooringestelde sjablonen, en het inzien van dit verkeer',
 				'images'=> [
 						'images/large-images/large-1.jpg',
 						'images/large-images/large-2.jpg',
@@ -168,8 +168,8 @@ class HomeController extends AbstractController
 				'id'=> 10,
 				'icon'=>'fa-lg fas fa-box',
 				'name'=>'Producten en Diensten',
-				'summary'=>'Producten en diensten catalagus',
-				'description'=>'Een producten en diensten catalagus',
+				'summary'=>'Producten en diensten catalogus',
+				'description'=>'Een producten en diensten catalogus',
 				'images'=> [
 						'images/large-images/large-1.jpg',
 						'images/large-images/large-2.jpg',
@@ -187,7 +187,7 @@ class HomeController extends AbstractController
 				'icon'=>'fa-lg fas fa-images',
 				'name'=>'Resources',
 				'summary'=>'Afbeeldingen, films en documenten',
-				'description'=>'Dit component houd verwerkt multimedia voor bijvoorbeeld plaatsingen op websites.',
+				'description'=>'Dit component verwerkt multimedia voor bijvoorbeeld plaatsingen op websites.',
 				'images'=> [
 						'images/large-images/large-1.jpg'
 				],
@@ -203,7 +203,7 @@ class HomeController extends AbstractController
 				'icon'=>'fa-lg fas fa-user-friends',
 				'name'=>'Trouwen',
 				'summary'=>'Doorgeven huwelijk/partnerschap',
-				'description'=>'Dit component handeld de basis functionaliteiten rond het vormgeven van een huwelijk af, inclusief de keuze van beschikbare ambtenaar, locatie, soot vanhuwelijke en de melding en aanvraag van het huwelijk',
+				'description'=>'Dit component handelt de basis functionaliteiten rond het vormgeven van een huwelijk af, inclusief de keuze van beschikbare ambtenaar, locatie, soort huwelijk en de melding en aanvraag van het huwelijk',
 				'images'=> [
 						'images/large-images/large-1.jpg'
 				],
