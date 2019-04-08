@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <script id="tinyhippos-injected">if (window.top.ripple) { window.top.ripple("bootstrap").inject(window, document); }</script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>{% block title %}Conduction <3 Common Ground{% endblock %}</title>
+        
+        <!-- CSS and fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:500,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+    	<div class="site-holder">
+    	
+		{# Let include the header #}
+		{{ include('header.html.twig') }}			
+		
+		{# Let include the menus #}
+		{{ include('menu.html.twig') }}	
+		
+        {% block body %}{% endblock %}
+        
+        </div>
+        <!-- JavaScript
+        ================================================== -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+         <script type="text/javascript">
+            $( document ).ready(function() {
+              
+              var numItems = $('#timeline .timeline-badge').length;
+              var gradientColours = "";
+    
+              for(var i = 0; i < numItems; i ++){
+                if(i > 0) gradientColours += ", ";
+                var badgeClass  = "";
+                var lineClass  = "";
+                
+                // change the gradientColours value as required. Also see badgeClass and lineClass in css/styles.css
+                if((i+1) % 4 == 0){
+                    badgeClass  = "badge-4";
+                    lineClass  = "line-4";
+                    gradientColours += "#70c6da";
+                }else if((i+1) % 3 == 0){
+                    badgeClass  = "badge-3";
+                    lineClass  = "line-3";
+                    gradientColours += "#6fc6d9";
+                }else if((i+1) % 2 == 0){
+                    badgeClass  = "badge-2";
+                    lineClass  = "line-2";
+                    gradientColours += "#56c2b1";
+                }else{
+                    badgeClass  = "badge-1";
+                    lineClass  = "line-1";
+                    gradientColours += "#ed78a6";
+                }
+                if(i < numItems -1){
+                  ($('#timeline .timeline-line').eq(i)).addClass(lineClass);
+                }
+                ($('#timeline .timeline-badge').eq(i)).addClass(badgeClass);
+              }
+    
+              var styleString = "<style>";
+              styleString += ".timeline:before{background: -webkit-linear-gradient('+gradientColours+');background: -o-linear-gradient('+gradientColours+'); background: -moz-linear-gradient('+gradientColours+'); background: linear-gradient('+gradientColours+')}";
+              styleString += "</style>";
+    
+              $('head').append(styleString);
+    
+    
+              // Sticky Menu
+              var stickyNavTop = $('.header-menu').offset().top + 30;
+              var stickyNavTopMobile = $('.mobile-header-menu').offset().top + 10;
+              var stickyNav = function(){
+              var scrollTop = $(window).scrollTop();
+                 
+                if(scrollTop > stickyNavTopMobile) {
+                  $('.mobile-header-menu').addClass('mobile-sticky');
+                  $('.mobile-header-menu .menu-logo').addClass('show');
+                }else{
+                  $('.mobile-header-menu').removeClass('mobile-sticky');
+                  $('.mobile-header-menu .menu-logo').removeClass('show');
+                }
+    
+                if (scrollTop > stickyNavTop) { 
+                    $('.header-menu').addClass('sticky');
+                    $('.header-menu-content').addClass('header-menu-content-sticky'); 
+                    $('.header-menu').removeClass('container'); 
+                    $('.header-menu').removeClass('fluid-container'); 
+                    $('.header-menu').removeClass('content-area'); 
+                    $('.header-menu-content .menu-logo').addClass('show');
+                    
+                } else {
+                    $('.header-menu').removeClass('sticky'); 
+                    $('.header-menu-content').removeClass('header-menu-content-sticky'); 
+                    $('.header-menu').addClass('container'); 
+                    $('.header-menu').addClass('fluid-container'); 
+                    $('.header-menu').addClass('content-area'); 
+                    $('.header-menu-content .menu-logo').removeClass('show');
+                    
+                }
+              };
+               
+              stickyNav();
+               
+              $(window).scroll(function() {
+                  stickyNav();
+              });
+    
+            });
+            
+            function scrollToAnchor(aid){
+                var aTag = $("a[name='"+ aid +"']");
+                $('html,body').animate({scrollTop: aTag.offset().top-80},'slow');
+            }
+    
+    
+            /*
+            This method takes an array of filters plus the button that was pressed.
+            Change the classes (web, print, mobile) as required.
+            */
+            function filterPortfolio(filters, filterBtn){
+                $('#allFilter').removeClass("filter-selected");
+                $('#webFilter').removeClass("filter-selected");
+                $('#mobileFilter').removeClass("filter-selected");
+                $('#printFilter').removeClass("filter-selected");
+    
+                $('.web').removeClass("show");
+                $('.print').removeClass("show");
+                $('.mobile').removeClass("show");
+                $('.web').addClass("hide");
+                $('.print').addClass("hide");
+                $('.mobile').addClass("hide");
+    
+                for(var i = 0; i < filters.length; i ++){
+                  $('.'+filters[i]).addClass("show");
+                }
+                
+                if(filterBtn == "allFilter"){
+                  $('#allFilter').addClass("filter-selected");
+                  $('#webFilter').addClass("filter-selected");
+                  $('#mobileFilter').addClass("filter-selected");
+                  $('#printFilter').addClass("filter-selected");
+                }else{
+                  $('#'+filterBtn).addClass("filter-selected");
+                }
+              
+            }
+            filterPortfolio(["all", "web", "mobile", "print"], "allFilter");
+         </script>
+         
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

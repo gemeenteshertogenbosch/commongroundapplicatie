@@ -1,0 +1,53 @@
+{# templates/home/modal.html.twig #}
+ <!--  Modal -->
+    <div class="modal fade" id="porfolio-{{ item.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+         <button type="button" class="modal-close-btn" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove"></span></button>
+         <div class="modal-body container-fluid portfolio web">
+            <!--  Carousel -->
+            <div id="carousel-portfolio-{{ item.id }}" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner" role="listbox">
+              	{% for image in item.images %}
+                <div class="item">
+                  <img src="{{ image }}" alt="" />
+                </div>
+             	{% endfor %}
+              </div>
+
+              <!-- Controls -->
+              <!--
+                Remove these controls if you are only using one image in the carousel.
+              -->
+              <a class="left carousel-control" href="#carousel-portfolio-{{ item.id }}" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              </a>
+              <a class="right carousel-control" href="#carousel-portfolio-{{ item.id }}" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              </a>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="portfolio-title">
+                  <div class="portfolio-icon">
+                    <div><span class="{{ item.icon }}"></span></div>
+                  </div>
+                  <div class="title">
+                    <h4>{{ item.name }}</h4>
+                    <em>{{ item.summary }}</em>
+                  </div>
+                  <div>
+                    {% for link in item.links %}
+                  		<a href="{{ link.url }}">{{ link.name }}</a><br />
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="modal-text col-md-7">
+                <p>{{ item.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
