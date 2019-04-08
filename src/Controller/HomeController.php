@@ -60,8 +60,8 @@ class HomeController extends AbstractController
 				'id'=> 4,
 				'icon'=>'fa-lg fas fa-file-invoice-dollar',
 				'name'=>'Betalen',
-				'summary'=>'Component voor de Basis Registratie Personen',
-				'description'=>'Een mock-up voor het BRP, met rest api en crud mogelijkheden voor het genereren van test data voor andere componenten',
+				'summary'=>'Component voor betalen',
+				'description'=>'Met dit component kun je betalingen regelen, via bijv. mollie of Ideal',
 				'images'=> [
 						'images/large-images/large_betalen.gif'
 				],
@@ -77,7 +77,7 @@ class HomeController extends AbstractController
 				'icon'=>'fa-lg fas fa-users',
 				'name'=>'BRP', 
 				'summary'=>'Component voor de Basis Registratie Personen',
-				'description'=>'Lead Developer',
+				'description'=>'een component waarmee we het BRP simuleren, met rest api en mogelijkheden voor het genereren van testdata voor andere componenten ',
 				'images'=> [
 						'images/large-images/large_brp.gif'
 				],
@@ -205,7 +205,7 @@ class HomeController extends AbstractController
 				'icon'=>'fa-lg fas fa-people-carry',
 				'name'=>'Verhuizen',
 				'summary'=>'Doorgeven verhuizing',
-				'description'=>'In ontwikkeling',
+				'description'=>'To be continued : In ontwikkeling..',
 				'images'=> [
 						'images/large-images/large_agenda.gif'
 				],
