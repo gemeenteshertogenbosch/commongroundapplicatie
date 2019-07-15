@@ -24,7 +24,7 @@
                       <div class="panel-icon"><span class="glyphicon glyphicon-heart"></span></div>
                       <div class="panel-title">
                         <h4>Common Ground</h4>
-                        <p>A Een community voor gemeenten.</p>
+                        <p>Een community voor gemeenten.</p>
                       </div>
                     </div>
                     <div class="panel-body">
@@ -63,29 +63,6 @@
             </div>
           </li>
 
-
-          <li>
-            <a name="section-2"></a>
-            <div class="timeline-badge"></div>
-            <div class="timeline-line"></div>
-            <div class="timeline-panel">
-              <div class="timeline-body">
-                 <div class="top-link">
-                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
-                </div>
-                <!-- Team section -->
-                <h1>Meet the Team</h1>
-                <h5>Pretty please, with sugar on top.</h5>
-                <div class="row">          
-                  	{% for member in team %}
-                      {% include 'home/teamMember.html.twig' with {'item': member} %}
-                 	{% endfor %}
-                </div>
-              </div>
-            </div>
-          </li>
-
-
           <li>
             <a name="section-3"></a>
             <div class="timeline-badge"></div>
@@ -96,15 +73,10 @@
                   <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
                 </div>
                 <!-- Our Work section -->
-                <h1>Applications</h1>
-                <h5>Knowing is not enough; we must apply. Willing is not enough; we must do.</h5>
+                <h1>Applicaties</h1>
                 <div class="row">
-                  <div class="col-sm-4">
-                    <p>A concept is nice, but the proof of the pudding is in the eating. And lets be fair we're not going to trust our governmental software to an unproven concept right?  </p>
-                  </div>
-                  
-                 <div class="col-sm-8">
-                     To this end we provide proof of concept applications. Be it trouwen (marriage) or verhuizen (moving) these application proof that both the common ground concept, the containers that it exists of and the data connections that it uses (nlx), are a trustworthy hair to the current Dutch (local) government software stack.
+                  <div class="col-sm-12">
+                    <p>Laten we eerlijk zijn we gaan onze overheids software niet vertrouwen met een onbewezen concept. Daarom moeten we &quot;Proof of concept&quot; applicaties bouwen. Of het nu trouwen of verhuizen is, deze applicaties bewijzen dat de Common Ground concepten, de containers, de dataconnecties (NLX) betrouwbaar zijn.</p>
                  </div>
 
 
@@ -139,18 +111,15 @@
                   <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
                 </div>
                 <!-- Our Work section -->
-                <h1>Components</h1>
-                <h5>Sharing is caring.</h5>
+                <h1>Componenten</h1>
                 <div class="row">
-                  <div class="col-sm-4">
-                    Common ground components are small rest API&rsquo;s that represent CRUD operations and some minimal validation logic. Business logic and advanced validation are left to applications.
-                  </div>                  
-                  <div class="col-sm-4">
-                   The datamodel of common grounds consists out of linked data, therefore components can (and will) return URI&rsquo;s to other components instead of combining data.
+                  <div class="col-sm-12">
+                    <p>Common Ground componenten zijn kleine rest-API's, die CRUD-bewerkingen mogelijk maken en regels toepassen. Business logica en geavanceerde validaties worden overgelaten aan de aangesloten applicaties.</p>
+                  
+                    <p>Common Ground bestaat uit gekoppelde data, daarom kunnen (en zullen) componenten URI's naar andere componenten retourneren, in plaats van data te verzenden.
+                   Deze componenten zijn ontworpen om te werken op Docker containers of in een Kubernetes-netwerk. Lees de juiste installatiegids voor het snel laten draaien van deze componenten.</p>
                   </div>
-                  <div class="col-sm-4">
-                    These components are designed to run on docker containers or in a Kubernetes network. Read the appropriate installations guide on the how to spin up these components quickly.    
-                  </div>
+
 
 
                   <!-- See the filterPortfolio(...) function in the javascript block at the bottom of the page for an explanation of how this works.
@@ -174,52 +143,6 @@
               </div>
             </div>
           </li>
-
-		  
-          <li>
-            <a name="section-5"></a>
-            <div class="timeline-badge"></div>
-            <div class="timeline-line"></div>
-            <div class="timeline-panel">
-              <div class="timeline-body">
-                 <div class="top-link">
-                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
-                </div>
-                <!-- Our Work section -->
-                <h1>Libraries</h1>
-                <h5>I think fast, I talk fast.</h5>
-                <div class="row">
-                  <div class="col-sm-4">
-                 </div>
-                  
-                 <div class="col-sm-4">
-                  </div>
-
-                  <div class="col-sm-4">
-                 </div>
-
-
-                  <!-- See the filterPortfolio(...) function in the javacript block at the bottom of the page for an explanation of how this works.
-                  <div class="col-sm-12 portfolio-filters">
-                    <button id="allFilter" type="button" class="btn background-black" onclick="filterPortfolio(['web', 'mobile', 'print'], 'allFilter')">all</button>
-                    <button id="webFilter" type="button" class="btn background-1" onclick="filterPortfolio(['web'], 'webFilter')">web</button>
-                    <button id="mobileFilter" type="button" class="btn background-2" onclick="filterPortfolio(['mobile'], 'mobileFilter')">mobile</button>
-                    <button id="printFilter" type="button" class="btn background-3" onclick="filterPortfolio(['print'], 'printFilter')">print</button>
-                  </div> -->
-                </div>
-
-                <!--
-                  Make sure the data-target is set to the id of the modal that you would like to open.
-                -->
-                <div class="row">                
-                  	{% for library in libraries %}
-                      {% include 'home/thumb.html.twig' with {'item': library} %}
-                 	{% endfor %} 
-                </div>
-              </div>
-            </div>
-          </li>		
-
         </ul>
       </div>
       <div class="content-area footer">
@@ -233,8 +156,5 @@
     {% endfor %} 
     {% for component in components %}
     	{% include 'home/modal.html.twig' with {'item': component} %}
-    {% endfor %} 
-    {% for library in libraries %}
-    	{% include 'home/modal.html.twig' with {'item': library} %}
     {% endfor %} 
 {% endblock %}

@@ -34,17 +34,44 @@
                   </div>
                   <div class="title">
                     <h4>{{ item.name }}</h4>
-                    <em>{{ item.summary }}</em>
+                    Versie <em>{{ item.summary }}</em>
+                    {#
+                    Licentie <a href="{{ item.license.url}}">{{ item.license.name}}</a><br />
+                    Ontwikkelaar <a href="{{ item.license.url}}">{{ item.license.name}}</a><br />
+                    Eigenaar <a href="{{ item.license.url}}">{{ item.license.name}}</a><br />
+                    #}
                   </div>
-                  <div>
+                  <br />
+                  {#
+                  <p>
+                  	<b>Documentatie</b><br />
+                    {% for doc in item.docs %}
+                  		<a href="{{ doc.url }}">{{ doc.name }}</a><br />
+                    {% endfor %}
+                  </p>
+                  #}
+                  <p>
+                  	<b>Informatie Model</b><br />   
+                    {% for tag in item.tags %}
+                  		{{ tag.name }}<br />
+                    {% endfor %}
+                  </p>
+                  <p>
+                  	<b>Servers</b> <br />      	
+                    {% for server in item.servers %}
+                  		<a href="{{ server.url }}">{{ server.description }}</a><br />
+                    {% endfor %}
+                  </p>
+                  <p>
+                  	<b>Verwijzingen</b><br />           
                     {% for link in item.links %}
                   		<a href="{{ link.url }}">{{ link.name }}</a><br />
                     {% endfor %}
-                  </div>
+                  </p>
                 </div>
               </div>
               <div class="modal-text col-md-7">
-                <p>{{ item.description }}</p>
+                <p>{{ item.description | raw }}</p>
               </div>
             </div>
           </div>

@@ -33,17 +33,17 @@ p {
 }
 
 a:link{
-	color: #ed78a6;
+	color: #4376FC;
 	text-decoration: none;
 }
 
 a:hover{
-	color: #ba4775;
+	color: #4376FC;
 	text-decoration: none;
 }
 
 a:visited{
-	color: #ed78a6;
+	color: #4376FC;
 	text-decoration: none;
 }
 
@@ -702,15 +702,15 @@ MODAL STYLES
 }
 
 .modal .web {
-	color: #ed78a6;
+	color: #555;
 }
 
 .modal .mobile {
-	color: #56c2b1;
+	color: #555;
 }
 
 .modal .print {
-	color: #70c6da;
+	color: #FFF;
 }
 
 
