@@ -6,12 +6,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+use App\Service\SchemaService;
+
 class HomeController extends AbstractController
 { 
 	/**
 	* @Route("/")
 	*/
-	public function indexAction()
+	public function indexAction(SchemaService $schemaService)
 	{
 		// Lets make a list of team members
 		$team = [];
@@ -20,10 +22,55 @@ class HomeController extends AbstractController
 		$team[] = ['id'=> 3,'icon'=> null,'name'=>'Matthias Oliveiro','function'=>'Design en Testing','description'=>'Houdt de kwaliteit hoog.','image'=>'images/avatar_matthias.png'];
 		
 		// Lets make a list of applications
-		$applications = [];		
+		$applications =[];
+		$applications[] = [
+				'id'=> 1,
+				'icon'=>'fa-lg fas fa-calendar-check',
+				'name'=>'Trouwplanner',
+				'summary'=>'Geef online je huwelijk vorm',
+				'description'=>'',
+				'license'=>[],
+				'images'=> [
+						'images/large-images/large_agenda.gif'
+				],
+				'links'=> [
+						['name'=>'online demo','url'=>'http://demo.trouwplanner.online/'],
+						['name'=>'docker container','url'=>''],
+						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/trouwplanner'],
+						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/trouwplanner/archive/master.zip']
+				],
+				'servers'=>[],
+				'docs'=>[],
+				'tags'=>[],
+		];
+		$applications[] = [
+				'id'=> 2,
+				'icon'=>'fa-lg fas fa-calendar-check',
+				'name'=>'Componenten Pagina',
+				'summary'=>'Overzicht van de componenten',
+				'description'=>'',
+				'license'=>[],
+				'images'=> [
+						'images/large-images/large_agenda.gif'
+				],
+				'links'=> [
+						['name'=>'online demo','url'=>'http://utrecht.zaakonline.nl/'],
+						['name'=>'docker container','url'=>''],
+						['name'=>'codebase (git)','url'=>'https://github.com/GemeenteUtrecht/agendas'],
+						['name'=>'codebase (zip)','url'=>'https://github.com/GemeenteUtrecht/agendas/archive/master.zip']
+				],
+				'servers'=>[],
+				'docs'=>[],
+				'tags'=>[],
+		];
 		
 		// Lets make a list of components
+		
+		
+		//var_dump($componentsGits);
 		$components=[];
+		
+		
 		$components[] = [
 				'id'=> 1,
 				'icon'=>'fa-lg fas fa-calendar-check',
@@ -156,7 +203,7 @@ class HomeController extends AbstractController
 				'id'=> 10,
 				'icon'=>'fa-lg fas fa-box',
 				'name'=>'Producten en Diensten',
-				'summary'=>'Producten en diensten catalogus',
+				'summary'=>'De catalogus',
 				'description'=>'Een producten en diensten catalogus',
 				'images'=> [
 						'images/large-images/large_agenda.gif'
@@ -212,6 +259,48 @@ class HomeController extends AbstractController
 				'links'=> [
 				]
 		];
+		
+		
+		// Das nieuwe code
+		$componentsGits=[];
+		//$componentsGits[] = 'http://adressen.demo.zaakonline.nl';
+		$componentsGits[] = 'http://agendas.demo.zaakonline.nl';
+		$componentsGits[] = 'http://ambtenaren.demo.zaakonline.nl';
+		$componentsGits[] = 'http://berichten.demo.zaakonline.nl';
+		$componentsGits[] = 'http://betalen.demo.zaakonline.nl';
+		$componentsGits[] = 'http://brp.demo.zaakonline.nl';
+		$componentsGits[] = 'http://contactregistraties.demo.zaakonline.nl';
+		$componentsGits[] = 'http://instemmingen.demo.zaakonline.nl';
+		$componentsGits[] = 'http://locaties.demo.zaakonline.nl';
+		$componentsGits[] = 'http://orders.demo.zaakonline.nl';
+		$componentsGits[] = 'http://personen.demo.zaakonline.nl';
+		//$componentsGits[] = 'http://procesen.demo.zaakonline.nl';
+		$componentsGits[] = 'http://personen.demo.zaakonline.nl';
+		$componentsGits[] = 'http://producten-diensten.demo.zaakonline.nl';
+		$componentsGits[] = 'http://trouwen.demo.zaakonline.nl';
+		$componentsGits[] = 'http://verzoeken.demo.zaakonline.nl';
+		
+		$components=[];
+		foreach($componentsGits as $git){
+			$links=[];			
+			$openApi = $schemaService->getSchema($git);
+			$components[] = [
+					'id'=> 'openapi_'.md5($git),
+					'icon'=>'fa-lg fas fa-calendar-check',
+					'name'=> $openApi['info']['title'],
+					'summary'=> $openApi['info']['version'],
+					'license'=>$openApi['info']['license'],
+					'description'=> $openApi['info']['description'],
+					'servers'=> $openApi['servers'],
+					'docs'=> $openApi['externalDocs'],
+					'tags'=> $openApi['tags'],
+					'links'=>[],
+					'images'=> [
+							'images/large-images/large_agenda.gif'
+					]
+			];
+		}
+		
 		
 		// Lets make a list of libraries
 		$libraries=[];
