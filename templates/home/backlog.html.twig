@@ -1,0 +1,32 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ 	<div class="main-content container fluid-container">
+        <!-- Main timeline -->
+        <ul id="timeline" class="timeline">
+          <li>
+            <a name="section-1"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- What We Do section -->
+                <h1>Welkom bij het common ground componenten overzicht</h1>
+                <h5>Waar delen vermenigvuldingen is</h5>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+      <div class="content-area footer">
+        (c) <a href="http://www.conduction.nl" target="_blank">Conduction</a> {{ "now"|date("Y") }}</a>
+      </div>
+    </div> 
+    
+{% endblock %}

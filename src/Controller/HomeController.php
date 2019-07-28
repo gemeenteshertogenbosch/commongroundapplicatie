@@ -2,19 +2,47 @@
 // src/Controller/LuckyController.php
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 use App\Service\SchemaService;
+use App\Service\OrganisationService;
 
 class HomeController extends AbstractController
 { 
 	/**
 	* @Route("/")
 	*/
-	public function indexAction(SchemaService $schemaService)
+	public function indexAction(SchemaService $schemaService, OrganisationService $organisationService,  Request $request)
 	{
+		// First of we want to get a subdomain 
+		/* @todo welicht willen we dit op een andere plek afhandelen */
+		$currentHost = $request->getHttpHost();
+		$parsedUrl = parse_url($currentHost);		
+		$host = explode('.', $parsedUrl['path']);		
+		$subdomain = $host[0];
+		
+		// So now we should have a sub domain, so lets walk trough the options
+		if($subdomain == "www" || count($host)== 2){ 
+			// If iether the domain is www or only consists of two parts. e.g. google.com, the we have hid the main page and wil load the inforamtion for that page
+			// We then return that page to prevent further exectution of code
+			return $this->render('home/main.html.twig');
+		}
+		
+		// If we got here then we have a subdomain, so try to render a organisation or organisation not found pages
+		$organisation = $organisationService->getOrganisationOnSlug($subdomain);
+		if($organisation){			
+			$variables = ["organisation" => $organisation];
+			return $this->render('home/organisation.html.twig',$variables);			
+		}
+		else{			
+			$variables = ["subdomain" => $subdomain];
+			return $this->render('home/join-organisation.html.twig',$variables);
+		}
+		
+		/*
 		// Lets make a list of team members
 		$team = [];
 		$team[] = ['id'=> 1,'icon'=> null,'name'=>'Ruben van der Linde','function'=>'Lead Developer','description'=>'De omdenker en bouwer.','image'=>'images/avatar_ruben.png'];
@@ -311,5 +339,6 @@ class HomeController extends AbstractController
 				'components' => $components,
 				'libraries' => $libraries,
 		]);
+		*/
 	}
 }
