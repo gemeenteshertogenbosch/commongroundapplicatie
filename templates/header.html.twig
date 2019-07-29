@@ -5,7 +5,7 @@
         <div class="container fluid-container header-content content-area">
           <span class="header-icon glyphicon glyphicon-heart-empty"></span>
           <div class="header-title">
-            <h1>Conduction</h1>
+            <h1>{% if organisation is defined %}{{ organisation.name }}{% else %} Wij{% endif %}</h1>
             <h3>Common ground</h3>
           </div>
         </div>        

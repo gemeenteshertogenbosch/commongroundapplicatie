@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>{% block title %}Conduction <3 Common Ground{% endblock %}</title>
+        <title>{% block title %}{% if organisation is defined %}{{ organisation.name }}{% else %} Wij{% endif %} <3 Common Ground{% endblock %}</title>
         
         <!-- CSS and fonts -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">

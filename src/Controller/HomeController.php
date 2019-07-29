@@ -28,7 +28,13 @@ class HomeController extends AbstractController
 		if($subdomain == "www" || count($host)== 2){ 
 			// If iether the domain is www or only consists of two parts. e.g. google.com, the we have hid the main page and wil load the inforamtion for that page
 			// We then return that page to prevent further exectution of code
-			return $this->render('home/main.html.twig');
+			
+			$organisations = [];
+			$components = [];
+			$user = [];
+			
+			$variables = ["organisations" => $organisations,"components" => $components];
+			return $this->render('home/main.html.twig',$variables);
 		}
 		
 		// If we got here then we have a subdomain, so try to render a organisation or organisation not found pages

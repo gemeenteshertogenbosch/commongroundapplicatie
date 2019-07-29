@@ -123,6 +123,24 @@
     "knplabs/knp-markdown-bundle": {
         "version": "1.7.1"
     },
+    "knpuniversity/oauth2-client-bundle": {
+        "version": "1.20",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.20",
+            "ref": "80acc9223a205cbf5d9828fd616c82a374d281dd"
+        },
+        "files": [
+            "config/packages/knpu_oauth2_client.yaml"
+        ]
+    },
+    "league/oauth2-client": {
+        "version": "2.4.1"
+    },
+    "league/oauth2-github": {
+        "version": "2.0.0"
+    },
     "michelf/php-markdown": {
         "version": "1.8.0"
     },
@@ -134,6 +152,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
+    },
+    "omines/oauth2-gitlab": {
+        "version": "3.1.2"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
@@ -176,6 +197,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "stevenmaguire/oauth2-bitbucket": {
+        "version": "3.0.0"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.0"

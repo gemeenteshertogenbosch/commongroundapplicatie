@@ -1,0 +1,120 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ 	<div class="main-content container fluid-container">
+        <!-- Main timeline -->
+        <ul id="timeline" class="timeline">
+        <li>
+            <a name="Edit"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- Contact Us section -->
+                <h1>Gegevens bewerken</h1>
+                <h5>It's thirty minutes away. I'll be there in ten.</h5>
+                <div class="row">
+                  <div class="col-sm-12 panel">
+                    <div class="panel-body">
+                      <div class="form-horizontal">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Name">
+                            <input type="text" class="form-control" placeholder="Email">
+                          </div>
+                          <div class="col-md-6">
+                            <textarea class="form-control" rows="3" placeholder="Beschrijving"></textarea>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 pull-right text-right">
+                            <button class="btn background-1" type="button">Opslaan</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a name="login"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- Contact Us section -->
+                <h1><i class="fab fa-github"></i> Git Koppelingen</h1>
+                <h5>Beheer uw git koppelingen</h5>
+                <div class="row">
+                  <div class="col-sm-12 panel">
+                    <div class="panel-body">
+                      <div class="form-horizontal">
+                        <div class="row">
+                          <div class="col-md-12">
+                          	<p>Het is mogenlijk om meer dan één git provider aan uw acount te koppelen, op deze manier kunt u organisaties van meerder providers beheren</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <a href="{{ path('connect_github_start') }}" class="btn background-1 btn-lg btn-block" type="button"><i class="fab fa-github"></i> Connect with GitHub</a>
+                          </div>
+                          <div class="col-md-4">
+                            <a href="{{ path('connect_gitlab_start') }}"  class="btn background-1 btn-lg btn-block" type="button"><i class="fab fa-gitlab"></i> Connect with  GitLab</a>
+                          </div>
+                          <div class="col-md-4">
+                            <a href="{{ path('connect_bitbucket_start') }}"  class="btn background-1 btn-lg btn-block" type="button"><i class="fab fa-bitbucket"></i> Connect with BitBucket</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a name="login"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- Contact Us section -->
+                <h1><i class="fab fa-github"></i> Github Organisaties</h1>
+                <h5>Voeg organisaties toe of pas deze aan</h5>
+                <div class="row">
+                  <div class="col-sm-12 panel">
+                    <div class="panel-body">
+                      <div class="form-horizontal">
+                        <div class="row">
+                          <div class="col-md-4">
+                            Een organisatie
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="content-area footer">
+        (c) <a href="http://www.conduction.nl" target="_blank">Conduction</a> {{ "now"|date("Y") }}</a>
+      </div>
+    </div> 
+    
+{% endblock %}

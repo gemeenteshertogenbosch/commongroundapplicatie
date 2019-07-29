@@ -9,15 +9,22 @@
           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
             <span class="glyphicon glyphicon-menu-hamburger color-1"></span>
           </button>
-          <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+          <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">                       
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('section-1')">Wat wij doen</a>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('about')">Over {% if organisation is defined %}{{ organisation.name }}{% else %} deze site{% endif %}</a>
             </li>
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('section-3')">Applicaties</a>
+                {% if organisation is defined %}
+              	<a href="common-ground.dev#organisations">Andere Organisaties</a>
+              	{% else %}
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('organisations')">Organisaties</a>
+              	{% endif %}
             </li>
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('section-4')">Componenten</a>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('components')">Componenten</a>
+            </li>
+            <li>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('login')">{% if user is defined %} Uitloggen {% else %} Inloggen / Aanmelden {% endif %}</a>
             </li>
           </ul>
         </div>
@@ -29,16 +36,22 @@
           <div class="menu-logo">
             <span class="header-icon glyphicon glyphicon-heart-empty"></span>
           </div>
-          <ul>
-            
+          <ul>                    
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('section-1')">Wat wij doen</a>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('about')">Over {% if organisation is defined %}{{ organisation.name }}{% else %} deze site{% endif %}</a>
             </li>
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('section-3')">Applicaties</a>
+                {% if organisation is defined %}
+              	<a href="common-ground.dev#organisations">Andere Organisaties</a>
+              	{% else %}
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('organisations')">Organisaties</a>
+              	{% endif %}
             </li>
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('section-4')">Componenten</a>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('components')">Componenten</a>
+            </li>
+            <li>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('login')">{% if user is defined %} Uitloggen {% else %} Inloggen / Aanmelden {% endif %}</a>
             </li>
           </ul>
         </div>
