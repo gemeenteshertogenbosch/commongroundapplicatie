@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="socialuser")
  */
 class User implements UserInterface
 {
@@ -17,7 +18,27 @@ class User implements UserInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+	private $id;
+	
+	/**
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	private $username;
+	
+	/**
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	private $name;
+	
+	/**
+	 * @ORM\Column(type="text", nullable=true)
+	 */
+	private $description;
+	
+	/**
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	private $avatar;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -31,23 +52,54 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $password;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Organisation", mappedBy="Users")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Organisation", mappedBy="users")
      */
     private $organisations;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\GithubConnect", mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $github;
+    private $githubId;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $githubToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $gitlabId;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $gitlabToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $bitbucketId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $bitbucketToken;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Team", mappedBy="members")
+     */
+    private $teams;
 
     public function __construct()
     {
         $this->organisations = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,18 +208,144 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getGithub(): ?GithubConnect
+    public function getGithubId(): ?string
     {
-        return $this->github;
+        return $this->githubId;
     }
 
-    public function setGithub(GithubConnect $github): self
+    public function setGithubId(?string $githubId): self
     {
-        $this->github = $github;
+        $this->githubId = $githubId;
 
-        // set the owning side of the relation if necessary
-        if ($this !== $github->getUser()) {
-            $github->setUser($this);
+        return $this;
+    }
+
+    public function getGitlabId(): ?string
+    {
+        return $this->gitlabId;
+    }
+
+    public function setGitlabId(?string $gitlabId): self
+    {
+        $this->gitlabId = $gitlabId;
+
+        return $this;
+    }
+
+    public function getBitbucketId(): ?string
+    {
+        return $this->bitbucketId;
+    }
+
+    public function setBitbucketId(?string $bitbucketId): self
+    {
+        $this->bitbucketId = $bitbucketId;
+
+        return $this;
+    }
+
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getGithubToken(): ?string
+    {
+        return $this->githubToken;
+    }
+
+    public function setGithubToken(?string $githubToken): self
+    {
+        $this->githubToken = $githubToken;
+
+        return $this;
+    }
+
+    public function getGitlabToken(): ?string
+    {
+        return $this->gitlabToken;
+    }
+
+    public function setGitlabToken(?string $gitlabToken): self
+    {
+        $this->gitlabToken = $gitlabToken;
+
+        return $this;
+    }
+
+    public function getBitbucketToken(): ?string
+    {
+        return $this->bitbucketToken;
+    }
+
+    public function setBitbucketToken(?string $bitbucketToken): self
+    {
+        $this->bitbucketToken = $bitbucketToken;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Team[]
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): self
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams[] = $team;
+            $team->addMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): self
+    {
+        if ($this->teams->contains($team)) {
+            $this->teams->removeElement($team);
+            $team->removeMember($this);
         }
 
         return $this;

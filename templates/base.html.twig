@@ -6,15 +6,91 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
-        <meta name="author" content="">
-        <title>{% block title %}{% if organisation is defined %}{{ organisation.name }}{% else %} Wij{% endif %} <3 Common Ground{% endblock %}</title>
+        <meta name="author" content="conduction.nl">
+        <title>{% block title %}
+                {% if organisation is defined %}
+                {{ organisation.name }}
+                {% else %} 
+                	{% if is_granted('IS_AUTHENTICATED_FULLY')  or is_granted('IS_AUTHENTICATED_REMEMBERED') %} 
+                    {{ app.user.name }}
+                    {% else %} 
+                    Wij
+               	    {% endif %}
+                {% endif %}
+                {% endblock %}
+        </title>
         
         <!-- CSS and fonts -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <link href="css/styles.css" rel="stylesheet">
-        <link href='http://fonts.googleapis.com/css?family=Roboto:500,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:500,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         {% block stylesheets %}{% endblock %}
+        
+        <style>
+        
+/************
+Organisation page
+************/
+.organisation-well {
+    width: 150px;	    
+    position: relative;
+  	float: left;
+    margin-top: 15px;
+    margin-right: 15px;
+  	
+}
+
+.organisation-portrait {
+    width: 138px;
+    height: 100px;
+    position: absolute;
+    top: 6px;
+  	text-align: center;
+}
+
+.organisation-buttons {
+    padding-top: 5px;
+    padding-bottom: 5px;	
+}
+	
+.organisation {
+	/*background-color: #ededed;*/
+	border: 6px solid #EDEDED;
+    border-radius: 6px;
+    width: 150px;
+    height: 150px;
+}
+
+.organisation img{	
+	max-width:100%;
+	max-height:100%;
+}
+
+.organisation-type {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    top: -6px;    
+    left: -12px;
+	
+}
+
+.organisation-title {
+	background-color: #ededed;
+    position: absolute;
+    left: 0px;
+    top: 110px;
+    height: 37px;
+    width: 150px;	
+    align-content: center;
+    text-align: center;
+}
+
+/************
+Organisation specific overwrites
+************/
+        </style>
     </head>
     <body>
     	<div class="site-holder">

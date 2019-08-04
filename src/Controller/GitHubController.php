@@ -7,6 +7,8 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class GitHubController extends Controller
 {
@@ -21,9 +23,9 @@ class GitHubController extends Controller
 		
 		// will redirect to github!
 		return $clientRegistry
-		->getClient('github_main') // key used in config/packages/knpu_oauth2_client.yaml
+		->getClient('github') // key used in config/packages/knpu_oauth2_client.yaml
 		->redirect([
-				'public_profile', 'email' // the scopes you want to access
+				'public_profile', 'email','user','read:org' // the scopes you want to access
 		])
 		;
 	}
@@ -33,30 +35,27 @@ class GitHubController extends Controller
 	 * because this is the "redirect_route" you configured
 	 * in config/packages/knpu_oauth2_client.yaml
 	 *
-	 * @Route("/connect/github/check", name="connect_github_check")
+	 * @Route("/connect/github/check", name="connect_github_check", schemes={"https"})
 	 */
 	public function connectCheckAction(Request $request, ClientRegistry $clientRegistry)
 	{
-		// ** if you want to *authenticate* the user, then
-		// leave this method blank and create a Guard authenticator
-		// (read below)
+		// We dont actualy use this route its just a hook for our guard authenticators
+	}
+	
+	/**
+	 * This route remove the github credentials from the curently loged in user and log him out
+	 *
+	 * @Route("/connect/github/remove", name="connect_github_remove", schemes={"https"})
+	 */
+	public function removeAction(Request $request,  UserInterface $user, EntityManagerInterface $em){
 		
-		/** @var \KnpU\OAuth2ClientBundle\Client\Provider\GithubClient $client */
-		$client = $clientRegistry->getClient('github_main');
+		$user->setGithubId(null);
+		$user->setGitubToken(null);
+		$em->persist($user);
+		$em->flush();
 		
-		try {
-			// the exact class depends on which provider you're using
-			/** @var \League\OAuth2\Client\Provider\GithubUser $user */
-			$user = $client->fetchUser();
-			
-			// do something with all this new power!
-			// e.g. $name = $user->getFirstName();
-			var_dump($user); die;
-			// ...
-		} catch (IdentityProviderException $e) {
-			// something went wrong!
-			// probably you should return the reason to the user
-			var_dump($e->getMessage()); die;
-		}
+		$targetUrl = $this->router->generate('app_user_index');
+		
+		return new RedirectResponse($targetUrl);
 	}
 }

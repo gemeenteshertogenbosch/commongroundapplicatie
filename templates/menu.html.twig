@@ -23,8 +23,13 @@
             <li>
               	<a href="javascript:void(0);" onclick="scrollToAnchor('components')">Componenten</a>
             </li>
+            {% if is_granted('IS_AUTHENTICATED_FULLY')  or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('login')">{% if user is defined %} Uitloggen {% else %} Inloggen / Aanmelden {% endif %}</a>
+              	<a href="{{ path('app_user_index') }}" >Instellingen</a>
+            </li>
+            {% endif %}
+            <li>
+              	<a href="javascript:void(0);" >{% if is_granted('IS_AUTHENTICATED_FULLY')  or is_granted('IS_AUTHENTICATED_REMEMBERED')%} Uitloggen {% else %} Inloggen / Aanmelden {% endif %}</a>
             </li>
           </ul>
         </div>
@@ -50,8 +55,13 @@
             <li>
               	<a href="javascript:void(0);" onclick="scrollToAnchor('components')">Componenten</a>
             </li>
+            {% if is_granted('IS_AUTHENTICATED_FULLY')  or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('login')">{% if user is defined %} Uitloggen {% else %} Inloggen / Aanmelden {% endif %}</a>
+              	<a href="{{ path('app_user_index') }}">Instellingen</a>
+            </li>
+            {% endif %}
+            <li>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('login')">{% if is_granted('IS_AUTHENTICATED_FULLY')  or is_granted('IS_AUTHENTICATED_REMEMBERED')%} Uitloggen {% else %} Inloggen / Aanmelden {% endif %}</a>
             </li>
           </ul>
         </div>

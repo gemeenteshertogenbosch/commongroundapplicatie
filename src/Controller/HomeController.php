@@ -13,7 +13,7 @@ use App\Service\OrganisationService;
 class HomeController extends AbstractController
 { 
 	/**
-	* @Route("/")
+	* @Route("/", name="home")
 	*/
 	public function indexAction(SchemaService $schemaService, OrganisationService $organisationService,  Request $request)
 	{
@@ -23,10 +23,10 @@ class HomeController extends AbstractController
 		$parsedUrl = parse_url($currentHost);		
 		$host = explode('.', $parsedUrl['path']);		
 		$subdomain = $host[0];
-		
+				
 		// So now we should have a sub domain, so lets walk trough the options
-		if($subdomain == "www" || count($host)== 2){ 
-			// If iether the domain is www or only consists of two parts. e.g. google.com, the we have hid the main page and wil load the inforamtion for that page
+		if($subdomain == "www" || count($host)<= 2){ 
+			// If iether the domain is www or only consists of less then two parts. e.g. google.com or localhost, the we have hit the main page and wil load the inforamtion for that page
 			// We then return that page to prevent further exectution of code
 			
 			$organisations = [];

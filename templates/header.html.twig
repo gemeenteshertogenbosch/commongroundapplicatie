@@ -5,8 +5,17 @@
         <div class="container fluid-container header-content content-area">
           <span class="header-icon glyphicon glyphicon-heart-empty"></span>
           <div class="header-title">
-            <h1>{% if organisation is defined %}{{ organisation.name }}{% else %} Wij{% endif %}</h1>
-            <h3>Common ground</h3>
+            <h1>
+                {% if organisation is defined %}
+                {{ organisation.name }}
+                {% else %} 
+                	{% if is_granted('IS_AUTHENTICATED_FULLY')  or is_granted('IS_AUTHENTICATED_REMEMBERED') %} 
+                    {{ app.user.name }}
+                    {% else %} 
+                    Wij
+               	    {% endif %}
+                {% endif %}</h1>
+            <h3>Common Ground</h3>
           </div>
         </div>        
       </div>

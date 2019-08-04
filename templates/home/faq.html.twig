@@ -1,0 +1,49 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ 	<div class="main-content container fluid-container">
+        <!-- Main timeline -->
+        <ul id="timeline" class="timeline">
+          <li>
+            <a name="fas"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div><!-- /.top-link -->
+                <!-- Contact Us section -->
+                <h1><i class="fab fa-bitbucket">F.A.Q</h1>
+                <h5>Veel gestelde vragen</h5>
+                
+                <div class="row">
+                  <div class="col-sm-12 panel">
+                    <div class="panel-body">
+                        <div class="row">
+                          <div class="col-md-12">  
+                            <h2>Waarom kan ik geen acount aanmaken?</h2>                        
+                            <p>common-ground.dev dient alleen als overzicht en versameling van wat organisaties op andere plaatsen doen.</p>
+                            <h2>Waarom kan ik alleen organisaties importeren</h2>                        
+                            <p>common-ground.dev dient alleen als overzicht en versameling van wat organisaties op andere plaatsen doen. </p>
+                            <h2>Waarom kan ik de beschrijving van mijn component niet aanpassen?</h2>                        
+                            <p>Dat kan wel zeker, alleen niet op common-ground.dev. We geven hier slechts de informatie weer zo als die in je codebase en eventueel openapi specifiactie staat. Mocht je een andere beschrijving of naam voor je component willen dan kan je deze daar (bij de bron) aanpassen</p>
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                    </div><!-- /.panel-body -->
+                  </div><!-- /.col -->
+                </div><!-- /.row -->
+                
+              </div><!-- /.timeline-body -->
+            </div><!-- /.timeline-panel -->
+          </li>
+        </ul>
+      </div>
+      <div class="content-area footer">
+        (c) <a href="http://www.conduction.nl" target="_blank">Conduction</a> {{ "now"|date("Y") }}</a>
+      </div>
+    </div> 
+    
+{% endblock %}

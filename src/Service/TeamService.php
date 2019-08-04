@@ -1,5 +1,5 @@
 <?php
-// src/Service/AmbtenaarService.php
+// src/Service/TeamService.php
 namespace App\Service;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -10,9 +10,9 @@ use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-use App\Entity\Organisation; 
+use App\Entity\Team; 
 
-class OrganisationService
+class TeamService
 {
 	private $params;
 	private $cash;
@@ -28,27 +28,29 @@ class OrganisationService
 	}
 	
 	/* @todo lets force a user here */
-	public function getUserSocialOrganisations($user)
+	public function getUserSocialTeams($user)
 	{
-		$organisations=[];
-		
+		$teams=[];
+		/*
 		// Lets see if we have github organisations
 		if($user->getGithubToken()){
 			
 			$client = new Client(['base_uri' => 'https://api.github.com', 'headers'=>['Authorization'=>'Bearer '.$user->getGithubToken()]]);
 			$response = $client->get('/user/orgs');
 			$response = json_decode ($response->getBody(), true);
+			var_dump($response);
 			
 			foreach($response as $organisation ){
-				$organisations[]= [
+				$teams[]= [
 						"type"=>"github",
 						"link"=>$organisation['url'],
-						"id"=>$organisation['login'],
+						"id"=>$organisation['id'],
 						"name"=>$organisation['login'],
 						"avatar"=>$organisation['avatar_url']
 				];
 			}
 		}
+		*/
 		// Lets see if we have gitlab groups
 		if($user->getGitlabToken()){
 			$client = new Client(['base_uri' => 'https://gitlab.com', 'headers'=>['Authorization'=>'Bearer '.$user->getGitlabToken()]]);
@@ -56,7 +58,7 @@ class OrganisationService
 			$response = json_decode ($response->getBody(), true);
 			
 			foreach($response as $organisation ){
-				$organisations[]= [
+				$teams[]= [
 						"type"=>"gitlab",
 						"link"=>$organisation['web_url'],
 						"id"=>$organisation['id'],
@@ -65,15 +67,17 @@ class OrganisationService
 				];
 			}
 		}
+		/*
 		// Lets see if we have bitbucket teams
 		if($user->getBitbucketToken()){
 			
 			$client = new Client(['base_uri' => 'https://api.bitbucket.org/', 'headers'=>['Authorization'=>'Bearer '.$user->getBitbucketToken()]]);
 			$response = $client->get('/2.0/teams?role=member');
 			$response = json_decode ($response->getBody(), true);
+			var_dump($response);
 			
 			foreach($response['values'] as $organisation ){
-				$organisations[]= [
+				$teams[]= [
 						"type"=>"bitbucket",
 						"link"=>$organisation['links']['html']['href'],
 						"id"=>$organisation['uuid'],
@@ -82,39 +86,37 @@ class OrganisationService
 				];
 			}
 		}
+		*/
 		
-		return $organisations;
+		return $team;
 	}
-	
-	public function enrichOrganisations($organisations)
+		
+	public function enrichTeams($teams)
 	{
-		$repository = $this->em->getRepository(Organisation::class);
+		$repository = $this->em->getRepository(Team::class);
 		
 		// Lets see if we already know these organisations
-		foreach($organisations as $organisation){
+		foreach($teams as $team){
 			$type = $organisation['type'];
 			switch ($type) {
 				case 'github':
-					$organisation['commonground'] = $repository->findOneBy(['githubId' => $organisation['id']]);
+					$team['commonground'] = $repository->findOneBy(['githubId' => $team['id']]);
 					break;
 				case 'bitbucket':
-					$organisation['commonground'] = $repository->findOneBy(['bitbucketId' => $organisation['id']]);
+					$team['commonground'] = $repository->findOneBy(['bitbucketId' => $team['id']]);
 					break;
 				case 'gitlab':
-					$organisation['commonground'] = $repository->findOneBy(['gitlabId' => $organisation['id']]);
+					$team['commonground'] = $repository->findOneBy(['gitlabId' => $team['id']]);
 					break;
-			}			
+			}
 		}
 		
-		return $organisations;
+		return $teams;
 	}	
-	public function getOrganisationOnSlug($slug)
+	
+	public function getTeamOnSlug($slug)
 	{
-		$repository = $this->em->getRepository(Organisation::class);
+		$repository = $this->em->getRepository(Team::class);
 		return $repository->findOneBy(['slug' => $slug]);
 	}		
-	
-	public function getOrganisationFromGithub($slug)
-	{
-	}	
 }

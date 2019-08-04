@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OrganisationRepository")
@@ -34,6 +35,7 @@ class Organisation
     private $logo;
 
     /**
+     * @Gedmo\Slug(fields={"name"}, unique=true)
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
@@ -56,16 +58,47 @@ class Organisation
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $bitbucket;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $githubId;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $gitlabId;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $bitbucketId;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="organisations")
      */
-    private $Users;
+    private $users;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $css;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $javascript;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Team", mappedBy="organisation", orphanRemoval=true)
+     */
+    private $teams;
 
     public function __construct()
     {
         $this->components = new ArrayCollection();
-        $this->Users = new ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -182,19 +215,55 @@ class Organisation
 
         return $this;
     }
-
+    
+    public function getGithubId(): ?string
+    {
+    	return $this->githubId;
+    }
+    
+    public function setGithubId(?string $githubId): self
+    {
+    	$this->githubId= $githubId;
+    	
+    	return $this;
+    }
+    
+    public function getGitlabId(): ?string
+    {
+    	return $this->gitlabId;
+    }
+    
+    public function setGitlabId(?string $gitlabId): self
+    {
+    	$this->gitlabId= $gitlabId;
+    	
+    	return $this;
+    }
+    
+    public function getBitbucketId(): ?string
+    {
+    	return $this->bitbucketId;
+    }
+    
+    public function setBitbucketId(?string $bitbucketId): self
+    {
+    	$this->bitbucketId = $bitbucketId;
+    	
+    	return $this;
+    }
+    
     /**
      * @return Collection|User[]
      */
     public function getUsers(): Collection
     {
-        return $this->Users;
+        return $this->users;
     }
 
     public function addUser(User $user): self
     {
-        if (!$this->Users->contains($user)) {
-            $this->Users[] = $user;
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
         }
 
         return $this;
@@ -202,8 +271,63 @@ class Organisation
 
     public function removeUser(User $user): self
     {
-        if ($this->Users->contains($user)) {
-            $this->Users->removeElement($user);
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+        }
+
+        return $this;
+    }
+
+    public function getCss(): ?string
+    {
+        return $this->css;
+    }
+
+    public function setCss(?string $css): self
+    {
+        $this->css = $css;
+
+        return $this;
+    }
+
+    public function getJavascript(): ?string
+    {
+        return $this->javascript;
+    }
+
+    public function setJavascript(?string $javascript): self
+    {
+        $this->javascript = $javascript;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Team[]
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): self
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams[] = $team;
+            $team->setOrganisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): self
+    {
+        if ($this->teams->contains($team)) {
+            $this->teams->removeElement($team);
+            // set the owning side to null (unless already changed)
+            if ($team->getOrganisation() === $this) {
+                $team->setOrganisation(null);
+            }
         }
 
         return $this;

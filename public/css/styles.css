@@ -91,9 +91,44 @@ GENERAL STYLES
 	background-color: #000;
 }
 
+.color-bitbucket {
+	color: #0747A6 ;	
+}	
+	
+.background-bitbucket {
+	background-color: #0747A6;
+	color: #DEEBFF !important;	
+	
+}
+
+.color-github {
+	color: #24292e ;	
+}	
+
+
+.background-github {
+	background-color: #24292e;
+	color: #FFF !important;	
+	
+}
+
+.color-gitlab {
+	color: #e65328 ;	
+}	
+
+.background-gitlab {
+	background-color: #e65328;
+	color: #FFF !important;		
+}
 .background-1 {
 	background-color: #4376FC;
 }
+
+.background-1 a:link, .background-1 a:visited {
+	color: #FFF !important;	
+}
+
+
 
 .background-with-image-1 {
 	background:
@@ -949,3 +984,5 @@ RESOLLUTION SPECIFIC STYLES
 		width: 970px;
 	}
 }
+
+

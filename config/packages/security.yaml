@@ -16,6 +16,12 @@ security:
             security: false
         main:
             anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\BitbucketAuthenticator
+                    - App\Security\GithubAuthenticator
+                    - App\Security\GitlabAuthenticator
+                entry_point: App\Security\GithubAuthenticator
 
             # activate different ways to authenticate
 
