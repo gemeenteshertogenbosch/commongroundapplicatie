@@ -74,9 +74,9 @@ class Team
         $this->members = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
-        return $this->id;
+    	return $this->id;
     }
 
     public function getOrganisation(): ?Organisation

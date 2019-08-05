@@ -141,6 +141,9 @@
               </div>
             </div>
           </li>
+          {% if is_granted('IS_AUTHENTICATED_FULLY') == false  and is_granted('IS_AUTHENTICATED_REMEMBERED')  == false %}
+             {% include 'home/login.html.twig' %}
+         {% else %}         
           <li>
             <a name="login"></a>
             <div class="timeline-badge"></div>
@@ -149,37 +152,67 @@
               <div class="timeline-body">
                  <div class="top-link">
                   <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
-                </div>
+                </div><!-- /.top-link -->
                 <!-- Contact Us section -->
-                <h1>Inloggen of Aanmelden</h1>
-                <h5>Om in te loggen of uw organisatie aan te melden voor dit overzicht kunt u gebruikt maken van uw persoonlijke git acount</h5>
+                <h1>Componenten toevoegen</h1>
+                <h5>Vanuit <i class="fab fa-bitbucket"></i>, <i class="fab fa-github"></i>, en <i class="fab fa-gitlab"></i>  Repositories</h5>
+                
                 <div class="row">
                   <div class="col-sm-12 panel">
                     <div class="panel-body">
                       <div class="form-horizontal">
                         <div class="row">
-                          <div class="col-md-12">
-                          	<p>Om in te loggen of uw organisatie aan te melden voor dit overzicht kunt u gebruikt maken van uw persoonlijke git acount, u kunt vervolgens organisaties toevoegen of wijzigen waar u via die acount schrijf rechten op heeft. En componenten toevoegen waar u leesrechten op heeft.</p>
-                          </div>
-                        </div>
+                          <div class="col-md-12">  
+                             U kunt de volgende organisaties toevoegen, het toevoegen van extra Git Providers aan een bestaande organisatie gaat via die organisatie zelf.                        
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
                         <div class="row">
-                          <div class="col-md-4">
-                            <a href="{{ path('connect_github_start') }}" class="btn background-1 btn-lg btn-block" type="button"><i class="fab fa-github"></i> Connect with GitHub</a>
-                          </div>
-                          <div class="col-md-4">
-                            <a href="{{ path('connect_gitlab_start') }}"  class="btn background-1 btn-lg btn-block" type="button"><i class="fab fa-gitlab"></i> Connect with  GitLab</a>
-                          </div>
-                          <div class="col-md-4">
-                            <a href="{{ path('connect_bitbucket_start') }}"  class="btn background-1 btn-lg btn-block" type="button"><i class="fab fa-bitbucket"></i> Connect with BitBucket</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
+                          <div class="col-md-12">  
+                            {% for repository in repositories %}
+                            <div class="organisation-well">
+                              	<div class="organisation">             
+                              		<div class="organisation-portrait">
+                                        <img src="{{ organisation.avatar|e }}">
+                                    </div>     	                     
+                              		<div class="organisation-type ">
+                                        <span class="fa-stack fa-2x color-{{ repository.type }}">
+                                          <i class="fas fa-circle fa-stack-2x"></i>
+                                          <i class="fab fa-{{ repository.type|e }} fa-stack-1x fa-inverse"></i>
+                                        </span>
+                              		</div>
+                              		<div class="organisation-title">
+                              		{{ repository.name|e }}
+                              		</div>
+                              	</div>
+                              	<div class="organisation-buttons">
+                              	{% if repository.commonground is not defined %}
+                              	<a href="{{ path('app_component_add',  {type: repository.type, organisation: organisation.id , id: repository.id}) }}"  class="btn background-{{ repository.type }} btn-sm btn-block" type="button">Connect</a>                       	
+                              	{% endif %}
+                              	</div>
+                             </div> 	
+                                
+                            {% endfor %}
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                        <div class="row">
+                          <div class="col-md-12">  
+                            <p>Waarom worden voor verschillende Git Providers verschillende bronnen gebruikt?</p>
+                            <p>Er is nogal wat definitie verschil tussen Bitbucket, GitHub en GitLab rondom organisatie inrichting en gelaagdheid. Bitbucket kent Teams die meerder projecten hebben, GitHub houdt het op organisaties bestaande uit teams en GitLab heeft alleen maar groepen. Voor commonground hanteren we Organisaties bestaande uit Teams (de github methode). Dat betekend dat je commonground organisaties kan aanmaken vanuit (en koppelen aan) Bitbucket Teams, Github Organisaties en GitLab Groups. Lees er <a href="https://about.gitlab.com/2017/09/11/comparing-confusing-terms-in-github-bitbucket-and-gitlab/">hier</a> meer over.</p>                          
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                        <div class="row">
+                        	<div class="col-md-12">  
+                 			</div><!-- /.col -->
+                		</div><!-- /.row -->
+                      </div>                      
+                    </div><!-- /.panel-body -->
+                  </div><!-- /.col -->
+                </div><!-- /.row -->
+                
+              </div><!-- /.timeline-body -->
+            </div><!-- /.timeline-panel -->
+          </li>    
+         {% endif %}
         </ul>
       </div>
       <div class="content-area footer">

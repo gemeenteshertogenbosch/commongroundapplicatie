@@ -12,21 +12,56 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Organisation; 
 
+
+use App\Service\GithubService; 
+use App\Service\GitlabService; 
+use App\Service\BitbucketService; 
+
 class OrganisationService
 {
 	private $params;
 	private $cash;
 	private $markdown;
 	private $em;
+	private $gitlab;
+	private $github;
+	private $bitbucket;
 	
-	public function __construct(ParameterBagInterface $params, MarkdownParserInterface $markdown, CacheInterface $cache, EntityManagerInterface $em)
+	public function __construct(
+			ParameterBagInterface $params, 
+			MarkdownParserInterface $markdown, 
+			CacheInterface $cache, 
+			EntityManagerInterface $em, 
+			GithubService $github, 
+			GitlabService $gitlab, 
+			BitbucketService $bitbucket)
 	{
 		$this->params = $params;
 		$this->cash = $cache;
 		$this->markdown = $markdown;
 		$this->em = $em;
+		$this->gitlab= $gitlab;
+		$this->github= $github;
+		$this->bitbucket= $bitbucket;
 	}
 	
+	/* @todo lets force a organisation here */
+	public function getOrganisationRepositories($organisation)
+	{
+		$repositories =[];
+		if($organisation->getGithubId()){
+			$repositories = array_merge ($repositories, $this->github->getOrganisationRepositories($organisation->getGithubId())); 
+			
+		}
+		if($organisation->getGitlabId()){
+			$repositories = array_merge ($repositories, $this->gitlab->getGroupRepositories($organisation->getGitlabId()));
+		}
+		if($organisation->getBitbucketId()){
+			$repositories = array_merge ($repositories, $this->bitbucket->getOrganisationRepositories($organisation->getBitbucketId()));
+		}
+			
+		return $repositories;
+	}
 	/* @todo lets force a user here */
 	public function getUserSocialOrganisations($user)
 	{

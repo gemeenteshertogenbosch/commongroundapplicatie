@@ -27,10 +27,14 @@
             <li>
               	<a href="{{ path('app_user_index') }}" >Instellingen</a>
             </li>
-            {% endif %}
             <li>
-              	<a href="javascript:void(0);" >{% if is_granted('IS_AUTHENTICATED_FULLY')  or is_granted('IS_AUTHENTICATED_REMEMBERED')%} Uitloggen {% else %} Inloggen / Aanmelden {% endif %}</a>
+              	<a href="{{ path('app_logout') }}" >Uitloggen</a>
             </li>
+            {% else %}
+            <li>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('login')"> Inloggen / Aanmelden</a>
+            </li>
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -57,12 +61,16 @@
             </li>
             {% if is_granted('IS_AUTHENTICATED_FULLY')  or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <li>
-              	<a href="{{ path('app_user_index') }}">Instellingen</a>
+              	<a href="{{ path('app_user_index') }}" >Instellingen</a>
+            </li>
+            <li>
+              	<a href="{{ path('app_logout') }}" >Uitloggen</a>
+            </li>
+            {% else %}
+            <li>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('login')"> Inloggen / Aanmelden</a>
             </li>
             {% endif %}
-            <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('login')">{% if is_granted('IS_AUTHENTICATED_FULLY')  or is_granted('IS_AUTHENTICATED_REMEMBERED')%} Uitloggen {% else %} Inloggen / Aanmelden {% endif %}</a>
-            </li>
           </ul>
         </div>
       </div>

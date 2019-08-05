@@ -99,7 +99,7 @@
                 -->
                 <div class="row">              
                   	{% for organisation in organisations %}
-                      {% include 'home/thumb.html.twig' with {'organisation': organisation} %}
+                      {% include 'home/organisation-thumb.html.twig' with {'organisation': organisation} %}
                  	{% endfor %}                   
                 </div>
               </div>
@@ -135,55 +135,14 @@
 
                 <div class="row">              
                   	{% for component in components %}
-                      {% include 'home/thumb.html.twig' with {'item': component} %}
+                      {% include 'home/component-thumb.html.twig' with {'item': component} %}
                  	{% endfor %}                   
                 </div>
               </div>
             </div>
           </li>
           {% if is_granted('IS_AUTHENTICATED_FULLY') == false  and is_granted('IS_AUTHENTICATED_REMEMBERED')  == false %}
-          <li>
-            <a name="login"></a>
-            <div class="timeline-badge"></div>
-            <div class="timeline-line"></div>
-            <div class="timeline-panel">
-              <div class="timeline-body">
-                 <div class="top-link">
-                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
-                </div>
-                <!-- Contact Us section -->
-                <h1>Inloggen of Aanmelden</h1>
-                <h5>Om in te loggen of uw organisatie aan te melden voor dit overzicht kunt u gebruikt maken van uw persoonlijke git acount</h5>
-                <div class="row">
-                  <div class="col-sm-12 panel">
-                    <div class="panel-body">
-                      <div class="form-horizontal">
-                        <div class="row">
-                          <div class="col-md-12">
-                          
-                          
-                          
-                          	<p>Om in te loggen of uw organisatie aan te melden voor dit overzicht kunt u gebruikt maken van uw persoonlijke git acount, u kunt vervolgens organisaties toevoegen of wijzigen waar u via die acount schrijf rechten op heeft. En componenten toevoegen waar u leesrechten op heeft.</p>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-4">
-                            <a href="{{ path('connect_bitbucket_start') }}"  class="btn background-bitbucket btn-lg btn-block" type="button"><i class="fab fa-bitbucket"></i> Connect with BitBucket</a>
-                          </div>
-                          <div class="col-md-4">
-                            <a href="{{ path('connect_github_start') }}" class="btn background-github btn-lg btn-block" type="button"><i class="fab fa-github"></i> Connect with GitHub</a>
-                          </div>
-                          <div class="col-md-4">
-                            <a href="{{ path('connect_gitlab_start') }}"  class="btn background-gitlab btn-lg btn-block" type="button"><i class="fab fa-gitlab"></i> Connect with  GitLab</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
+             {% include 'home/login.html.twig' %}
          {% endif %}
         </ul>
       </div>

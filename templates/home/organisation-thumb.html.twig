@@ -1,0 +1,23 @@
+        {# templates/home/modal.html.twig #}
+
+ 	
+                  <!-- Thumb -->
+                  {# @todo commonground schould be an config paramater #}
+                  <a href="https://{{ organisation.slug }}.common-ground.dev">
+                  <div class="col-md-4 col-sm-6 portfolio web panel" >
+                    <div class="panel-body">
+                      <div class="portfolio-title">
+                        <div class="portfolio-icon">
+                          <div><span class=""></span></div>
+                        </div>
+                        <div class="title">
+                          <h4>{{ organisation.name }}</h4>
+                          <em>{{ organisation.description }}</em>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="portfolio-image">
+                        <img src="{{ organisation.logo }}" alt="" />
+                    </div>
+                  </div>
+                  </a>

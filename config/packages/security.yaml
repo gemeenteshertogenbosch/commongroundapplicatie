@@ -22,6 +22,13 @@ security:
                     - App\Security\GithubAuthenticator
                     - App\Security\GitlabAuthenticator
                 entry_point: App\Security\GithubAuthenticator
+            logout:
+                path:   app_logout
+                # where to redirect after logout
+                target: home
+
+                # where to redirect after logout
+                # target: app_any_route
 
             # activate different ways to authenticate
 

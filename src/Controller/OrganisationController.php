@@ -32,6 +32,10 @@ class OrganisationController extends AbstractController
 		$organisation->removeUser($user);
 		$em->persist($organisation);
 		$em->flush();
+				
+		$targetUrl = $this->router->generate('app_user_index');
+		
+		return new RedirectResponse($targetUrl);
 	}
 	
 	/**
@@ -43,6 +47,10 @@ class OrganisationController extends AbstractController
 		$organisation->addUser($user);
 		$em->persist($organisation);
 		$em->flush();
+		
+		/* @todo domein automatisch inladen */
+		// redirects externally
+		return $this->redirect('https://'.$organisation->getSlug().'.common-ground.dev');
 	}
 	
 	/**
@@ -52,15 +60,7 @@ class OrganisationController extends AbstractController
 	{
 		switch ($type) {
 			case 'github':
-				// Firts we need an organisation
-				$organisation = $githubService->getOrganisationFromGitHub($id);
-				// Then we can add the teams
-				/*
-				$teams = $githubService->getTeamsFromGitHub($id);
-				foreach($teams as $team){
-					$organisation->addTeam($teams);
-				}
-				*/
+				$organisation = $githubService->getOrganisationFromGitHub($id);				
 				break;
 			case 'bitbucket':
 				$organisation = $bitbucketService->getOrganisationFromBitbucket($id);
@@ -75,32 +75,9 @@ class OrganisationController extends AbstractController
 		$em->persist($organisation);
 		$em->flush();
 		/* @todo let catch non existing organisations */
-	}
-	
-	/**
-	* @Route("/organisation/edit/{slug}")
-	*/
-	public function editAction(SchemaService $schemaService, OrganisationService $organisationService, TeamService $teamService,Request $request, UserInterface $user, $slug)
-	{
-		$organisation = $organisationService->getOrganisationOnSlug($slug);
-		/* @todo let catch non existing organisations */
 		
-		$variables =[];		
-		$variables['user'] = $user;		
-		// Lets see if we have github organisations
-		
-		// Lets get al the organisations that this user has on social profiles
-		$variables['organisations'] =  $organisationService->getUserSocialOrganisations($user);
-		
-		// Now that we have all the data we can see if we have aditional data on the organisations ons our platform
-		$variables['organisations'] = $organisationService->enrichOrganisations($variables['organisations']);
-		
-		// Lets get al the organisations that this user has on social profiles
-		$variables['teams'] =  $teamService->getUserSocialTeams($user);
-		
-		// Now that we have all the data we can see if we have aditional data on the organisations ons our platform
-		$variables['teams'] = $teamService->enrichTeams($variables['teams']);
-		
-		return $this->render('home/edit-organisation.html.twig', $variables);
+		/* @todo domein automatisch inladen */
+		// redirects externally
+		return $this->redirect('https://'.$organisation->getSlug().'.common-ground.dev');
 	}
 }

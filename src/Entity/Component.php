@@ -23,6 +23,11 @@ class Component
 	private $name;
 	
 	/**
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	private $version;
+	
+	/**
 	 * @ORM\Column(type="text", nullable=true)
 	 */
 	private $description;
@@ -43,7 +48,12 @@ class Component
      * @ORM\JoinColumn(nullable=false)
      */
     private $organisation;
-
+    
+    /**
+     * @ORM\Column(type="integer", length=11)
+     */
+    private $gitId;
+    
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -58,23 +68,38 @@ class Component
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $openapi;
-	
+    
+    public function getId(): ?string
+    {
+    	return $this->id;
+    }
+    
 	public function getName(): ?string
-                                    	{
-                                    		return $this->name;
-                                    	}
+	{
+		return $this->name;
+	}
 	
 	public function setName(string $name): self
-                                    	{
-                                    		$this->name = $name;
-                                    		
-                                    		return $this;
-                                    	}
+	{
+		$this->name = $name;
+		return $this;
+	}
+	
+	public function getVersion(): ?string
+	{
+		return $this->version;
+	}
+	
+	public function setVersion(string $version): self
+	{
+		$this->version= $version;
+		return $this;
+	}
 	
 	public function getDescription(): ?string
-                                    	{
-                                    		return $this->description;
-                                    	}
+	{
+		return $this->description;
+	}
 	
 	public function setDescription(?string $description): self
                                     	{
@@ -118,7 +143,19 @@ class Component
 
         return $this;
     }
-
+    
+    public function getGitId(): ?string
+    {
+    	return $this->gitId;
+    }
+    
+    public function setGitId(string $gitId): self
+    {
+    	$this->gitId = $gitId;
+    	
+    	return $this;
+    }
+    
     public function getGitType(): ?string
     {
         return $this->gitType;

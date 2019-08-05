@@ -100,7 +100,12 @@ class Organisation
         $this->users = new ArrayCollection();
         $this->teams = new ArrayCollection();
     }
-
+    
+    public function getId(): ?string
+    {
+    	return $this->id;
+    }
+    
     public function getName(): ?string
     {
         return $this->name;

@@ -204,16 +204,16 @@ Organisation specific overwrites
             */
             function filterPortfolio(filters, filterBtn){
                 $('#allFilter').removeClass("filter-selected");
-                $('#webFilter').removeClass("filter-selected");
-                $('#mobileFilter').removeClass("filter-selected");
-                $('#printFilter').removeClass("filter-selected");
+                $('#sourceFilter').removeClass("filter-selected");
+                $('#applicationFilter').removeClass("filter-selected");
+                $('#toolFilter').removeClass("filter-selected");
     
-                $('.web').removeClass("show");
-                $('.print').removeClass("show");
-                $('.mobile').removeClass("show");
-                $('.web').addClass("hide");
-                $('.print').addClass("hide");
-                $('.mobile').addClass("hide");
+                $('.source').removeClass("show");
+                $('.application').removeClass("show");
+                $('.tool').removeClass("show");
+                $('.source').addClass("hide");
+                $('.application').addClass("hide");
+                $('.tool').addClass("hide");
     
                 for(var i = 0; i < filters.length; i ++){
                   $('.'+filters[i]).addClass("show");
@@ -221,15 +221,15 @@ Organisation specific overwrites
                 
                 if(filterBtn == "allFilter"){
                   $('#allFilter').addClass("filter-selected");
-                  $('#webFilter').addClass("filter-selected");
-                  $('#mobileFilter').addClass("filter-selected");
-                  $('#printFilter').addClass("filter-selected");
+                  $('#sourceFilter').addClass("filter-selected");
+                  $('#applicationFilter').addClass("filter-selected");
+                  $('#toolFilter').addClass("filter-selected");
                 }else{
                   $('#'+filterBtn).addClass("filter-selected");
                 }
               
             }
-            filterPortfolio(["all", "web", "mobile", "print"], "allFilter");
+            filterPortfolio(["all", "source", "application", "tool"], "allFilter");
          </script>
          
          <!-- Start of HubSpot Embed Code -->

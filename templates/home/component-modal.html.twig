@@ -1,0 +1,85 @@
+{# templates/home/modal.html.twig #}
+ <!--  Modal -->
+    <div class="modal fade" id="component-{{ component.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+         <button type="button" class="modal-close-btn" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove"></span></button>
+         <div class="modal-body container-fluid portfolio web">
+            <!--  Carousel -->
+            <div id="carousel-portfolio-{{ component.id }}" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner" role="listbox">
+              
+                <div class="item active">
+                  <img src="{{ component.logo  }}" alt="" />
+                </div>
+              
+              	{# for image in item.images %}
+                <div class="item active">
+                  <img src="{{ component.logo  }}" alt="" />
+                </div>
+             	{% endfor #}
+              </div>
+
+              <!-- Controls -->
+              <!--
+                Remove these controls if you are only using one image in the carousel.
+              <a class="left carousel-control" href="#carousel-portfolio-{{ component.id }}" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              </a>
+              <a class="right carousel-control" href="#carousel-portfolio-{{ component.id }}" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              </a>
+              -->
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="portfolio-title">
+                  <div class="portfolio-icon">
+                    <div><span class="{{ component.type }}"></span></div>
+                  </div>
+                  <div class="title">
+                    <h4>{{ component.name }}</h4>
+                    Versie <em>{{ component.version }}</em>
+                    {#
+                    Licentie <a href="{{ item.license.url}}">{{ item.license.name}}</a><br />
+                    Ontwikkelaar <a href="{{ item.license.url}}">{{ item.license.name}}</a><br />
+                    Eigenaar <a href="{{ item.license.url}}">{{ item.license.name}}</a><br />
+                    #}
+                  </div>
+                  <br />
+                  {#
+                  <p>
+                  	<b>Documentatie</b><br />
+                    {% for doc in item.docs %}
+                  		<a href="{{ doc.url }}">{{ doc.name }}</a><br />
+                    {% endfor %}
+                  </p>
+                  #}
+                  <p>
+                  	<b>Informatie Model</b><br />   
+                    {% for tag in component.tags %}
+                  		{{ tag.name }}<br />
+                    {% endfor %}
+                  </p>
+                  <p>
+                  	<b>Servers</b> <br />      	
+                    {% for server in component.servers %}
+                  		<a href="{{ server.url }}">{{ server.description }}</a><br />
+                    {% endfor %}
+                  </p>
+                  <p>
+                  	<b>Verwijzingen</b><br />           
+                    {% for link in component.links %}
+                  		<a href="{{ link.url }}">{{ link.name }}</a><br />
+                    {% endfor %}
+                  </p>
+                </div>
+              </div>
+              <div class="modal-text col-md-7">
+                <p>{{ component.description | raw }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

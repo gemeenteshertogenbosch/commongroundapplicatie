@@ -11,7 +11,8 @@ use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use App\Entity\Organisation; 
+use App\Entity\Organisation;
+use App\Entity\Component; 
 
 class BitbucketService
 {
@@ -37,10 +38,20 @@ class BitbucketService
 		}
 	}
 		
-	public function getRepositories($organisations)
+	public function getComponentFromGitHub($repository)
 	{
-	}		
+		$response = $this->client->get($repository);
+		$response = json_decode ($response->getBody(), true);
 		
+		$component = New Component;
+		$component->setName($response['name']);
+		$component->setDescription($response['description']);
+		$component->setGithub($response['html_url']);
+		$component->setGithubId($response['full_name']);
+		
+		return $component;
+	}
+	
 	// we always use a user to ask api qoustions
 	public function getTeam($id)
 	{

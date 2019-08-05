@@ -11,7 +11,8 @@ use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use App\Entity\Organisation; 
+use App\Entity\Organisation;
+use App\Entity\Component; 
 
 class GitlabService
 {
@@ -36,10 +37,21 @@ class GitlabService
 			$this->client = new Client(['base_uri' => 'https://gitlab.com/api/v4/']);
 		}
 	}	
-		
-	public function getRepositories($organisations)
+			
+	public function getComponentFromGitLab($id)
 	{
-	}		
+		$response = $this->client->get('/api/v4/projects/'.$id);
+		$response = json_decode ($response->getBody(), true);
+		
+		$component = New Component;
+		$component->setName($response['name']);
+		$component->setDescription($response['description']);
+		$component->setGitlab($response['web_url']);
+		$component->setGitlabId($response['id']);
+		$component->setAvatar($response['avatar_url']);
+		
+		return $component;
+	}
 	
 	
 	// we always use a user to ask api qoustions
@@ -49,4 +61,44 @@ class GitlabService
 		$organisation = New Organisation;
 		
 	}	
+	
+	// Returns an array of repositories for an organisation
+	public function getGroupRepositories ($id)
+	{		
+		$repositories= [];
+		$response = $this->client->get('groups/'.$id.'/projects');
+		$responses = json_decode ($response->getBody(), true);
+		
+		foreach($responses as $repository){
+			$repositories[]= [
+					"type"=>"gitlab",
+					"link"=>$repository['html_url'],
+					"id"=>$repository['name'],
+					"name"=>$repository['name'],
+					"description"=>$repository['description']
+			];
+		}
+		
+		return $repositories;
+	}
+	
+	// Returns an array of repositories for an user
+	public function getUserRepositories ($id)
+	{
+		$repositories= [];
+		$response = $this->client->get('users/'.$id.'/projects');
+		$responses = json_decode ($response->getBody(), true);
+		
+		foreach($responses as $repository){
+			$repositories[]= [
+					"type"=>"gitlab",
+					"link"=>$repository['web_url'],
+					"id"=>$repository['id'],
+					"name"=>$repository['name_with_namespace'],
+					"description"=>$repository['description']
+			];
+		}
+		
+		return $repositories;
+	}
 }

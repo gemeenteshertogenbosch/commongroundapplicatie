@@ -11,7 +11,8 @@ use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-use App\Entity\Organisation; 
+use App\Entity\Organisation;
+use App\Entity\Component; 
 
 class GithubService
 {
@@ -37,9 +38,39 @@ class GithubService
 		}
 	}
 		
-	public function getRepositories($organisations)
+	public function getUserOrganisations($id)
 	{
+		$organisations = [];
+		$response = $this->client->get('/users/'.$user.'/repos');
+		$responses = json_decode ($response->getBody(), true);
+		
+		
+		foreach($response as $organisation ){
+			$organisations[]= [
+					"type"=>"gitlab",
+					"link"=>$organisation['web_url'],
+					"id"=>$organisation['id'],
+					"name"=>$organisation['name'],
+					"avatar"=>$organisation['avatar_url']
+			];
+		}
 	}			
+	
+	
+	public function getComponentFromGitHub($id)
+	{
+		$response = $this->client->get('repositories/'.$id);
+		$response = json_decode ($response->getBody(), true);
+		
+		$component = New Component;
+		$component->setName($response['name']);
+		$component->setDescription($response['description']);
+		$component->setGit($response['html_url']);
+		$component->setGitType('github');
+		$component->setGitId($response['id']);
+		
+		return $component;
+	}
 	
 	public function getOrganisationFromGitHub($id)
 	{
@@ -51,7 +82,7 @@ class GithubService
 		$organisation->setDescription($response['description']);
 		$organisation->setLogo($response['avatar_url']);
 		$organisation->setGithub($response['html_url']);
-		$organisation->setGithubId($response['id']);
+		$organisation->setGithubId($response['login']);
 		
 		return $organisation;
 	}
@@ -67,8 +98,9 @@ class GithubService
 			$team = New Team;
 			$team->setName($response['name']);
 			$team->setDescription($response['description']);
-			$team->setGithub($response['html_url']);
-			$team->setGithubId($response['id']);
+			$team->setGit($response['html_url']);
+			$team->setGitType('github');
+			$team->setGitId($response['id']);
 			$teams[] = $team;
 		}
 				
@@ -76,15 +108,45 @@ class GithubService
 	}	
 	
 	
-	// Returns an array of teams for an organisation
-	public function getOrganisationRepositories ($organisation)
-	{		
-		
+	// Returns an array of repositories for an organisation
+	public function getOrganisationRepositories ($id)
+	{
+		$repositories= [];
+		$response = $this->client->get('/orgs/'.$id.'/repos');
+		$responses = json_decode ($response->getBody(), true);		
+				
+		foreach($responses as $repository){
+			$repositories[]= [
+					"type"=>"github",
+					"link"=>$repository['html_url'],
+					"id"=>$repository['id'],
+					"name"=>$repository['name'],
+					"description"=>$repository['description'],
+					"avatar"=>$repository['owner']['avatar_url']
+			];
+		}
+				
+		return $repositories;
 	}	
 	
-	// Returns an array of teams for an organisation
-	public function getUserRepositories ($user)
+	// Returns an array of repositories for an user
+	public function getUserRepositories ($id)
 	{
+		$repositories= [];
+		$response = $this->client->get('/users/'.$id.'/repos');
+		$responses = json_decode ($response->getBody(), true);
 		
+		foreach($responses as $repository){
+			$repositories[] = [
+					"type"=>"github",
+					"link"=>$repository['html_url'],
+					"id"=>$repository['id'],
+					"name"=>$repository['name'],
+					"description"=>$repository['description'],
+					"avatar"=>$repository['owner']['avatar_url']
+			];
+		}
+		
+		return $repositories;
 	}
 }

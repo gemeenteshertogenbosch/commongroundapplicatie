@@ -2,19 +2,19 @@
 
  	
                   <!-- Thumb -->
-                  <div class="col-md-4 col-sm-6 portfolio web panel" data-toggle="modal" data-target="#porfolio-{{ item.id }}">
+                  <div class="col-md-4 col-sm-6 portfolio web panel" data-toggle="modal" data-target="#component-{{ component.id }}">
                     <div class="panel-body">
                       <div class="portfolio-title">
                         <div class="portfolio-icon">
-                          <div><span class="{{ item.icon }}"></span></div>
+                          <div><span class=""></span></div>
                         </div>
                         <div class="title">
-                          <h4>{{ item.name }}</h4>
-                          <em>{{ item.summary }}</em>
+                          <h4>{{ component.name }}</h4>
+                          <em>{{ component.description }}</em>
                         </div>
                       </div>
                     </div>
                     <div class="portfolio-image">
-                        <img src="{{ item.images|first }}" alt="" />
+                        <img src="{{ component.logo }}" alt="" />
                     </div>
                   </div>
