@@ -49,8 +49,7 @@ class GithubAuthenticator extends SocialAuthenticator
 	public function getUser($credentials, UserProviderInterface $userProvider)
 	{
 		/** @var FacebookUser $facebookUser */
-		$githubUser = $this->getGithubClient()
-		->fetchUserFromToken($credentials);
+		$githubUser = $this->getGithubClient()->fetchUserFromToken($credentials);
 		
 		$email = $githubUser->getEmail();
 		

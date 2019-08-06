@@ -38,27 +38,94 @@ class BitbucketService
 		}
 	}
 		
-	public function getComponentFromGitHub($repository)
+	public function getComponentFromBitbucket($fullName)
 	{
-		$response = $this->client->get($repository);
+		$response = $this->client->get('/2.0/repositories/'.$fullName);
 		$response = json_decode ($response->getBody(), true);
 		
 		$component = New Component;
 		$component->setName($response['name']);
-		$component->setDescription($response['description']);
-		$component->setGithub($response['html_url']);
-		$component->setGithubId($response['full_name']);
+		$component->setLogo($response['links']['avatar']['href']);
+		$component->setBitbucket($response['links']['html']['href']);
+		$component->setBitbucketId($response['full_name']);
 		
 		return $component;
 	}
 	
-	// we always use a user to ask api qoustions
-	public function getTeam($id)
+	public function getOrganisationFromBitbucket($id)
 	{
+		$response = $this->client->get('/2.0/teams/'.$id);
+		$response = json_decode ($response->getBody(), true);
+		
+		$organisation = New Organisation;
+		$organisation->setName($response['display_name']);
+		$organisation->setLogo($response['links']['avatar']['href']);
+		$organisation->setBitbucket($response['links']['html']['href']);
+		$organisation->setBitbucketId($response['username']);
+		
+		return $organisation;
 	}
 	
-	// we always use a user to ask api qoustions
-	public function getProject($id)
+	// Returns an array of teams for an organisation
+	public function getTeamsFromBitbucket($id)
 	{
-	}	
+		$response = $this->client->get('/orgs/'.$id.'/teams');
+		$responses = json_decode ($response->getBody(), true);
+		
+		$teams=[];
+		foreach($responses as $response){
+			$team = New Team;
+			$team->setName($response['name']);
+			$team->setDescription($response['description']);
+			$team->setGit($response['html_url']);
+			$team->setGitType('github');
+			$team->setGitId($response['id']);
+			$teams[] = $team;
+		}
+		
+		return $teams;
+	}
+	
+	
+	// Returns an array of repositories for an organisation
+	public function getOrganisationRepositories ($id)
+	{
+		$repositories= [];	
+		$response = $this->client->get('/2.0/repositories/'.$id);
+		$responses = json_decode ($response->getBody(), true);
+		
+		foreach($responses['values'] as $repository){
+			$repositories[]= [
+					"type"=>"bitbucket",
+					"link"=>$repository['links']['html']['href'],
+					"id"=>$repository['full_name'],
+					"name"=>$repository['name'],
+					"description"=>$repository['description'],
+					"avatar"=>$repository['owner']['avatar']['href']
+			];
+		}
+		
+		return $repositories;
+	}
+	
+	// Returns an array of repositories for an user
+	public function getUserRepositories ($id)
+	{
+		$repositories= [];
+		$response = $this->client->get('/2.0/repositories/'.$id);
+		$responses = json_decode ($response->getBody(), true);
+		
+		foreach($responses['values'] as $repository){
+			$repositories[]= [
+					"type"=>"bitbucket",
+					"link"=>$repository['links']['html']['href'],
+					"id"=>$repository['full_name'],
+					"name"=>$repository['name'],
+					"description"=>$repository['description'],
+					"avatar"=>$repository['owner']['avatar']['href']
+			];
+		}
+		
+		return $repositories;
+	}
 }

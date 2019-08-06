@@ -24,13 +24,28 @@
                         </div>
                         <div class="row">
                           <div class="col-md-4">
-                            <a href="{{ path('connect_bitbucket_start') }}"  class="btn background-bitbucket btn-lg btn-block" type="button"><i class="fab fa-bitbucket"></i> Connect with BitBucket</a>
+                            {% if organisation is defined %}
+                          	 <a href="https://www.common-ground.dev/connect/bitbucket"  class="btn background-bitbucket btn-lg btn-block" type="button"><i class="fab fa-bitbucket"></i> Connect with BitBucket</a>
+                          	{% else %}
+                          	 <a href="{{ path('connect_bitbucket_start') }}"  class="btn background-bitbucket btn-lg btn-block" type="button"><i class="fab fa-bitbucket"></i> Connect with BitBucket</a>
+                          	{% endif %}
+                           
                           </div>
                           <div class="col-md-4">
-                            <a href="{{ path('connect_github_start') }}" class="btn background-github btn-lg btn-block" type="button"><i class="fab fa-github"></i> Connect with GitHub</a>
+                            {% if organisation is defined %}
+                          	<a href="https://www.common-ground.dev/connect/github" class="btn background-github btn-lg btn-block" type="button"><i class="fab fa-github"></i> Connect with GitHub</a>
+                          	{% else %}
+                          	<a href="{{ path('connect_github_start') }}" class="btn background-github btn-lg btn-block" type="button"><i class="fab fa-github"></i> Connect with GitHub</a>
+                          	{% endif %}
+                            
                           </div>
                           <div class="col-md-4">
-                            <a href="{{ path('connect_gitlab_start') }}"  class="btn background-gitlab btn-lg btn-block" type="button"><i class="fab fa-gitlab"></i> Connect with  GitLab</a>
+                            {% if organisation is defined %}
+                          	<a href="https://www.common-ground.dev/connect/gitlab"  class="btn background-gitlab btn-lg btn-block" type="button"><i class="fab fa-gitlab"></i> Connect with  GitLab</a>
+                          	{% else %}
+                          	<a href="{{ path('connect_gitlab_start') }}"  class="btn background-gitlab btn-lg btn-block" type="button"><i class="fab fa-gitlab"></i> Connect with  GitLab</a>
+                          	{% endif %}
+                           
                           </div>
                         </div>
                       </div>

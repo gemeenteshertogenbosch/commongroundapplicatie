@@ -149,4 +149,20 @@ class GithubService
 		
 		return $repositories;
 	}
+	
+	// Lets get the content of a public github file
+	public function getFileContent(Component $component, $file)
+	{
+		$git = str_replace("https://github.com/","", $component->getGit());
+		$client = new Client(['base_uri' => 'https://raw.githubusercontent.com/'.$git.'/master/', 'http_errors' => false]);			
+		
+		$response = $client->get($file);
+		
+		// Lets see if we can get the file
+		if($response->getStatusCode() == 200){
+			return strval ($response->getBody());
+		}
+		
+		return false;
+	}
 }
