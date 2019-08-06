@@ -37,9 +37,9 @@ It is possible extend the OAS3 specification with commonground specific informat
 At this moment the follwing fields are in use:
 
 | Field      | Value         | Usage  |
-| ------------- |:-------------:| -----:|
-| type      | eum: 'application','source','tool' | Determines the type of the component |
-| developer      | Array of [contact objects](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#contactObject) + Git profile | Lists all developing parties (preferably organizations, optionally single developers that work on this project |
+| ------------- |:-------------:| :-----|
+| type      | enum: 'application','source','tool' | Determines the type of the component |
+| developers      | Array of [contact objects](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#contactObject) + Git profile | Lists all developing parties (preferably organizations, optionally single developers that work on this project. In order for logo's and avatars to be displayed on the platform be sure to link to a git (Github, Gitlab or Bitbucket) acount in the url |
 
 ```yaml
 info:
@@ -49,13 +49,11 @@ info:
     developers:
       -
         name: Conduction
-        url: http://www.conduction.nl
+        url: https://github.com/ConductionNL
         email: ruben@conduction.nl
-        git: https://github.com/ConductionNL
       -
         name: Ruben van der Linde
-        url: http://www.conduction.nl/team
+        url: https://github.com/rubenvdlinde
         email: ruben@conduction.nl
-        git: https://github.com/rubenvdlinde
 ```
 
