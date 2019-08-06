@@ -55,10 +55,19 @@ class GitlabService
 	
 	
 	// we always use a user to ask api qoustions
-	public function getGroupFromGitLab($id)
+	public function getOrganisationFromGitlab($id)
 	{
+		$response = $this->client->get('/api/v4/groups/'.$id);
+		$response = json_decode ($response->getBody(), true);
 		
 		$organisation = New Organisation;
+		$organisation->setName($response['name']);
+		$organisation->setDescription($response['description']);
+		$organisation->setLogo($response['avatar_url']);
+		$organisation->setGithub($response['web_url']);
+		$organisation->setGithubId($response['path']);
+		
+		return $organisation;
 		
 	}	
 	
@@ -72,10 +81,11 @@ class GitlabService
 		foreach($responses as $repository){
 			$repositories[]= [
 					"type"=>"gitlab",
-					"link"=>$repository['html_url'],
-					"id"=>$repository['name'],
+					"link"=>$repository['web_url'],
+					"id"=>$repository['id'],
 					"name"=>$repository['name'],
-					"description"=>$repository['description']
+					"description"=>$repository['description'],
+					"logo"=>$repository['avatar_url']
 			];
 		}
 		
@@ -94,8 +104,9 @@ class GitlabService
 					"type"=>"gitlab",
 					"link"=>$repository['web_url'],
 					"id"=>$repository['id'],
-					"name"=>$repository['name_with_namespace'],
-					"description"=>$repository['description']
+					"name"=>$repository['name'],
+					"description"=>$repository['description'],
+					"logo"=>$repository['avatar_url']
 			];
 		}
 		

@@ -26,19 +26,17 @@ class UserController extends AbstractController
 	/**
 	* @Route("/user")
 	*/
-	public function indexAction(SchemaService $schemaService, OrganisationService $organisationService,  Request $request, UserInterface $user)
+	public function indexAction(SchemaService $schemaService, OrganisationService $organisationService,  Request $request)
 	{
-		
-		
 		$variables =[];		
-		$variables['user'] = $user;		
+		$variables['user'] = $this->getUser();		
 		
 		// Lets get al the organisations that this user has on social profiles
-		$variables['organisations'] =  $organisationService->getUserSocialOrganisations($user);				
+		$variables['organisations'] =  $organisationService->getUserSocialOrganisations();				
 		
 		// Now that we have all the data we can see if we have aditional data on the organisations ons our platform
 		$variables['organisations'] = $organisationService->enrichOrganisations($variables['organisations']);
-		
+				
 		return $this->render('home/edit-user.html.twig', $variables);
 	}
 }

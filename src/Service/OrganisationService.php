@@ -9,6 +9,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
 
 use App\Entity\Organisation; 
 
@@ -26,6 +27,7 @@ class OrganisationService
 	private $gitlab;
 	private $github;
 	private $bitbucket;
+	private $user;
 	
 	public function __construct(
 			ParameterBagInterface $params, 
@@ -34,7 +36,8 @@ class OrganisationService
 			EntityManagerInterface $em, 
 			GithubService $github, 
 			GitlabService $gitlab, 
-			BitbucketService $bitbucket)
+			BitbucketService $bitbucket,
+			Security $security)
 	{
 		$this->params = $params;
 		$this->cash = $cache;
@@ -43,6 +46,7 @@ class OrganisationService
 		$this->gitlab= $gitlab;
 		$this->github= $github;
 		$this->bitbucket= $bitbucket;
+		$this->user = $security->getUser();;
 	}
 	
 	/* @todo lets force a organisation here */
@@ -63,61 +67,90 @@ class OrganisationService
 		return $repositories;
 	}
 	/* @todo lets force a user here */
-	public function getUserSocialOrganisations($user)
+	public function getUserSocialOrganisations()
 	{
+		// We need a user to find organisations
+		if(!$this->user){
+			return [];
+		}
+		/* @todoonderstaadne code verplaatsen naar de respectiefelijke service providers */
+		
 		$organisations=[];
 		
 		// Lets see if we have github organisations
-		if($user->getGithubToken()){
+		if($this->user->getGithubToken()){
+			// We set HTTP errors to false here to prevent the application throwing an error when an token has expired			
+			$client = new Client(['base_uri' => 'https://api.github.com', 'headers'=>['Authorization'=>'Bearer '.$this->user->getGithubToken()], 'http_errors' => false]);
+			$serverResponse= $client->get('/user/orgs');
+			$response = json_decode ($serverResponse->getBody(), true);
 			
-			$client = new Client(['base_uri' => 'https://api.github.com', 'headers'=>['Authorization'=>'Bearer '.$user->getGithubToken()]]);
-			$response = $client->get('/user/orgs');
-			$response = json_decode ($response->getBody(), true);
+			// Lets catch expired or invalid tokens
+			if($serverResponse->getStatusCode() == 401){
+				$this->user->setGithubToken(null);
+				$this->em->persist($this->user);
+				$this->em->flush($this->user);
+			}
 			
 			foreach($response as $organisation ){
 				$organisations[]= [
 						"type"=>"github",
 						"link"=>$organisation['url'],
-						"id"=>$organisation['login'],
+						"id"=> strtolower($organisation['login']),
 						"name"=>$organisation['login'],
 						"avatar"=>$organisation['avatar_url']
 				];
 			}
 		}
 		// Lets see if we have gitlab groups
-		if($user->getGitlabToken()){
-			$client = new Client(['base_uri' => 'https://gitlab.com', 'headers'=>['Authorization'=>'Bearer '.$user->getGitlabToken()]]);
-			$response = $client->get('/api/v4/groups');
-			$response = json_decode ($response->getBody(), true);
+		if($this->user->getGitlabToken()){
+			// We set HTTP errors to false here to prevent the application throwing an error when an token has expired
+			$client = new Client(['base_uri' => 'https://gitlab.com', 'headers'=>['Authorization'=>'Bearer '.$this->user->getGitlabToken()], 'http_errors' => false]);
+			$serverResponse= $client->get('/api/v4/groups');
+			$response = json_decode ($serverResponse->getBody(), true);
+			
+			// Lets catch expired or invalid tokens
+			if($serverResponse->getStatusCode() == 401){
+				$this->user->setGitlabToken(null);
+				$this->em->persist($this->user);
+				$this->em->flush($this->user);
+			}
 			
 			foreach($response as $organisation ){
 				$organisations[]= [
 						"type"=>"gitlab",
 						"link"=>$organisation['web_url'],
-						"id"=>$organisation['id'],
+						"id"=> strtolower($organisation['path']),
 						"name"=>$organisation['name'],
 						"avatar"=>$organisation['avatar_url']
 				];
 			}
 		}
 		// Lets see if we have bitbucket teams
-		if($user->getBitbucketToken()){
+		if($this->user->getBitbucketToken()){
+			// We set HTTP errors to false here to prevent the application throwing an error when an token has expired
+			$client = new Client(['base_uri' => 'https://api.bitbucket.org/', 'headers'=>['Authorization'=>'Bearer '.$this->user->getBitbucketToken()], 'http_errors' => false]);
 			
-			$client = new Client(['base_uri' => 'https://api.bitbucket.org/', 'headers'=>['Authorization'=>'Bearer '.$user->getBitbucketToken()]]);
-			$response = $client->get('/2.0/teams?role=member');
-			$response = json_decode ($response->getBody(), true);
+			$serverResponse = $client->get('/2.0/teams?role=member'); 
+			$response = json_decode ($serverResponse->getBody(), true);
+			
+			// Lets catch expired or invalid tokens
+			if($serverResponse->getStatusCode() == 401){
+				$this->user->setBitbucketToken(null);
+				$this->em->persist($this->user);
+				$this->em->flush($this->user);
+			}
 			
 			foreach($response['values'] as $organisation ){
 				$organisations[]= [
 						"type"=>"bitbucket",
 						"link"=>$organisation['links']['html']['href'],
-						"id"=>$organisation['uuid'],
+						"id"=> strtolower($organisation['uuid']),
 						"name"=>$organisation['display_name'],
 						"avatar"=>$organisation['links']['avatar']['href']
 				];
 			}
 		}
-		
+				
 		return $organisations;
 	}
 	
@@ -125,23 +158,34 @@ class OrganisationService
 	{
 		$repository = $this->em->getRepository(Organisation::class);
 		
+		$results = [];
+		
 		// Lets see if we already know these organisations
 		foreach($organisations as $organisation){
 			$type = $organisation['type'];
+			$commonground = false;
 			switch ($type) {
 				case 'github':
-					$organisation['commonground'] = $repository->findOneBy(['githubId' => $organisation['id']]);
+					$commonground = $repository->findOneBy(['githubId' => $organisation['id']]);
 					break;
 				case 'bitbucket':
-					$organisation['commonground'] = $repository->findOneBy(['bitbucketId' => $organisation['id']]);
+					$commonground = $repository->findOneBy(['bitbucketId' => $organisation['id']]);
 					break;
 				case 'gitlab':
-					$organisation['commonground'] = $repository->findOneBy(['gitlabId' => $organisation['id']]);
+					$commonground =$repository->findOneBy(['gitlabId' => $organisation['id']]);
 					break;
-			}			
+			}		
+			
+			if($commonground){
+				$organisation['commonground'] = $commonground;
+				$organisation['isMember'] =$commonground->getUsers()->contains($this->user);
+				$organisation['isAdmin'] = $commonground->getAdmins()->contains($this->user); 
+			}
+			
+			$results[] = $organisation;
 		}
-		
-		return $organisations;
+				
+		return $results;
 	}	
 	public function getOrganisationOnSlug($slug)
 	{

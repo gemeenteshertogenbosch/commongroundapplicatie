@@ -25,11 +25,11 @@ class OrganisationController extends AbstractController
 	
 	/**
 	 * @Route("/organisation/leave/{id}")
- 	 * @ParamConverter("organisation", class="Organisation")
+ 	 * @ParamConverter("organisation", class="App:Organisation")
 	 */
-	public function leaveAction(Request $request, UserInterface $user, EntityManagerInterface $em, $organisation)
+	public function leaveAction(Request $request, EntityManagerInterface $em, $organisation)
 	{
-		$organisation->removeUser($user);
+		$organisation->removeUser($this->getUser());
 		$em->persist($organisation);
 		$em->flush();
 				
@@ -40,13 +40,52 @@ class OrganisationController extends AbstractController
 	
 	/**
 	 * @Route("/organisation/join/{id}")
- 	 * @ParamConverter("organisation", class="Organisation")
+ 	 * @ParamConverter("organisation", class="App:Organisation")
 	 */
-	public function joinAction(Request $request, UserInterface $user, EntityManagerInterface $em, $organisation)
+	public function joinAction(Request $request, EntityManagerInterface $em, $organisation)
 	{
-		$organisation->addUser($user);
+		$organisation->addUser($this->getUser());
 		$em->persist($organisation);
 		$em->flush();
+		
+		/* @todo domein automatisch inladen */
+		// redirects externally
+		return $this->redirect('https://'.$organisation->getSlug().'.common-ground.dev');
+	}
+	
+		/**
+	 * @Route("/organisation/connect/{type}/{organisation}/{id}")
+ 	 * @ParamConverter("organisation", class="App:Organisation")
+	 */
+	public function connectAction(GithubService $githubService, GitlabService $gitlabService, BitbucketService $bitbucketService, Request $request, EntityManagerInterface $em, $organisation, $type, $id)
+	{
+		/* @todo block dubble connections */
+		switch ($type) {
+			case 'github':
+				$connectOrganisation = $githubService->getOrganisationFromGitHub($id);
+				$organisation->setGithub($connectOrganisation->getGithub());
+				$organisation->setGithubId($connectOrganisation->getGithubId());
+				break;
+			case 'bitbucket':
+				$connectOrganisation= $bitbucketService->getOrganisationFromBitbucket($id);
+				$organisation->setBitbucket($connectOrganisation->getBitbucket());
+				$organisation->setBitbucketId($connectOrganisation->getBitbucketId());
+				break;
+			case 'gitlab':
+				$connectOrganisation= $gitlabService->getOrganisationFromGitlab($id);
+				$organisation->setGitlab($connectOrganisation->getGitlab());
+				$organisation->setGitlabId($connectOrganisation->getGitlabId());
+				break;
+				/* @todo let catch non existing organisations */
+		}
+		
+		// Then lets see if we ca update missing data
+		if(!$organisation->getLogo()){$organisation->setLogo($connectOrganisation->getLogo());}
+		
+		
+		$em->persist($organisation);
+		$em->flush();
+		/* @todo let catch non existing organisations */
 		
 		/* @todo domein automatisch inladen */
 		// redirects externally
@@ -56,7 +95,7 @@ class OrganisationController extends AbstractController
 	/**
 	 * @Route("/organisation/add/{type}/{id}")
 	 */
-	public function addAction(GithubService $githubService, GitlabService $gitlabService, BitbucketService $bitbucketService, Request $request, UserInterface $user, EntityManagerInterface $em, $type, $id)
+	public function addAction(GithubService $githubService, GitlabService $gitlabService, BitbucketService $bitbucketService, Request $request, EntityManagerInterface $em, $type, $id)
 	{
 		switch ($type) {
 			case 'github':
@@ -71,7 +110,8 @@ class OrganisationController extends AbstractController
 			/* @todo let catch non existing organisations */
 		}		
 		
-		$organisation->addUser($user);
+		$organisation->addUser($this->getUser());
+		$organisation->addAdmin($this->getUser());
 		$em->persist($organisation);
 		$em->flush();
 		/* @todo let catch non existing organisations */

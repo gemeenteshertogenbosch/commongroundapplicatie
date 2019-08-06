@@ -50,9 +50,7 @@ class BitbucketAuthenticator extends SocialAuthenticator
 	public function getUser($credentials, UserProviderInterface $userProvider)
 	{
 		/** @var FacebookUser $facebookUser */
-		$bitbucketUser = $this->getBitbucketClient()
-		->fetchUserFromToken($credentials);
-		
+		$bitbucketUser = $this->getBitbucketClient()->fetchUserFromToken($credentials);
 		
 		/* bit bucket doesnt suply the email adres in the return so we need te maken an aditional api call */
 		/** @var \GuzzleHttp\Client $client */

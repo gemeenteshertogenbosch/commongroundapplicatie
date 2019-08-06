@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use App\Service\SchemaService;
 use App\Service\OrganisationService;
+use App\Service\ComponentService;
 
 use App\Entity\Organisation;
 use App\Entity\Component;
@@ -19,7 +20,7 @@ class HomeController extends AbstractController
 	/**
 	* @Route("/", name="home")
 	*/
-	public function indexAction(SchemaService $schemaService, OrganisationService $organisationService,  Request $request, EntityManagerInterface $em)
+	public function indexAction(SchemaService $schemaService, OrganisationService $organisationService, ComponentService $componentService, Request $request, EntityManagerInterface $em)
 	{
 		// First of we want to get a subdomain 
 		/* @todo welicht willen we dit op een andere plek afhandelen */
@@ -35,7 +36,13 @@ class HomeController extends AbstractController
 			
 			/* @todo wellicht willen we nog iets doen met published zetten of iets dergelijks*/
 			$organisations = $em->getRepository(Organisation::class)->findAll();
-			$components = $em->getRepository(Component::class)->findAll();
+			$databasecomponents = $em->getRepository(Component::class)->findAll();
+			
+			$components = [];
+			foreach($databasecomponents as $component){
+				$components[] = $componentService->getComponentFromGit($component);
+			}
+			
 			
 			$variables = ["organisations" => $organisations,"components" => $components];
 			return $this->render('home/main.html.twig',$variables);
@@ -43,12 +50,21 @@ class HomeController extends AbstractController
 		
 		// If we got here then we have a subdomain, so try to render a organisation or organisation not found pages
 		$organisation = $organisationService->getOrganisationOnSlug($subdomain);
+		
 		if($organisation){			
 			$repositories= $organisationService->getOrganisationRepositories($organisation);
-						
-			$isAdmin = $organisation->getUsers()->contains($this->getUser());
-			$isAdmin = true; /* @todo verijwderen, is voor test doeleinden */
-			$variables = ["organisation" => $organisation,"repositories"=> $repositories, "isAdmin" => $isAdmin];
+			
+			$organisations = $organisationService->getUserSocialOrganisations($this->getUser());
+			$organisations = $organisationService->enrichOrganisations($organisations);
+			
+			$components = [];
+			foreach($organisation->getComponents() as $component){
+				$components[] = $componentService->getComponentFromGit($component);
+			}
+			
+			$isAdmin = $organisation->getAdmins()->contains($this->getUser()); 
+			$isMember = $organisation->getUsers()->contains($this->getUser());
+			$variables = ["organisation" => $organisation,"components" => $components, "repositories"=> $repositories, "isAdmin" => $isAdmin, 'organisations'=>$organisations];
 			return $this->render('home/organisation.html.twig',$variables);			
 		}
 		else{			

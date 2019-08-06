@@ -146,7 +146,7 @@
                   <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
                 </div><!-- /.top-link -->
                 <!-- Contact Us section -->
-                <h1>Organisaties toevoegen</h1>
+                <h1>Git organisaties toevoegen</h1>
                 <h5>Vanuit <i class="fab fa-bitbucket"></i> Teams, <i class="fab fa-github"></i>  Organizations, en <i class="fab fa-gitlab"></i>  Groups</h5>
                 
                 <div class="row">
@@ -160,31 +160,27 @@
                 		</div><!-- /.row -->
                         <div class="row">
                           <div class="col-md-12">  
-                            {# for organisation in organisations %}
+                            {% for connectOrganisation in organisations %}
                             <div class="organisation-well">
                               	<div class="organisation">             
                               		<div class="organisation-portrait">
-                                        <img src="{{ organisation.avatar|e }}">
+                                        <img src="{{ connectOrganisation.avatar|e }}">
                                     </div>     	                     
                               		<div class="organisation-type ">
-                                        <span class="fa-stack fa-2x color-{{ organisation.type }}">
+                                        <span class="fa-stack fa-2x color-{{ connectOrganisation.type }}">
                                           <i class="fas fa-circle fa-stack-2x"></i>
-                                          <i class="fab fa-{{ organisation.type|e }} fa-stack-1x fa-inverse"></i>
+                                          <i class="fab fa-{{ connectOrganisation.type|e }} fa-stack-1x fa-inverse"></i>
                                         </span>
                               		</div>
                               		<div class="organisation-title">
-                              		{{ organisation.name|e }}
+                              		{{ connectOrganisation.name|e }}
                               		</div>
                               	</div>
                               	<div class="organisation-buttons">
-                              	{% if organisation.commonground is not defined %}
-                              	<a href="{{ path('app_organisation_add',  {type: organisation.type, id: organisation.id}) }}"  class="btn background-{{ organisation.type }} btn-sm btn-block" type="button">Connect</a>                       	
-                              	{% elseif organisation.commonground is not empty  %}                              	
-                              	<a href="{{ path('app_organisation_join',  {id: organisation.commonground.id }) }}"  class="btn background-{{ organisation.type }} btn-sm btn-block" type="button">Join</a>    
-                              	{% endif %}
-                              	</div>
-                             </div> 	                                
-                            {% endfor #}
+                              	<a href="{{ path('app_organisation_connect',  {type: connectOrganisation.type, id: connectOrganisation.id, organisation: organisation.id}) }}"  class="btn background-{{ connectOrganisation.type }} btn-sm btn-block" type="button">Connect</a>                       	
+                             </div> 
+                        	</div> 	                                
+                            {% endfor %}
                            </div><!-- /.col -->
                 		</div><!-- /.row -->
                         <div class="row">

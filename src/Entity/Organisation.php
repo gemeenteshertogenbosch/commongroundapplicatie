@@ -78,6 +78,14 @@ class Organisation
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="organisations")
      */
     private $users;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User")     
+     * @ORM\JoinTable(
+     *  name="organisation_admin"
+     * )
+     */
+    private $admins;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -98,6 +106,7 @@ class Organisation
     {
         $this->components = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->admins = new ArrayCollection();
         $this->teams = new ArrayCollection();
     }
     
@@ -281,6 +290,32 @@ class Organisation
         }
 
         return $this;
+    }
+    
+    /**
+     * @return Collection|Admin[]
+     */
+    public function getAdmins(): Collection
+    {
+    	return $this->admins;
+    }
+    
+    public function addAdmin(User $admin): self
+    {
+    	if (!$this->admins->contains($admin)) {
+    		$this->admins[] = $admin;
+    	}
+    	
+    	return $this;
+    }
+    
+    public function removeAdmin(User $admin): self
+    {
+    	if ($this->admins->contains($admin)) {
+    		$this->admins->removeElement($admin);
+    	}
+    	
+    	return $this;
     }
 
     public function getCss(): ?string
