@@ -53,9 +53,8 @@ class GitlabAuthenticator extends SocialAuthenticator
 		
 		$email = $gitlabUser->getEmail();
 		
-		// 1) have they logged in with Facebook before? Easy!
-		$existingUser = $this->em->getRepository(User::class)
-		->findOneBy(['gitlabId' => $gitlabUser->getId()]);
+		// 1) have they logged in with Gitlab before? Easy!
+		$existingUser = $this->em->getRepository(User::class)->findOneBy(['gitlabId' => $gitlabUser->getId()]);
 		if ($existingUser) {
 			// if the user user is already connected we just want to update the security token
 			$existingUser->setGitlabToken($credentials);
@@ -63,6 +62,12 @@ class GitlabAuthenticator extends SocialAuthenticator
 			$this->em->flush();
 			
 			return $existingUser;
+		}
+		
+		// We need an email adres for the following staps so lets check if we have that
+		if(!$email){
+			// this exception ultimately generates a 500 status error
+			throw new \Exception('We could not determine your email adres');
 		}
 		
 		// 2) do we have a matching user by email?

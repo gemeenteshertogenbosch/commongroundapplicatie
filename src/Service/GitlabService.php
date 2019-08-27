@@ -110,6 +110,17 @@ class GitlabService
 			];
 		}
 		
+		
+		// Lets then remove all te repositories that are already on this platform
+		foreach($repositories as $repository){
+			
+			$component= $this->em->getRepository('App:Component')->findOneBy(array('gitId' => $repository["id"],'gitType' => $repository["type"]));
+			
+			if($component){
+				$repositories[$key]['commonGroundId'] = $component->getId();
+			}
+		}
+		
 		return $repositories;
 	}
 }

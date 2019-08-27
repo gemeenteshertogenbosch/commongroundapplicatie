@@ -1,4 +1,30 @@
 /************
+Variables
+************/
+
+:root {
+  --main-font: 'Roboto', sans-serif !important;
+  --main-background: #ededed;
+  --main-text-color: #555;
+  --main-link-color: #4376FC;
+  
+  --header-background: #4376FC url(/images/base-header-overlay.png) repeat top left;
+  --header-text-color: #fff;
+  
+  --pannel-background-color: #4376FC; 
+  --pannel-txt-color: #fff; 
+  
+  --line-color: #FEBF24; 
+  --line-dot-color: #FFF; 
+  
+  --background-color-1: #4376FC; 
+  --background-color-2: #56c2b1; 
+  --background-color-3: #6fc6d9; 
+  --background-color-4: #FEBF24; 
+}
+
+
+/************
 GLOBAL STYLES
 ************/
 
@@ -498,11 +524,11 @@ SERVICES STYLES
 
 }
 
-.panel-heading .panel-icon .glyphicon {
-	position: relative;
-  	top: 50%;
-  	transform: translateY(-50%);
-  	-webkit-transform: translateY(-50%);
+.panel-heading .panel-icon div {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
 }
 
 .panel-heading .panel-title {

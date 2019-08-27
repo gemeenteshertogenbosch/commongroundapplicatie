@@ -54,7 +54,7 @@ class GitHubController extends Controller
 		$em->persist($user);
 		$em->flush();
 		
-		$targetUrl = $this->router->generate('app_user_index');
+		$targetUrl = $this->router->generate('home');
 		
 		return new RedirectResponse($targetUrl);
 	}

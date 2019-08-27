@@ -21,7 +21,11 @@
                 
                   <div class="col-md-12 col-sm-12 service panel">
                     <div class="panel-heading background-1">
-                      <div class="panel-icon"><span class="glyphicon glyphicon-heart"></span></div>
+                      <div class="panel-icon">
+                      	<div>
+                      		<i class="fad fa-building"></i>
+                      	</div>
+                      </div>
                       <div class="panel-title">
                         <h4>{{ organisation.name }}</h4>
                         <p>Welkom bij het common ground componenten overzicht van {{ organisation.name }}</p>
@@ -60,14 +64,14 @@
                   <!-- See the filterPortfolio(...) function in the javascript block at the bottom of the page for an explanation of how this works. -->
                   <div class="col-sm-12 portfolio-filters">
                     <button id="allFilter" type="button" class="btn background-black" onclick="filterPortfolio(['component', 'application', 'tool'], 'allFilter')">Alle</button>
-                    <button id="sourceFilter" type="button" class="btn background-1" onclick="filterPortfolio(['source'], 'sourceFilter')">Bronnen</button>
-                    <button id="applicationFilter" type="button" class="btn background-2" onclick="filterPortfolio(['application'], 'applicationFilter')">Applicaties</button>
-                    <button id="toolFilter" type="button" class="btn background-3" onclick="filterPortfolio(['tool'], 'toolFilter')">Hulpmiddelen</button>
+                    <button id="sourceFilter" type="button" class="btn background-1" onclick="filterPortfolio(['source'], 'sourceFilter')"><i class="fad fa-database"></i> Bronnen</button>
+                    <button id="applicationFilter" type="button" class="btn background-2" onclick="filterPortfolio(['application'], 'applicationFilter')"><i class="fad fa-browser"></i> Applicaties</button>
+                    <button id="toolFilter" type="button" class="btn background-3" onclick="filterPortfolio(['tool'], 'toolFilter')"><i class="fad fa-tools"></i> Hulpmiddelen</button>
                   </div>
                 </div>
 
                 <div class="row">              
-                  	{% for component in organisation.components %}
+                  	{% for component in components %}
                       {% include 'home/component-thumb.html.twig' with {'item': component} %}
                  	{% endfor %}                   
                 </div>
@@ -102,7 +106,7 @@
                 		</div><!-- /.row -->
                         <div class="row">
                           <div class="col-md-12">  
-                            {% for repository in repositories %}
+                            {% for repository in repositories %}                            
                             <div class="organisation-well">
                               	<div class="organisation">             
                               		<div class="organisation-portrait">
@@ -119,11 +123,13 @@
                               		</div>
                               	</div>
                               	<div class="organisation-buttons">
-                              	{% if repository.commonground is not defined %}
-                              	<a href="{{ path('app_component_add',  {type: repository.type, organisation: organisation.id , id: repository.id}) }}"  class="btn background-{{ repository.type }} btn-sm btn-block" type="button">Connect</a>                       	
+                                {% if repository.commonGroundId is defined and repository.commonGroundId is not empty %}
+                                	<span  class="btn bg-faded btn-sm btn-block">Already connected</span>
+                                {% else %}
+                              		<a href="{{ path('app_component_add',  {type: repository.type, organisation: organisation.id , id: repository.id}) }}"  class="btn background-{{ repository.type }} btn-sm btn-block" type="button">Connect</a>                       	
                               	{% endif %}
                               	</div>
-                             </div> 	                                
+                             </div>                             
                             {% endfor %}
                            </div><!-- /.col -->
                 		</div><!-- /.row -->
@@ -177,9 +183,13 @@
                               		</div>
                               	</div>
                               	<div class="organisation-buttons">
-                              	<a href="{{ path('app_organisation_connect',  {type: connectOrganisation.type, id: connectOrganisation.id, organisation: organisation.id}) }}"  class="btn background-{{ connectOrganisation.type }} btn-sm btn-block" type="button">Connect</a>                       	
+                                {% if connectOrganisation.commonGroundId is defined and connectOrganisation.commonGroundId is not empty %}
+                               	 	Already connected
+                                {% else %}
+                              		<a href="{{ path('app_organisation_connect',  {type: connectOrganisation.type, id: connectOrganisation.id, organisation: organisation.id}) }}"  class="btn background-{{ connectOrganisation.type }} btn-sm btn-block" type="button">Connect</a>                       	
+                        	    {% endif %}    
                              </div> 
-                        	</div> 	                                
+                        	</div> 	                            
                             {% endfor %}
                            </div><!-- /.col -->
                 		</div><!-- /.row -->
@@ -208,5 +218,9 @@
         (c) <a href="http://www.conduction.nl" target="_blank">Conduction</a> {{ "now"|date("Y") }}</a>
       </div>
     </div> 
+    
+    {% for component in components %}
+    	{% include 'home/component-modal.html.twig' with {'component': component} %}
+    {% endfor %} 
     
 {% endblock %}

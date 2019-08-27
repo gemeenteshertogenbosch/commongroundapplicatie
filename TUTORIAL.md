@@ -1,10 +1,8 @@
-#love-common-ground
-
-
+#TUTORIAL
 
 
 ## Setting up your component for use with the common ground dev platform
-Following the data at the source principle, the The commonground dev platform stores as little information as possible about your components. Instead it will try to analyze the repository holding your code. This means that your repository must be public in order for you to offer it as a common ground component. And that if you want to change any or all of the information displayed on the common ground platform your own codebase is the place to go.
+Following the data at the source principle, the commonground dev platform stores as little information as possible about your components. Instead it will try to analyze the repository holding your code. This means that your repository must be public in order for you to offer it as a common ground component. And that if you want to change any or all of the information displayed on the common ground platform your own codebase is the place to go.
  
 When analyzing your repository the platform will try the following operations 
 - Get the name, description and logo for your component from your repository settings
@@ -32,7 +30,7 @@ Specifications files will only be processed when they conform to AOS3 or higher.
 Docker information will be procced from the docker-compose.yml file that should be included at the route of repository. 
 
 ## Extending on AOS3 specifications
-It is possible extend the OAS3 specification with commonground specific information using the [x-commonground](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#specificationExtensions) field. This field should extend in the info field.
+It is possible extend the OAS3 specification with commonground specific information using the [x-commonground](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#specificationExtensions) field. This field should extend the info field.
 
 At this moment the follwing fields are in use:
 

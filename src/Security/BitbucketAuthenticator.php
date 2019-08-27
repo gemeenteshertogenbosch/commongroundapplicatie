@@ -64,9 +64,8 @@ class BitbucketAuthenticator extends SocialAuthenticator
 					
 		$email = $new[0]['email'];
 		
-		// 1) have they logged in with Facebook before? Easy!
-		$existingUser = $this->em->getRepository(User::class)
-		->findOneBy(['bitbucketId' => $bitbucketUser->getId()]);
+		// 1) have they logged in with Bitbucket before? Easy!
+		$existingUser = $this->em->getRepository(User::class)->findOneBy(['bitbucketId' => $bitbucketUser->getId()]);
 		if ($existingUser) {
 			// if the user user is already connected we just want to update the security token
 			$existingUser->setBitbucketToken($credentials);
@@ -74,6 +73,12 @@ class BitbucketAuthenticator extends SocialAuthenticator
 			$this->em->flush();
 			
 			return $existingUser;
+		}
+		
+		// We need an email adres for the following staps so lets check if we have that
+		if(!$email){
+			// this exception ultimately generates a 500 status error
+			throw new \Exception('We could not determine your email adres');
 		}
 		
 		// 2) do we have a matching user by email?

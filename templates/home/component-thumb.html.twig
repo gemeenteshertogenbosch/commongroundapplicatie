@@ -2,11 +2,19 @@
 
  	
                   <!-- Thumb -->
-                  <div class="col-md-4 col-sm-6 portfolio web panel" data-toggle="modal" data-target="#component-{{ component.id }}">
+                  <div class="col-md-4 col-sm-6 portfolio {{ component.type }} web panel" data-toggle="modal" data-target="#component-{{ component.id }}">
                     <div class="panel-body">
                       <div class="portfolio-title">
                         <div class="portfolio-icon">
-                          <div><span class=""></span></div>
+                          <div>
+                          	{% if component.type == 'source'%}
+                          	<i class="fad fa-database"></i>
+                          	{% elseif component.type == 'tool' %}
+                          	<i class="fad fa-tools"></i>
+                          	{% else %}{# lets default to application#}
+                          	<i class="fad fa-browser"></i>                          	
+                          	{% endif %}
+                          </div>
                         </div>
                         <div class="title">
                           <h4>{{ component.name }}</h4>

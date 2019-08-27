@@ -105,6 +105,17 @@ class BitbucketService
 			];
 		}
 		
+		
+		// Lets then remove all te repositories that are already on this platform
+		foreach($repositories as $repository){
+			
+			$components= $this->em->getRepository('App:Component')->findOneBy(array('gitId' => $repository["id"],'gitType' => 'bitbucket'));
+			
+			if($component){
+				$repositories[$key]['commonGroundId'] = $component->getId();
+			}
+		}
+		
 		return $repositories;
 	}
 	

@@ -41,7 +41,7 @@ class GithubService
 	public function getUserOrganisations($id)
 	{
 		$organisations = [];
-		$response = $this->client->get('/users/'.$user.'/repos');
+		$response = $this->client->get('/users/'.$user.'/organisations');
 		$responses = json_decode ($response->getBody(), true);
 		
 		
@@ -54,6 +54,19 @@ class GithubService
 					"avatar"=>$organisation['avatar_url']
 			];
 		}
+		
+		
+		// Lets then remove all te repositories that are already on this platform
+		foreach($organisations as $organisation){
+			
+			$components= $this->em->getRepository('App:Organisation')->findBy(array('githubId' => $organisation["id"]));
+			
+			if(count($components) > 0){
+				$repository['common-ground-id'] = $components->first()->getId();
+			}
+		}
+		
+		return $organisations;
 	}			
 	
 	
@@ -125,6 +138,20 @@ class GithubService
 					"avatar"=>$repository['owner']['avatar_url']
 			];
 		}
+		
+		// Lets then remove all te repositories that are already on this platform
+		foreach($repositories as $key => $repository){
+			
+			$component= $this->em->getRepository('App:Component')->findOneBy(array('gitId' => $repository["id"],'gitType' => 'github'));
+		
+			if($component){
+				$repositories[$key]['commonGroundId'] = $component->getId();
+			}
+			
+		}
+		
+		
+		var_dump($repositories);
 				
 		return $repositories;
 	}	

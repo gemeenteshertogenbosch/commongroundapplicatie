@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
+use GuzzleHttp\Client;
+use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 
 use App\Service\SchemaService;
 use App\Service\OrganisationService;
@@ -52,14 +54,13 @@ class HomeController extends AbstractController
 		$organisation = $organisationService->getOrganisationOnSlug($subdomain);
 		
 		if($organisation){			
-			$repositories= $organisationService->getOrganisationRepositories($organisation);
-			
+			$repositories= $organisationService->getOrganisationRepositories($organisation);			
 			$organisations = $organisationService->getUserSocialOrganisations($this->getUser());
 			$organisations = $organisationService->enrichOrganisations($organisations);
 			
 			$components = [];
 			foreach($organisation->getComponents() as $component){
-				$components[] = $componentService->getComponentFromGit($component);
+				$components[] = $componentService->getComponentGit($component);
 			}
 			
 			$isAdmin = $organisation->getAdmins()->contains($this->getUser()); 
@@ -71,5 +72,36 @@ class HomeController extends AbstractController
 			$variables = ["subdomain" => $subdomain];
 			return $this->render('home/join-organisation.html.twig',$variables);
 		}
+	}
+	
+	
+	/**
+	* @Route("/tutorial")
+	 */
+	public function tutorialAction(MarkdownParserInterface $parser)
+	{
+		$variables =[];
+		$variables['user'] = $this->getUser();		
+		
+		$client = new Client(['base_uri' => 'https://raw.githubusercontent.com/ConductionNL/love-common-ground/master/', 'http_errors' => false]);
+		$response = $client->get('TUTORIAL.md')->getBody();
+		$variables['html'] = $parser->transformMarkdown($response);
+		
+		return $this->render('home/page.html.twig', $variables);
+	}
+	
+	/**
+	 * @Route("/license")
+	 */
+	public function licenseAction(MarkdownParserInterface $parser)
+	{				
+		$variables =[];
+		$variables['user'] = $this->getUser();		
+		
+		$client = new Client(['base_uri' => 'https://raw.githubusercontent.com/ConductionNL/love-common-ground/master/', 'http_errors' => false]);
+		$response = $client->get('LICENSE')->getBody();
+		$variables['html'] = $parser->transformMarkdown($response);
+		
+		return $this->render('home/page.html.twig', $variables);
 	}
 }

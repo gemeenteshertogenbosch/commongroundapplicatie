@@ -91,6 +91,16 @@ class ComponentService
 			$git['installation'] = $this->github->getFileContent($component, 'INSTALLATION.md');
 			$git['codeofconduct'] = $this->github->getFileContent($component, 'CODE_OF_CONDUCT.md');
 		}		
+		
+		// Lets transform das shizle
+		$git['readme'] 			= $this->markdown->transformMarkdown($git['readme']);
+		$git['license'] 		= $this->markdown->transformMarkdown($git['license'] );
+		$git['changelog'] 		= $this->markdown->transformMarkdown($git['changelog']);
+		$git['contributing'] 	= $this->markdown->transformMarkdown($git['contributing']);
+		$git['installation'] 	= $this->markdown->transformMarkdown($git['installation']);
+		$git['codeofconduct']	= $this->markdown->transformMarkdown($git['codeofconduct']);
+		
+		
 		$git['openapi'] = $this->getOpenApi($component);
 		
 		// Lets copy some component info		
@@ -101,16 +111,19 @@ class ComponentService
 		$git['gitType'] = $component->getGitType();
 		$git['gitId'] = $component->getGitId();
 		$git['id'] = $component->getId();
+		$git['version'] ='';
+		$git['tags'] = [];
+		$git['servers'] = [];
+		$git['links'] = [];
 			
 		// The we need to determine the type of te componet
 		if($git['openapi']){
-			$git['type'] = '';
+			$git['type'] = 'source';
 		}
 		else {
-			$git['type'] = '';			
+			$git['type'] = 'application';			
 		}
 		
-		var_dump($git);
 		return $git;
 	}
 	

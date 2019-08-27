@@ -63,6 +63,7 @@ class OrganisationService
 		if($organisation->getBitbucketId()){
 			$repositories = array_merge ($repositories, $this->bitbucket->getOrganisationRepositories($organisation->getBitbucketId()));
 		}
+	
 			
 		return $repositories;
 	}
@@ -100,6 +101,16 @@ class OrganisationService
 						"avatar"=>$organisation['avatar_url']
 				];
 			}
+			
+			// Lets then remove all te repositories that are already on this platform
+			foreach($organisations as $key => $organisation){
+				$components = $this->em->getRepository('App:Organisation')->findBy(array('githubId' => $organisation["id"]));
+				
+				if(count($components) > 0){
+					$organisation['commonGroundId'] = $components[0]->getId();
+				}				
+			}
+			
 		}
 		// Lets see if we have gitlab groups
 		if($this->user->getGitlabToken()){
@@ -123,6 +134,15 @@ class OrganisationService
 						"name"=>$organisation['name'],
 						"avatar"=>$organisation['avatar_url']
 				];
+			}
+			
+			// Lets then remove all te repositories that are already on this platform
+			foreach($organisations as $key => $organisation){
+				$components = $this->em->getRepository('App:Organisation')->findBy(array('gitlabId' => $organisation["id"]));
+				
+				if(count($components) > 0){
+					$organisation['commonGroundId'] = $components[0]->getId();
+				}
 			}
 		}
 		// Lets see if we have bitbucket teams
@@ -149,8 +169,17 @@ class OrganisationService
 						"avatar"=>$organisation['links']['avatar']['href']
 				];
 			}
-		}
+			
+			// Lets then remove all te repositories that are already on this platform
+			foreach($organisations as $key => $organisation){
+				$components = $this->em->getRepository('App:Organisation')->findOneBy(array('bitbucketId' => $organisation["id"]));
 				
+				if(count($components) > 0){
+					$repositories[$key]['commonGroundId'] = $component->getId();
+				}
+			}
+		}
+		
 		return $organisations;
 	}
 	

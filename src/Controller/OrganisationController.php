@@ -105,7 +105,7 @@ class OrganisationController extends AbstractController
 				$organisation = $bitbucketService->getOrganisationFromBitbucket($id);
 				break;
 			case 'gitlab':
-				$organisation = $gitlabService->getOrganisationFromGitlabS($id);
+				$organisation = $gitlabService->getOrganisationFromGitlab($id);
 				break;
 			/* @todo let catch non existing organisations */
 		}		

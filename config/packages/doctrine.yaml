@@ -8,14 +8,13 @@ parameters:
 doctrine:
     dbal:
         # configure these for your database server
-        driver: 'pdo_mysql'
-        server_version: '5.7'
-        charset: utf8mb4
-        default_table_options:
-            charset: utf8mb4
-            collate: utf8mb4_unicode_ci
-
-        url: '%env(resolve:DATABASE_URL)%'
+        driver: 'pdo_pgsql'
+        sslmode: require
+        host: commonground-production-ams3-65272-do-user-4716261-0.db.ondigitalocean.com
+        port: 25060
+        user: common-ground-dev
+        password: ne2d50ntge9cneua
+        dbname: love-common-ground
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
