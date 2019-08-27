@@ -3,7 +3,7 @@
  	
                   <!-- Thumb -->
                   {# @todo commonground schould be an config paramater #}
-                  <a href="https://{{ organisation.slug }}.common-ground.dev">
+                  <a href="{{ path('app_organisation_view', {slug:organisation.slug}) }}">
                   <div class="col-md-4 col-sm-6 portfolio web panel" >
                     <div class="panel-body">
                       <div class="portfolio-title">

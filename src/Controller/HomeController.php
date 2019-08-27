@@ -86,6 +86,7 @@ class HomeController extends AbstractController
 		$client = new Client(['base_uri' => 'https://raw.githubusercontent.com/ConductionNL/love-common-ground/master/', 'http_errors' => false]);
 		$response = $client->get('TUTORIAL.md')->getBody();
 		$variables['html'] = $parser->transformMarkdown($response);
+		$variables['title'] = 'Tutorial';
 		
 		return $this->render('home/page.html.twig', $variables);
 	}
@@ -101,6 +102,7 @@ class HomeController extends AbstractController
 		$client = new Client(['base_uri' => 'https://raw.githubusercontent.com/ConductionNL/love-common-ground/master/', 'http_errors' => false]);
 		$response = $client->get('LICENSE')->getBody();
 		$variables['html'] = $parser->transformMarkdown($response);
+		$variables['title'] = 'License';
 		
 		return $this->render('home/page.html.twig', $variables);
 	}

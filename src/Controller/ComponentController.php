@@ -41,6 +41,11 @@ class ComponentController extends AbstractController
 			/* @todo let catch non existing organisations */
 		}		
 		
+		if($em->getRepository('App:Component')->findOneBy(array('gitId' => $component->getGitId(),'gitType' => $component->getGitType()))){
+			/* @todo ths should be a symfony exeption */
+			throw new \Exception('Component is already connected');
+		}
+		
 		$component->setOrganisation($organisation);		
 		$em->persist($component);
 		$em->flush();
@@ -48,7 +53,8 @@ class ComponentController extends AbstractController
 		
 		/* @todo domein automatisch inladen */
 		// redirects externally
-		return $this->redirect('https://'.$organisation->getSlug().'.common-ground.dev');
+		
+		return $this->redirectToRoute('app_organisation_view', ['slug' => $organisation->getSlug()]);
 	}
 	
 }

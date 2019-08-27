@@ -25,7 +25,7 @@
                             	<div class="col-md-12"> 
                                 {% if user.organisations is not empty and user.organisations|length > 0  %}
                                 {% for organisation in user.organisations %}
-                      			<a href="https://{{ organisation.slug }}.common-ground.dev">
+                      			<a href="{{ path('app_organisation_view', {slug:organisation.slug}) }}">
                                 <div class="organisation-well">
                                   	<div class="organisation">             
                                   		<div class="organisation-portrait">
@@ -147,7 +147,7 @@
                               	{% elseif organisation.commonground is not empty and organisation.isMember %}     
                               	<a href="https://{{ organisation.commonground.slug }}.common-ground.dev"  class="btn background-{{ organisation.type }} btn-sm btn-block" type="button">Bekijk</a>    
                               	{% elseif organisation.commonground is not empty  %}                              	
-                              	<a href="{{ path('app_organisation_join',  {id: organisation.commonground.id }) }}"  class="btn background-{{ organisation.type }} btn-sm btn-block" type="button">Join</a>    
+                              	<a href="{{ path('app_organisation_join',  {organisation: organisation.commonground.id }) }}"  class="btn background-{{ organisation.type }} btn-sm btn-block" type="button">Join</a>    
                               	{% endif %}
                               	</div>
                              </div>                                 

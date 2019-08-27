@@ -102,6 +102,16 @@ class Organisation
      */
     private $teams;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $subdomain;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $vetted;
+
     public function __construct()
     {
         $this->components = new ArrayCollection();
@@ -369,6 +379,30 @@ class Organisation
                 $team->setOrganisation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSubdomain(): ?bool
+    {
+        return $this->subdomain;
+    }
+
+    public function setSubdomain(?bool $subdomain): self
+    {
+        $this->subdomain = $subdomain;
+
+        return $this;
+    }
+
+    public function getVetted(): ?bool
+    {
+        return $this->vetted;
+    }
+
+    public function setVetted(?bool $vetted): self
+    {
+        $this->vetted = $vetted;
 
         return $this;
     }

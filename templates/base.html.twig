@@ -22,7 +22,7 @@
         
         <!-- CSS and fonts -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/styles.css" rel="stylesheet">
+        <link href="/css/styles.css" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Roboto:500,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
         
         {% block stylesheets %}{% endblock %}
@@ -87,12 +87,25 @@ Organisation page
     text-align: center;
 }
 
+.panel-icon{
+    padding-top: 10px;
+}
+
 /************
 Organisation specific overwrites
 ************/
+
+        {% if organisation is defined and organisation.css is defined  %}
+        	{{ organisation.css }}
+        {% endif %}
         </style>
     </head>
     <body>
+
+      <!-- anchorpoint for the chervrons -->
+      <a name="top"></a>
+
+
     	<div class="site-holder">
     	
 		{# Let include the header #}

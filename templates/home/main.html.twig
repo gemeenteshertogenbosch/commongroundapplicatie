@@ -79,7 +79,7 @@
                   <div class="col-sm-12">
                     <p>Welke organisaties hebben hier momenteel componenten beschikbaar gemaakt?</p>
                   
-                    <p>Uw organisatie hier? <a href="">meld</a> deze aan</p>
+                    <p>Uw organisatie hier? <a href="javascript:void(0);" onclick="scrollToAnchor('login')">meld</a> jezelf aan zodat je organisaties kan aanmaken</p>
                   </div>
                 </div>
                 <div class="row">              
@@ -110,7 +110,7 @@
 
                   <!-- See the filterPortfolio(...) function in the javascript block at the bottom of the page for an explanation of how this works. -->
                   <div class="col-sm-12 portfolio-filters">
-                    <button id="allFilter" type="button" class="btn background-black" onclick="filterPortfolio(['component', 'application', 'tool'], 'allFilter')">Alle</button>
+                    <button id="allFilter" type="button" class="btn background-black" onclick="filterPortfolio(['source', 'application', 'tool'], 'allFilter')">Alle</button>
                     <button id="sourceFilter" type="button" class="btn background-1" onclick="filterPortfolio(['source'], 'sourceFilter')"><i class="fad fa-database"></i> Bronnen</button>
                     <button id="applicationFilter" type="button" class="btn background-2" onclick="filterPortfolio(['application'], 'applicationFilter')"><i class="fad fa-browser"></i> Applicaties</button>
                     <button id="toolFilter" type="button" class="btn background-3" onclick="filterPortfolio(['tool'], 'toolFilter')"><i class="fad fa-tools"></i> Tools</button>

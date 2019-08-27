@@ -5,8 +5,9 @@
 {% block body %}
  	<div class="main-content container fluid-container">
  	
+ 	  <h1>{{ title }}</h1>
       <div class="panel-body">
-      	{{ html }}
+      	{{ html|raw }}
       </div>
       
       <div class="content-area footer">

@@ -168,16 +168,7 @@ class OrganisationService
 						"name"=>$organisation['display_name'],
 						"avatar"=>$organisation['links']['avatar']['href']
 				];
-			}
-			
-			// Lets then remove all te repositories that are already on this platform
-			foreach($organisations as $key => $organisation){
-				$components = $this->em->getRepository('App:Organisation')->findOneBy(array('bitbucketId' => $organisation["id"]));
-				
-				if(count($components) > 0){
-					$repositories[$key]['commonGroundId'] = $component->getId();
-				}
-			}
+			}		
 		}
 		
 		return $organisations;
@@ -185,8 +176,6 @@ class OrganisationService
 	
 	public function enrichOrganisations($organisations)
 	{
-		$repository = $this->em->getRepository(Organisation::class);
-		
 		$results = [];
 		
 		// Lets see if we already know these organisations
@@ -195,13 +184,13 @@ class OrganisationService
 			$commonground = false;
 			switch ($type) {
 				case 'github':
-					$commonground = $repository->findOneBy(['githubId' => $organisation['id']]);
+					$commonground = $this->em->getRepository('App:Organisation')->findOneBy(['githubId' => $organisation['name']]);
 					break;
 				case 'bitbucket':
-					$commonground = $repository->findOneBy(['bitbucketId' => $organisation['id']]);
+					$commonground = $this->em->getRepository('App:Organisation')->findOneBy(['bitbucket' => $organisation['link']]);
 					break;
 				case 'gitlab':
-					$commonground =$repository->findOneBy(['gitlabId' => $organisation['id']]);
+					$commonground = $this->em->getRepository('App:Organisation')->findOneBy(['gitlabId' => $organisation['id']]);
 					break;
 			}		
 			
@@ -213,7 +202,7 @@ class OrganisationService
 			
 			$results[] = $organisation;
 		}
-				
+		
 		return $results;
 	}	
 	public function getOrganisationOnSlug($slug)

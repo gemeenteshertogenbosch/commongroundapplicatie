@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 use App\Service\SchemaService;
 use App\Service\OrganisationService;
+use App\Service\ComponentService;
 use App\Service\GithubService;
 use App\Service\GitlabService;
 use App\Service\BitbucketService;
@@ -24,7 +25,28 @@ class OrganisationController extends AbstractController
 {
 	
 	/**
-	 * @Route("/organisation/leave/{id}")
+	 * @Route("/organisation/{slug}")
+	 */
+	public function viewAction(Organisation $organisation, Request $request, EntityManagerInterface $em, OrganisationService $organisationService, ComponentService $componentService)
+	{
+		$repositories= $organisationService->getOrganisationRepositories($organisation);
+		$organisations = $organisationService->getUserSocialOrganisations($this->getUser());
+		$organisations = $organisationService->enrichOrganisations($organisations);
+			
+		$components = [];
+		foreach($organisation->getComponents() as $component){
+			$components[] = $componentService->getComponentGit($component);
+		}
+			
+		$isAdmin = $organisation->getAdmins()->contains($this->getUser());
+		$isMember = $organisation->getUsers()->contains($this->getUser());
+		$variables = ["organisation" => $organisation,"components" => $components, "repositories"=> $repositories, "isAdmin" => $isAdmin, 'organisations'=>$organisations];
+		
+		return $this->render('home/organisation.html.twig',$variables);		
+	}
+	
+	/**
+	 * @Route("/organisation/leave/{organisation}")
  	 * @ParamConverter("organisation", class="App:Organisation")
 	 */
 	public function leaveAction(Request $request, EntityManagerInterface $em, $organisation)
@@ -39,7 +61,7 @@ class OrganisationController extends AbstractController
 	}
 	
 	/**
-	 * @Route("/organisation/join/{id}")
+	 * @Route("/organisation/join/{organisation}")
  	 * @ParamConverter("organisation", class="App:Organisation")
 	 */
 	public function joinAction(Request $request, EntityManagerInterface $em, $organisation)
@@ -50,10 +72,10 @@ class OrganisationController extends AbstractController
 		
 		/* @todo domein automatisch inladen */
 		// redirects externally
-		return $this->redirect('https://'.$organisation->getSlug().'.common-ground.dev');
+		return $this->redirectToRoute('app_organisation_view', ['slug' => $organisation->getSlug()]);
 	}
 	
-		/**
+	/**
 	 * @Route("/organisation/connect/{type}/{organisation}/{id}")
  	 * @ParamConverter("organisation", class="App:Organisation")
 	 */
@@ -89,7 +111,7 @@ class OrganisationController extends AbstractController
 		
 		/* @todo domein automatisch inladen */
 		// redirects externally
-		return $this->redirect('https://'.$organisation->getSlug().'.common-ground.dev');
+		return $this->redirectToRoute('app_organisation_view', ['slug' => $organisation->getSlug()]);
 	}
 	
 	/**
@@ -118,6 +140,6 @@ class OrganisationController extends AbstractController
 		
 		/* @todo domein automatisch inladen */
 		// redirects externally
-		return $this->redirect('https://'.$organisation->getSlug().'.common-ground.dev');
+		return $this->redirectToRoute('app_organisation_view', ['slug' => $organisation->getSlug()]);
 	}
 }

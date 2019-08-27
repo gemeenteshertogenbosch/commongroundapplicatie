@@ -67,7 +67,7 @@ class GithubAuthenticator extends SocialAuthenticator
 		// We need an email adres for the following staps so lets check if we have that
 		if(!$email){
 			// this exception ultimately generates a 500 status error
-			throw new \Exception('We could not determine your email adres');
+			throw new \Exception('We could not determine your email adres, it could be that you have turned on privacy in your github acount. Please go to settings -> ');
 		}
 		
 		// 2) do we have a matching user by email?

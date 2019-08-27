@@ -5,7 +5,13 @@
                   <div class="col-md-4 col-sm-6 portfolio {{ component.type }} web panel" data-toggle="modal" data-target="#component-{{ component.id }}">
                     <div class="panel-body">
                       <div class="portfolio-title">
-                        <div class="portfolio-icon">
+                        <div class="portfolio-icon 	{% if component.type == 'source'%}
+                          	background-1
+                          	{% elseif component.type == 'tool' %}
+                           background-3
+                          	{% else %}
+                           background-2                       	
+                          	{% endif %}">
                           <div>
                           	{% if component.type == 'source'%}
                           	<i class="fad fa-database"></i>
@@ -23,6 +29,8 @@
                       </div>
                     </div>
                     <div class="portfolio-image">
+                        {% if component.logo is defined and component.logo is not empty %}
                         <img src="{{ component.logo }}" alt="" />
+                        {% endif %}
                     </div>
                   </div>

@@ -117,6 +117,18 @@ GENERAL STYLES
 	background-color: #000;
 }
 
+.background-faded {
+	background-color: #ededed;
+	color: #000 !important;	
+	
+}
+
+.background-conduction {
+	background-color: #4376fc;
+	color: #FFF !important;	
+	
+}
+
 .color-bitbucket {
 	color: #0747A6 ;	
 }	
@@ -130,6 +142,7 @@ GENERAL STYLES
 .color-github {
 	color: #24292e ;	
 }	
+
 
 
 .background-github {
@@ -681,7 +694,7 @@ PORTFOLIO STYLES
 }
 
 .web .portfolio-icon {
-	background-color: #4376FC;
+	/* background-color: #4376FC */;
 }
 
 .mobile .portfolio-icon {

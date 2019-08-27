@@ -34,8 +34,22 @@
             <div class="row">
               <div class="col-md-5">
                 <div class="portfolio-title">
-                  <div class="portfolio-icon">
-                    <div><span class="{{ component.type }}"></span></div>
+                  <div class="portfolio-icon 	{% if component.type == 'source'%}
+                          	background-1
+                          	{% elseif component.type == 'tool' %}
+                           background-3
+                          	{% else %}
+                           background-2                       	
+                          	{% endif %}">
+                 	<div>
+                    	{% if component.type == 'source'%}
+                     	<i class="fad fa-database"></i>
+                        {% elseif component.type == 'tool' %}
+                       	<i class="fad fa-tools"></i>
+                        {% else %}{# lets default to application#}
+                   		<i class="fad fa-browser"></i>                          	
+                        {% endif %}
+                 	</div>
                   </div>
                   <div class="title">
                     <h4>{{ component.name }}</h4>

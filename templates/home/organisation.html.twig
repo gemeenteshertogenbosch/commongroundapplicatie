@@ -63,10 +63,10 @@
 
                   <!-- See the filterPortfolio(...) function in the javascript block at the bottom of the page for an explanation of how this works. -->
                   <div class="col-sm-12 portfolio-filters">
-                    <button id="allFilter" type="button" class="btn background-black" onclick="filterPortfolio(['component', 'application', 'tool'], 'allFilter')">Alle</button>
+                    <button id="allFilter" type="button" class="btn background-black" onclick="filterPortfolio(['source', 'application', 'tool'], 'allFilter')">Alle</button>
                     <button id="sourceFilter" type="button" class="btn background-1" onclick="filterPortfolio(['source'], 'sourceFilter')"><i class="fad fa-database"></i> Bronnen</button>
                     <button id="applicationFilter" type="button" class="btn background-2" onclick="filterPortfolio(['application'], 'applicationFilter')"><i class="fad fa-browser"></i> Applicaties</button>
-                    <button id="toolFilter" type="button" class="btn background-3" onclick="filterPortfolio(['tool'], 'toolFilter')"><i class="fad fa-tools"></i> Hulpmiddelen</button>
+                    <button id="toolFilter" type="button" class="btn background-3" onclick="filterPortfolio(['tool'], 'toolFilter')"><i class="fad fa-tools"></i> Tools</button>
                   </div>
                 </div>
 
@@ -124,7 +124,7 @@
                               	</div>
                               	<div class="organisation-buttons">
                                 {% if repository.commonGroundId is defined and repository.commonGroundId is not empty %}
-                                	<span  class="btn bg-faded btn-sm btn-block">Already connected</span>
+                                	<span  class="btn  background-faded btn-sm btn-block">Already connected</span>
                                 {% else %}
                               		<a href="{{ path('app_component_add',  {type: repository.type, organisation: organisation.id , id: repository.id}) }}"  class="btn background-{{ repository.type }} btn-sm btn-block" type="button">Connect</a>                       	
                               	{% endif %}
@@ -183,8 +183,8 @@
                               		</div>
                               	</div>
                               	<div class="organisation-buttons">
-                                {% if connectOrganisation.commonGroundId is defined and connectOrganisation.commonGroundId is not empty %}
-                               	 	Already connected
+                                {% if connectOrganisation.commonground is defined and connectOrganisation.commonground.id is not empty %}
+                                	<span class="btn  background-conduction btn-sm btn-block">Already connected</span>
                                 {% else %}
                               		<a href="{{ path('app_organisation_connect',  {type: connectOrganisation.type, id: connectOrganisation.id, organisation: organisation.id}) }}"  class="btn background-{{ connectOrganisation.type }} btn-sm btn-block" type="button">Connect</a>                       	
                         	    {% endif %}    

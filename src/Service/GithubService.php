@@ -149,10 +149,7 @@ class GithubService
 			}
 			
 		}
-		
-		
-		var_dump($repositories);
-				
+						
 		return $repositories;
 	}	
 	
