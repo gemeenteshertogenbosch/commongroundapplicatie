@@ -127,10 +127,16 @@ class ComponentService
 		return $git;
 	}
 	
-	public function getComponentGit(Component $component)
+	/**
+	 * 
+	 * 
+	 * @param Component $component The component for wich git info is requested
+	 * @param boolean $force If set to true will force a cash reset
+	 */
+	public function getComponentGit(Component $component, $force = false)
 	{		
 		$item = $this->cash->getItem('component_'.md5($component->getId()));
-		if ($item->isHit()) {
+		if ($item->isHit() && !$force) {
 			return $item->get();
 		}
 		
@@ -142,4 +148,5 @@ class ComponentService
 		
 		return $item->get();
 	}
+	
 }

@@ -12,6 +12,7 @@ use GuzzleHttp\Client;
 
 use App\Service\SchemaService;
 use App\Service\OrganisationService;
+use App\Service\ComponentService;
 use App\Service\GithubService;
 use App\Service\GitlabService;
 use App\Service\BitbucketService;
@@ -57,4 +58,14 @@ class ComponentController extends AbstractController
 		return $this->redirectToRoute('app_organisation_view', ['slug' => $organisation->getSlug()]);
 	}
 	
+	
+	/**
+	 * @Route("/component/{component}/refresh")
+	 */
+	public function refreshAction(Component $component, ComponentService $componentService)
+	{
+		$componentService->getComponentGit($component, true);
+				
+		return $this->redirectToRoute('app_organisation_view', ['slug' => $component->getOrganisation()->getSlug()]);
+	}
 }
