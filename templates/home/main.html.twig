@@ -28,7 +28,9 @@
                       </div>
                     </div>
                     <div class="panel-body">
-                      <p>Wij publiceren al onze Common Ground code op deze site.</p>
+                      <p>We proberen op deze pagina overzicht te cre&euml;ren in welke componenten momenteel door wie worden ontwikkeld. Partijen (gemeente en ontwikkelaars) kunnen zelf componenten toevoegen.</p>
+
+					  <p>Daarnaast is het een experiment in data bij de bron en het uitlezen van applicatie documentatie vanuit de applicaties zelf.  </p>
                       <p><a href="https://vng.nl/samen-organiseren/common-ground">Lees meer</a></p>
                     </div>
                   </div>
@@ -37,13 +39,13 @@
                     <div class="panel-heading background-1">
                       <div class="panel-icon"><span class="glyphicon glyphicon-link"></span></div>
                       <div class="panel-title">
-                        <h4>Meedoen?</h4>
-                        <p>Plaats jouw componenten</p>
+                        <h4>Meer weten?</h4>
+                        <p>Verbinding ipv contact</p>
                       </div>
                     </div>
                     <div class="panel-body">
-                      <p>Zonder verbinding geen contact.</p>
-                      <p><a href="https://nlx.io/">Lees meer</a></p>
+                      <p>Deze pagina dient slechts te overzicht. Meer weten over &eacute;&eacute;n component? Neem contact op de ontwikkelaar. Voor zover bij ons bekend vermelden we contactgegevens onder organisaties.</p>
+                      <p><a href="https://commonground.nl/">De commonground pleio</a></p>
                     </div>
                   </div>
                    <div class="col-md-4 col-sm-6 service panel">
@@ -55,8 +57,9 @@
                       </div>
                     </div>
                     <div class="panel-body">
-                      <p>Commonground bouwen we samen, en dat geldt net zo goed voor deze pagina. We zijn dan ook altijd op zoek naar mensen en organisatie die financieel of in tijd willen bijdragen. </p>
-                      <p>Je kan deze pagina "hier" als component terugvinden, daar staat ook meer invormatie over hoe je kan bijdragen.</p>                      
+                      <p>Deze pagina is een bet&aacute; test in het cre&euml;ren van overzicht en dient onder andere als inspiratie voor de in ontwikkeling zijnde VNG appstore. </p>
+					  <p>We horen het dus graag als je idee&euml;n, wensen of een verbeter punt hebt! Deze kan je <a href="https://github.com/ConductionNL/love-common-ground/issues/new/choose" target="_blanck">hier</a> als issue inschieten.</p>
+                     
                     </div>
                   </div>
                 </div>
@@ -78,8 +81,10 @@
                 <div class="row">
                   <div class="col-sm-12">
                     <p>Welke organisaties hebben hier momenteel componenten beschikbaar gemaakt?</p>
-                  
-                    <p>Uw organisatie hier? <a href="javascript:void(0);" onclick="scrollToAnchor('login')">meld</a> jezelf aan zodat je organisaties kan aanmaken</p>
+                    <p>Organisaties worden automatisch aangemaakt aan de hand van aangemelde repositories, je kan onder tutorial terugvinden hoe dat werkt</p>
+                  	<!-- 
+                    <p>Uw organisatie hier? <a href="javascript:void(0);" onclick="scrollToAnchor('login')">meld</a> jezelf aan zodat je organisaties kan aanmaken</p> 
+                    -->
                   </div>
                 </div>
                 <div class="row">              
@@ -125,9 +130,10 @@
               </div>
             </div>
           </li>
-          {% if is_granted('IS_AUTHENTICATED_FULLY') == false  and is_granted('IS_AUTHENTICATED_REMEMBERED')  == false %}
+             {% include 'home/add.html.twig' %}
+          {# if is_granted('IS_AUTHENTICATED_FULLY') == false  and is_granted('IS_AUTHENTICATED_REMEMBERED')  == false %}
              {% include 'home/login.html.twig' %}
-         {% endif %}
+          {% endif #}
         </ul>
       </div>
       <div class="content-area footer">

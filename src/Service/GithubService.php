@@ -70,18 +70,61 @@ class GithubService
 	}			
 	
 	
-	public function getComponentFromGitHub($id)
+	public function getRepositoryFromGitHub($owner, $repository)
 	{
+		$response = $this->client->get('repos/'.$owner.'/'.$repository);
+		$response = json_decode ($response->getBody(), true);
+		
+		return $response;	
+	}
+	
+	
+	public function getRepositoryFromGitHubOnId($id)
+	{		
 		$response = $this->client->get('repositories/'.$id);
 		$response = json_decode ($response->getBody(), true);
 		
-		$component = New Component;
-		$component->setName($response['name']);
-		$component->setDescription($response['description']);
-		$component->setGit($response['html_url']);
-		$component->setGitType('github');
-		$component->setGitId($response['id']);
+		return $response;
+	}
 		
+	public function getComponentFromGitHubOnId($id)
+	{
+		$repository = $this->getRepositoryFromGitHubOnId($id);
+		$component = New Component;
+		$component->setName($repository['name']);
+		$component->setDescription($repository['description']);
+		$component->setGit($repository['html_url']);
+		$component->setGitType('github');
+		$component->setGitId($repository['id']);
+		
+		return $component;
+	}
+	
+	public function getComponentFromGitHubOnUrl($url)
+	{
+		$path = explode('/',$url['path']);
+				
+		$repository = $this->getRepositoryFromGitHub($path[1], $path[2]);
+		
+		$component = New Component;
+		$component->setName($repository['name']);
+		$component->setDescription($repository['description']);
+		$component->setGit($repository['html_url']);
+		$component->setGitType('github');
+		$component->setGitId($repository['id']);
+		
+		// Lets get a list of posible owners
+		$organisations= $this->em->getRepository('App:Organisation')->findBy(array('githubId' => $repository['owner']['login']));
+		
+		if(count($organisations) > 0){
+			$component->addOrganisation($organisations[0]);
+			$component->setOwner($organisations[0]);
+		}
+		else{
+			$component->addOrganisation($this->getOrganisationFromGitHub($repository['owner']['login']));
+			$component->setOwner($organisations[0]);
+		}
+				
 		return $component;
 	}
 	

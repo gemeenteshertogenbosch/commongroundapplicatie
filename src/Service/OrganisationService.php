@@ -160,6 +160,7 @@ class OrganisationService
 				$this->em->flush($this->user);
 			}
 			
+			/* @todo error
 			foreach($response['values'] as $organisation ){
 				$organisations[]= [
 						"type"=>"bitbucket",
@@ -169,6 +170,7 @@ class OrganisationService
 						"avatar"=>$organisation['links']['avatar']['href']
 				];
 			}		
+			*/
 		}
 		
 		return $organisations;

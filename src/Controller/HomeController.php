@@ -37,12 +37,12 @@ class HomeController extends AbstractController
 			// We then return that page to prevent further exectution of code
 			
 			/* @todo wellicht willen we nog iets doen met published zetten of iets dergelijks*/
-			$organisations = $em->getRepository(Organisation::class)->findAll();
-			$databasecomponents = $em->getRepository(Component::class)->findAll();
+			$organisations = $em->getRepository(Organisation::class)->findBy(array('vetted' => true));			
+			$databasecomponents= $em->getRepository(Component::class)->getVetted();
 			
 			$components = [];
 			foreach($databasecomponents as $component){
-				$components[] = $componentService->getComponentFromGit($component);
+				$components[] = $componentService->getComponentGit($component);
 			}
 			
 			

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -10,11 +12,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Component
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+	/**
+	 * @var \Ramsey\Uuid\UuidInterface
+	 *
+	 * @ORM\Id
+	 * @ORM\Column(type="uuid", unique=true)
+	 * @ORM\GeneratedValue(strategy="CUSTOM")
+	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+	 */
 	private $id;
 	
 	/**
@@ -42,12 +47,6 @@ class Component
 	 * @ORM\Column(type="string", length=255)
 	 */
 	private $slug;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation", inversedBy="components")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $organisation;
     
     /**
      * @ORM\Column(type="integer", length=11)
@@ -68,81 +67,86 @@ class Component
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $openapi;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Organisation", mappedBy="components",cascade={"persist"})
+     */
+    private $organisations;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organisation")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
+
+    public function __construct()
+    {
+        $this->organisations = new ArrayCollection();
+    }
     
-    public function getId(): ?string
+    public function getId()
     {
     	return $this->id;
     }
     
 	public function getName(): ?string
-	{
-		return $this->name;
-	}
+                                 	{
+                                 		return $this->name;
+                                 	}
 	
 	public function setName(string $name): self
-	{
-		$this->name = $name;
-		return $this;
-	}
+                                 	{
+                                 		$this->name = $name;
+                                 		return $this;
+                                 	}
 	
 	public function getVersion(): ?string
-	{
-		return $this->version;
-	}
+                                 	{
+                                 		return $this->version;
+                                 	}
 	
 	public function setVersion(string $version): self
-	{
-		$this->version= $version;
-		return $this;
-	}
+                                 	{
+                                 		$this->version= $version;
+                                 		return $this;
+                                 	}
 	
 	public function getDescription(): ?string
-	{
-		return $this->description;
-	}
+                                 	{
+                                 		return $this->description;
+                                 	}
 	
 	public function setDescription(?string $description): self
-                                    	{
-                                    		$this->description = $description;
-                                    		
-                                    		return $this;
-                                    	}
+                                 	{
+                                 		$this->description = $description;
+                                                                     		
+                                 		return $this;
+                                 	}
 	
 	public function getLogo(): ?string
-                                    	{
-                                    		return $this->logo;
-                                    	}
+                                 	{
+                                 		return $this->logo;
+                                 	}
 	
 	public function setLogo(?string $logo): self
-                                    	{
-                                    		$this->logo = $logo;
-                                    		
-                                    		return $this;
-                                    	}
+                                 	{
+                                 		$this->logo = $logo;
+                                                                     		
+                                 		return $this;
+                                 	}
 	
 	public function getSlug(): ?string
-                                    	{
-                                    		return $this->slug;
-                                    	}
+                                 	{
+                                 		return $this->slug;
+                                 	}
 	
 	public function setSlug(string $slug): self
-                                    	{
-                                    		$this->slug = $slug;
-                                    		
-                                    		return $this;
-                                    	}
+                                 	{
+                                 		$this->slug = $slug;
+                                                                     		
+                                 		return $this;
+                                 	}
 
-    public function getOrganisation(): ?Organisation
-    {
-        return $this->organisation;
-    }
-
-    public function setOrganisation(?Organisation $organisation): self
-    {
-        $this->organisation = $organisation;
-
-        return $this;
-    }
     
     public function getGitId(): ?string
     {
@@ -188,6 +192,46 @@ class Component
     public function setOpenapi(?string $openapi): self
     {
         $this->openapi = $openapi;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Organisation[]
+     */
+    public function getOrganisations(): Collection
+    {
+        return $this->organisations;
+    }
+
+    public function addOrganisation(Organisation $organisation): self
+    {
+        if (!$this->organisations->contains($organisation)) {
+            $this->organisations[] = $organisation;
+            $organisation->addComponent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganisation(Organisation $organisation): self
+    {
+        if ($this->organisations->contains($organisation)) {
+            $this->organisations->removeElement($organisation);
+            $organisation->removeComponent($this);
+        }
+
+        return $this;
+    }
+
+    public function getOwner(): ?Organisation
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?Organisation $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }

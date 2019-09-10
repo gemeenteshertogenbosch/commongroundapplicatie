@@ -5,14 +5,14 @@
                   {# @todo commonground schould be an config paramater #}
                   <a href="{{ path('app_organisation_view', {slug:organisation.slug}) }}">
                   <div class="col-md-4 col-sm-6 portfolio web panel" >
-                    <div class="panel-body">
+                    <div class="panel-body" style="height: 76px;"> 
                       <div class="portfolio-title">
-                        <div class="portfolio-icon">
+                        <div class="portfolio-icon background-1">
                           <div><i class="fad fa-building"></i></div>
                         </div>
                         <div class="title">
-                          <h4>{{ organisation.name }}</h4>
-                          <em>{{ organisation.description }}</em>
+                          <h4>{{ organisation.name|slice(0, 50)|capitalize|replace({'-': " ", "_" : " "}) }}</h4>
+                          <em>{{ organisation.description|slice(0, 250) }}</em>
                         </div>
                       </div>
                     </div>

@@ -9,11 +9,11 @@
             <div id="carousel-portfolio-{{ component.id }}" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner" role="listbox">
               
+              	{# 
                 <div class="item active">
                   <img src="{{ component.logo  }}" alt="" />
                 </div>
-              
-              	{# for image in item.images %}
+              for image in item.images %}
                 <div class="item active">
                   <img src="{{ component.logo  }}" alt="" />
                 </div>
@@ -52,8 +52,8 @@
                  	</div>
                   </div>
                   <div class="title">
-                    <h4>{{ component.name }}</h4>
-                    Versie <em>{{ component.version }}</em>
+                    <h4>{{ component.name|capitalize|replace({'-': " ", "_" : " "}) }}</h4>
+                    {% if component.version %}Versie <em>{{ component.version }}</em>{% endif %}
                     {#
                     Licentie <a href="{{ item.license.url}}">{{ item.license.name}}</a><br />
                     Ontwikkelaar <a href="{{ item.license.url}}">{{ item.license.name}}</a><br />
@@ -61,39 +61,53 @@
                     #}
                   </div>
                   <br />
-                  {#
+                  {% if component.docs|length > 0 %}  
                   <p>
                   	<b>Documentatie</b><br />
-                    {% for doc in item.docs %}
-                  		<a href="{{ doc.url }}">{{ doc.name }}</a><br />
+                    {% for key,doc in component.docs if doc %}
+                  		<a href="#" data-toggle="collapse" data-target="#component-{{ component.id }}-collapse-{{ key }}" data-parent="#component-{{ component.id }}" aria-expanded="{% if key == 'readme'%}true{% else %}false{% endif %}" aria-controls="component-{{ component.id }}-collapse-{{ key }}" >{{ key|capitalize|replace({'-': " ", "_" : " "}) }}</a><br />
                     {% endfor %}
                   </p>
-                  #}
+                  {% endif %}
+                  {% if component.tags|length > 0 %}  
                   <p>
                   	<b>Informatie Model</b><br />   
                     {% for tag in component.tags %}
                   		{{ tag.name }}<br />
                     {% endfor %}
                   </p>
+                  {% endif %}
+                  {% if component.servers|length > 0 %}  
                   <p>
                   	<b>Servers</b> <br />      	
-                    {% for server in component.servers %}
-                  		<a href="{{ server.url }}">{{ server.description }}</a><br />
+                    {% for key,server in component.servers if server %}
+                  		<a href="{{ server }}" >{{ key|capitalize|replace({'-': " ", "_" : " "}) }}</a><br />
                     {% endfor %}
                   </p>
+                  {% endif %}
+                  {% if component.links|length > 0 %}  
                   <p>
                   	<b>Verwijzingen</b><br />           
-                    {% for link in component.links %}
-                  		<a href="{{ link.url }}">{{ link.name }}</a><br />
+                    {% for key,link in component.links if link %}
+                  		<a href="{{ link }}">{{ key|capitalize|replace({'-': " ", "_" : " "}) }}</a><br />
                     {% endfor %}
                   </p>
+                  {% endif %}
                 </div>
                 <div >
                 	<a href="{{ path('app_component_refresh',  {'component': component.id}) }}">Refresh</a>
                 </div>
               </div>
               <div class="modal-text col-md-7">
-                <p>{{ component.readme | raw }}</p>
+              	<div id="accordion-{{ component.id }}">
+               	  {% if component.docs|length > 0 %}  
+                  {% for key,doc in component.docs if doc  %}
+                  	<div id="component-{{ component.id }}-collapse-{{ key }}" class="{% if key!= 'readme'%}collapse{% endif %}">{{ doc | raw }}</div>
+                  {% endfor %}
+                  {% else %}
+                  Er kon geen documentatie worden gevonden voor dit component, bevat het een readme.md bestand?
+                  {% endif %}
+              	</div>
               </div>
             </div>
           </div>

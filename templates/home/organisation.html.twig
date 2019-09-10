@@ -78,9 +78,10 @@
               </div>
             </div>
           </li>
-         {% if is_granted('IS_AUTHENTICATED_FULLY') == false  and is_granted('IS_AUTHENTICATED_REMEMBERED')  == false %}
+             {% include 'home/add.html.twig' %}
+          {# if is_granted('IS_AUTHENTICATED_FULLY') == false  and is_granted('IS_AUTHENTICATED_REMEMBERED')  == false %}
              {% include 'home/login.html.twig' %}
-         {% endif %}    
+          {% endif }
          {% if isAdmin %}       
           <li>
             <a name="login"></a>
@@ -211,7 +212,7 @@
               </div><!-- /.timeline-body -->
             </div><!-- /.timeline-panel -->
           </li>
-         {% endif %}  
+         {% endif #}  
         </ul>
       </div>
       <div class="content-area footer">

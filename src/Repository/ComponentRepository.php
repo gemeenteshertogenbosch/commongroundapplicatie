@@ -19,6 +19,18 @@ class ComponentRepository extends ServiceEntityRepository
         parent::__construct($registry, Component::class);
     }
 
+    
+    public function getVetted()
+    {
+    	return $this->createQueryBuilder('c')
+    	->leftJoin('c.owner', 'o')
+    	->andWhere('o.vetted = :vetted')
+    	->setParameter('vetted', true)
+    	->getQuery()
+    	->getResult()
+    	;
+    }
+    
     // /**
     //  * @return Component[] Returns an array of Component objects
     //  */

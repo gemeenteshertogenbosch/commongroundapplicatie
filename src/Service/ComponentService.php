@@ -9,6 +9,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\RST\Parser as ReStructuredText;
 
 use App\Entity\Organisation; // your user entity
 use App\Entity\Component; // your user entity
@@ -29,7 +30,7 @@ class ComponentService
 	
 	public function __construct(
 			ParameterBagInterface $params, 
-			MarkdownParserInterface $markdown, 
+			MarkdownParserInterface $markdown,
 			CacheInterface $cache, 
 			EntityManagerInterface $em,
 			GithubService $github,
@@ -50,11 +51,30 @@ class ComponentService
 	}	
 	
 	
+	public function getHelm(Component $component)
+	{
+		
+		$lookIn = [
+				'helm/',
+				'api/helm/'
+		];
+		
+		foreach ($lookIn as $location){
+			if($responce = $this->github->getFileContent($component, $location.'values.yaml')){
+				return Yaml::parse($responce);
+			}
+		}
+		
+		// If nothing is found
+		return false;
+	}
+	
 	public function getOpenApi(Component $component)
 	{
 		
 		$lookIn = [
 			'',
+			'src/',
 			'schema/',
 			'public/',
 			'public/schema/',	
@@ -80,28 +100,71 @@ class ComponentService
 	public function getComponentFromGit(Component $component)
 	{
 		/*@todo we should filter for html here */
-		
+		$reStructuredText = new ReStructuredText();
 		
 		$git = [];
+		$git['docs'] = [];
+		$git['version'] = false;
+		$git['tags'] = [];
+		$git['servers'] = [];
+		$git['links'] = [];
+		
+		$git['links']['repository'] = $component->getGit();
+		
+		/* should be moved to git service */
 		if($component->getGitType()=="github"){
-			$git['readme'] = $this->github->getFileContent($component, 'README.md');
-			$git['license'] = $this->github->getFileContent($component, 'LICENSE');
-			$git['changelog'] = $this->github->getFileContent($component, 'CHANGELOG.md');
-			$git['contributing'] = $this->github->getFileContent($component, 'CONTRIBUTING.md');
-			$git['installation'] = $this->github->getFileContent($component, 'INSTALLATION.md');
-			$git['codeofconduct'] = $this->github->getFileContent($component, 'CODE_OF_CONDUCT.md');
+			
+			$git['docs']['readme'] = $this->github->getFileContent($component, 'README.md');
+			if($git['docs']['readme']){$git['docs']['readme'] = $this->markdown->transformMarkdown($git['docs']['readme']);}
+			else{
+				$git['docs']['readme'] = $this->github->getFileContent($component, 'README.rst');
+				//if($git['docs']['readme']){$git['docs']['readme'] = $reStructuredText->parse($git['docs']['readme'])->render();}
+			}
+			
+			$git['docs']['license'] = $this->github->getFileContent($component, 'LICENSE.md');
+			if($git['docs']['license']){$git['docs']['license'] = $this->markdown->transformMarkdown($git['docs']['license']);}
+			else{
+				$git['docs']['license'] = $this->github->getFileContent($component, 'LICENSE.rst');
+				if($git['docs']['license']){$git['docs']['license'] = $reStructuredText->parse($git['docs']['license'])->render();}
+			}
+			
+			$git['docs']['changelog'] = $this->github->getFileContent($component, 'CHANGELOG.md');
+			if($git['docs']['changelog'] ){$git['docs']['changelog'] = $this->markdown->transformMarkdown($git['docs']['changelog']);}
+			else{
+				$git['docs']['changelog'] = $this->github->getFileContent($component, 'CHANGELOG.rst');
+				//if($git['docs']['changelog'] ){$git['docs']['changelog'] = $reStructuredText->parse($git['docs']['changelog'])->render();}
+			}
+			
+			$git['docs']['contributing'] = $this->github->getFileContent($component, 'CONTRIBUTING.md');
+			if($git['docs']['contributing']){$git['docs']['contributing'] = $this->markdown->transformMarkdown($git['docs']['contributing']);}
+			else{
+				$git['docs']['contributing'] = $this->github->getFileContent($component, 'CONTRIBUTING.rst');
+				if($git['docs']['contributing']){$git['docs']['contributing'] = $reStructuredText->parse($git['docs']['contributing'])->render();}
+			}
+			
+			$git['docs']['installation'] = $this->github->getFileContent($component, 'INSTALLATION.md');
+			if($git['docs']['installation']){$git['docs']['installation'] = $this->markdown->transformMarkdown($git['docs']['installation']);}
+			else{
+				$git['docs']['installation'] = $this->github->getFileContent($component, 'INSTALLATION.rst');
+				if($git['docs']['installation']){$git['docs']['installation'] = $reStructuredText->parse($git['docs']['installation'])->render();}
+			}
+			
+			$git['docs']['code-of-conduct'] = $this->github->getFileContent($component, 'CODE_OF_CONDUCT.md');
+			if($git['docs']['code-of-conduct']){$git['docs']['code-of-conduct']	= $this->markdown->transformMarkdown($git['docs']['code-of-conduct']);}
+			else{
+				$git['docs']['code-of-conduct'] = $this->github->getFileContent($component, 'CODE_OF_CONDUCT.rst');
+				if($git['docs']['code-of-conduct']){$git['docs']['code-of-conduct']	= $reStructuredText->parse($git['docs']['code-of-conduct']);}
+			}			
+			
 		}		
 		
 		// Lets transform das shizle
-		$git['readme'] 			= $this->markdown->transformMarkdown($git['readme']);
-		$git['license'] 		= $this->markdown->transformMarkdown($git['license'] );
-		$git['changelog'] 		= $this->markdown->transformMarkdown($git['changelog']);
-		$git['contributing'] 	= $this->markdown->transformMarkdown($git['contributing']);
-		$git['installation'] 	= $this->markdown->transformMarkdown($git['installation']);
-		$git['codeofconduct']	= $this->markdown->transformMarkdown($git['codeofconduct']);
-		
-		
+				
 		$git['openapi'] = $this->getOpenApi($component);
+		$git['helm'] = $this->getHelm($component);
+				
+		// Lets do something with this info
+		if($git['openapi']['info']['version']){$git['version'] = $git['openapi']['info']['version'];}
 		
 		// Lets copy some component info		
 		$git['name'] = $component->getName();
@@ -111,10 +174,6 @@ class ComponentService
 		$git['gitType'] = $component->getGitType();
 		$git['gitId'] = $component->getGitId();
 		$git['id'] = $component->getId();
-		$git['version'] ='';
-		$git['tags'] = [];
-		$git['servers'] = [];
-		$git['links'] = [];
 			
 		// The we need to determine the type of te componet
 		if($git['openapi']){
@@ -135,7 +194,7 @@ class ComponentService
 	 */
 	public function getComponentGit(Component $component, $force = false)
 	{		
-		$item = $this->cash->getItem('component_'.md5($component->getId()));
+		$item = $this->cash->getItem('component_'.$component->getId());
 		if ($item->isHit() && !$force) {
 			return $item->get();
 		}

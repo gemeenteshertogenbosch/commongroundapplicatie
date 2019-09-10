@@ -24,7 +24,7 @@ use App\Entity\Organisation;
 class ComponentController extends AbstractController
 {
 	/**
-	 * @Route("/component/add/{type}/{organisation}/{id}")
+	 * @Route("/components/add/{type}/{organisation}/{id}")
  	 * @ParamConverter("organisation", class="App:Organisation")
 	 */
 	public function addAction(GithubService $githubService, GitlabService $gitlabService, BitbucketService $bitbucketService, Request $request, EntityManagerInterface $em, $organisation, $type, $id)
@@ -60,12 +60,84 @@ class ComponentController extends AbstractController
 	
 	
 	/**
+	 * @Route("/components/add")
+	 */
+	public function quickaddAction(GithubService $githubService, GitlabService $gitlabService, BitbucketService $bitbucketService, Request $request, EntityManagerInterface $em)
+	{
+		$url= $request->get('url');
+		$url = parse_url(urldecode ( $url));
+		
+		if(!$url){
+			/* @todo ths should be a symfony exeption */
+			throw new \Exception('No url parameter provided');
+		}
+		
+		$host = $url['host'];		
+		switch ($host) {
+			case 'github.com':
+				$component = $githubService->getComponentFromGitHubOnUrl($url);
+				break;
+			case 'bitbucket':
+				//$component = $bitbucketService->getComponentFromBitbucket($id);
+				break;
+			case 'gitlab':
+				//$component = $gitlabService->getComponentFromGitlabS($id);
+				break;
+				/* @todo let catch non existing git types */
+		}
+		
+		if($em->getRepository('App:Component')->findOneBy(array('gitId' => $component->getGitId(),'gitType' => $component->getGitType()))){
+			/* @todo ths should be a symfony exeption */
+			throw new \Exception('Component is already connected');
+		}
+		
+		//$component->setOrganisation($organisation);
+		$em->persist($component);
+		$em->flush();
+		/* @todo let catch non existing organisations */
+		
+		/* @todo domein automatisch inladen */
+		// redirects externally
+		
+		return $this->redirectToRoute('home');
+	}
+	
+	/**
 	 * @Route("/component/{component}/refresh")
 	 */
-	public function refreshAction(Component $component, ComponentService $componentService)
+	public function refreshAction(Component $component, ComponentService $componentService, GithubService $githubService)
 	{
-		$componentService->getComponentGit($component, true);
+		$url = parse_url(urldecode ($component->getGit()));
+		
+		if(!$url){
+			/* @todo ths should be a symfony exeption */
+			throw new \Exception('No url parameter provided');
+		}
+		
+		$host = $url['host'];
+		switch ($host) {
+			case 'github.com':
+				$path = explode('/',$url['path']);				
+				$repository = $githubService->getRepositoryFromGitHub($path[1], $path[2]);
+				$component->setName($repository['name']);
+				$component->setDescription($repository['description']);
+				if(!$component->getGitType()){$component->setGitType('github');}
+				if(!$component->getGitId()){$component->setGitId($repository['id']);}
+				$em->persist($component);
+				$em->flush();
+				break;
+			case 'bitbucket':
+				//$component = $bitbucketService->getComponentFromBitbucket($id);
+				break;
+			case 'gitlab':
+				//$component = $gitlabService->getComponentFromGitlabS($id);
+				break;
+				/* @todo let catch non existing git types */
+		}
+		
+		
+		$git = $componentService->getComponentGit($component, true);
 				
-		return $this->redirectToRoute('app_organisation_view', ['slug' => $component->getOrganisation()->getSlug()]);
+		return $this->redirectToRoute('home');
 	}
 }

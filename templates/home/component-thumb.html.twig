@@ -23,14 +23,15 @@
                           </div>
                         </div>
                         <div class="title">
-                          <h4>{{ component.name }}</h4>
-                          <em>{{ component.description }}</em>
+                          <h4>{{ component.name|length > 20 ? component.name|slice(0, 20) ~ '...' : component.name|capitalize|replace({'-': " ", "_" : " "})  }}</h4>
+                          <em>{{ component.description|slice(0, 250) }}</em>
                         </div>
                       </div>
                     </div>
+                    <!-- 
                     <div class="portfolio-image">
                         {% if component.logo is defined and component.logo is not empty %}
                         <img src="{{ component.logo }}" alt="" />
                         {% endif %}
-                    </div>
+                    </div>  -->
                   </div>

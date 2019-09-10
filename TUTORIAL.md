@@ -8,13 +8,13 @@ When analyzing your repository the platform will try the following operations
 
 * Get the name, description and logo for your component from your repository settings
 * Get license and owner information for your component from your repository settings
-* Read the following files for display purposes on the platform (must all be located at root level)
-** README.md
+* Read the following files for display purposes on the platform (must all be located at root level) markdown (.md) is preffered but reStructuredText (.rts) is also suported
+** README
 ** LICENSE
-** CHANGELOG.md
-** CONTRIBUTING.md
-** INSTALLATION.md
-** CODE_OF_CONDUCT.md
+** CHANGELOG
+** CONTRIBUTING
+** INSTALLATION
+** CODE_OF_CONDUCT
 
 It will then try to find an openapi(preferred) or swagger file in either yaml (preferred) or json format in the following directories(in order) of your repository.
 

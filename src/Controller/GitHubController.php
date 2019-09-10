@@ -10,8 +10,30 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
+use App\Service\GithubService;
+
 class GitHubController extends Controller
 {
+	private $githubService;
+	
+	public function __construct(GithubService $githubService)
+	{
+		$this->githubService = $githubService;
+	}
+	
+	/**
+	 * 
+	 *
+	 * @Route("/webhook/github")
+	 */
+	public function webhookAction(Request $request)
+	{
+		
+		$response = json_decode ($response->getBody(), true);
+		// on Symfony 3.3 or lower, $clientRegistry = $this->get('knpu.oauth2.registry');
+		
+	}
+	
 	/**
 	 * Link to this controller to start the "connect" process
 	 *

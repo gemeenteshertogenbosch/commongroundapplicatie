@@ -12,11 +12,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Organisation
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+	/**
+	 * @var \Ramsey\Uuid\UuidInterface
+	 *
+	 * @ORM\Id
+	 * @ORM\Column(type="uuid", unique=true)
+	 * @ORM\GeneratedValue(strategy="CUSTOM")
+	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+	 */
     private $id;
 
     /**
@@ -39,10 +42,6 @@ class Organisation
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Component", mappedBy="organisation", orphanRemoval=true)
-     */
-    private $components;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -112,15 +111,20 @@ class Organisation
      */
     private $vetted;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Component", inversedBy="organisations")
+     */
+    private $components;
+
     public function __construct()
     {
-        $this->components = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->admins = new ArrayCollection();
         $this->teams = new ArrayCollection();
+        $this->components = new ArrayCollection();
     }
     
-    public function getId(): ?string
+    public function getId()
     {
     	return $this->id;
     }
@@ -169,37 +173,6 @@ class Organisation
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Component[]
-     */
-    public function getComponents(): Collection
-    {
-        return $this->components;
-    }
-
-    public function addComponent(Component $component): self
-    {
-        if (!$this->components->contains($component)) {
-            $this->components[] = $component;
-            $component->setOrganisation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComponent(Component $component): self
-    {
-        if ($this->components->contains($component)) {
-            $this->components->removeElement($component);
-            // set the owning side to null (unless already changed)
-            if ($component->getOrganisation() === $this) {
-                $component->setOrganisation(null);
-            }
-        }
 
         return $this;
     }
@@ -403,6 +376,32 @@ class Organisation
     public function setVetted(?bool $vetted): self
     {
         $this->vetted = $vetted;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Component[]
+     */
+    public function getComponents(): Collection
+    {
+        return $this->components;
+    }
+
+    public function addComponent(Component $component): self
+    {
+        if (!$this->components->contains($component)) {
+            $this->components[] = $component;
+        }
+
+        return $this;
+    }
+
+    public function removeComponent(Component $component): self
+    {
+        if ($this->components->contains($component)) {
+            $this->components->removeElement($component);
+        }
 
         return $this;
     }
