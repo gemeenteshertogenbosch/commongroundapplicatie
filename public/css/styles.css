@@ -1,5 +1,5 @@
 /************
-Variables
+Conduction Variables
 ************/
 
 :root {
@@ -11,18 +11,54 @@ Variables
   --header-background: #4376FC url(/images/base-header-overlay.png) repeat top left;
   --header-text-color: #fff;
   
-  --pannel-background-color: #4376FC; 
-  --pannel-txt-color: #fff; 
+  --pannel-header-background: #4376FC; 
+  --pannel-header-txt-color: #fff; 
+  --pannel-background-color: #fff; 
+  --pannel-txt-color: #555; 
   
-  --line-color: #FEBF24; 
-  --line-dot-color: #FFF; 
+  --timeline: #FEBF24; 
+  --timeline-dot: #FFF;  
   
-  --background-color-1: #4376FC; 
-  --background-color-2: #56c2b1; 
-  --background-color-3: #6fc6d9; 
-  --background-color-4: #FEBF24; 
+  --primary-1-color: #ffffff !important;
+  --primary-1-background: #4376FC;  
+  --primary-2-color: #56c2b1; 
+  --primary-2-background: #56c2b1; 
+  --primary-3-color: #6fc6d9; 
+  --primary-3-background: #6fc6d9; 
+  --primary-4-color: #FEBF24; 
+  --primary-4-background: #FEBF24; 
 }
 
+/************
+NLX Variables
+************/
+
+:root {
+  --main-font: 'Roboto', sans-serif !important;
+  --main-background: #F5F5F5;
+  --main-text-color: #555;
+  --main-link-color: #4376FC;
+  
+  --header-background: #FFBC2C url(/images/header-nlx.jpg) no-repeat center center fixed;
+  --header-text-color: #fff;
+  
+  --pannel-header-background: #FFBC2C; 
+  --pannel-header-txt-color: #fff; 
+  --pannel-background-color: #fff; 
+  --pannel-txt-color: #555; 
+  
+  --timeline: #FFBC2C; 
+  --timeline-dot: #FFF;  
+  
+  --primary-1-color: #ffffff !important;
+  --primary-1-background: #FFBC2C;  
+  --primary-2-color: #56c2b1; 
+  --primary-2-background: #56c2b1; 
+  --primary-3-color: #6fc6d9; 
+  --primary-3-background: #6fc6d9; 
+  --primary-4-color: #FEBF24; 
+  --primary-4-background: #FEBF24; 
+}
 
 /************
 GLOBAL STYLES
@@ -34,13 +70,13 @@ html {
 }
 
 body{ 
-	background-color: #ededed;
+	background: var(--main-background);
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	color: #555;
-	font-family: 'Roboto', sans-serif !important;
+	color: var(--main-text-color);
+	font-family: var(--main-font);
 	font-weight: 300;
 	font-size: 1.3em;
 }
@@ -59,17 +95,17 @@ p {
 }
 
 a:link{
-	color: #4376FC;
+	color: var( --main-link-color);
 	text-decoration: none;
 }
 
 a:hover{
-	color: #4376FC;
+	color: var( --main-link-color);
 	text-decoration: none;
 }
 
 a:visited{
-	color: #4376FC;
+	color: var( --main-link-color);
 	text-decoration: none;
 }
 
@@ -160,7 +196,8 @@ GENERAL STYLES
 	color: #FFF !important;		
 }
 .background-1 {
-	background-color: #4376FC;
+	background: var(--primary-1-background);
+	color: var(--primary-1-color);	
 }
 
 .background-1 a:link, .background-1 a:visited {
@@ -183,7 +220,8 @@ GENERAL STYLES
 }
 
 .background-2 {
-	background-color: #56c2b1;
+	background: var(--primary-2-background);
+	color: var(--primary-2-color);		
 }
 
 .background-with-image-2 {
@@ -200,7 +238,8 @@ GENERAL STYLES
 }
 
 .background-3 {
-	background-color: #6fc6d9;
+	background: var(--primary-3-background);
+	color: var(--primary-3-color);	
 }
 
 .background-with-image-3 {
@@ -216,24 +255,25 @@ GENERAL STYLES
 	background-size: cover;
 }
 
-.background-4 {
-	background-color: #70c6da;
+.background-4{	
+	background: var(--primary-4-background);
+	color: var(--primary-4-color);	
 }
 
 .color-1 {
-	color: #ed78a6;
+	color: var(--primary-1-background);
 }
 
 .color-2 {
-	color: #56c2b1;
+	color: var(--primary-2-background);
 }
 
 .color-3 {
-	color: #6fc6d9;
+	color: var(--primary-3-background);
 }
 
 .color-4 {
-	color: #70c6da;
+	color: var(--primary-4-background);
 }
 
 .btn {
@@ -263,8 +303,8 @@ GENERAL STYLES
 HEADER AND MENU STYLES
 ************/
 .header {
-	background: #4376FC url(/images/base-header-overlay.png) repeat top left;
-	color: #fff;
+	background: var(--header-background);
+	color: var(--header-text-color);;
 	width: 100%;
 	padding: 0;
 	margin: 0;
@@ -502,7 +542,6 @@ SERVICES STYLES
 }
 
 .panel-heading {
-	color: #ffffff;
 	-web-kit-border-top-left-radius: 6px;
 	-web-kit-border-top-right-radius: 6px;
 	border-top-left-radius: 6px;
@@ -512,7 +551,6 @@ SERVICES STYLES
 .panel-heading h4{
 	padding: 10px 0 10px 0 !important;
 	margin: 0;
-	color: #ffffff !important;
 
 }
 
@@ -579,17 +617,17 @@ SERVICES STYLES
 TEAM STYLES
 ************/
 .team-image {
-width: 50px;
-height: 50px;
-position: relative;
-overflow: hidden;
--webkit-border-radius: 50%;
--moz-border-radius: 50%;
--ms-border-radius: 50%;
--o-border-radius: 50%;
-border-radius: 50%;
-float: left;
-margin-right: 10px;
+	width: 50px;
+	height: 50px;
+	position: relative;
+	overflow: hidden;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
+	border-radius: 50%;
+	float: left;
+	margin-right: 10px;
 }
 
 img {
@@ -883,7 +921,8 @@ TIMELINE STYLES
   border-top-left-radius: 50%;
   border-bottom-right-radius: 50%;
   border-bottom-left-radius: 50%;
-  background: #fff;
+  background: var(--timeline-dot);
+  border: 3px solid #FEBF24 !important;
 }
 
 .timeline > li > .timeline-line {
@@ -893,40 +932,8 @@ TIMELINE STYLES
   margin-top: 20px;
   margin-left: -2px;
   z-index: 99;
+  background: var(--timeline);
 }
-
-.badge-1 {
-	border: 3px solid #FEBF24 !important;
-}
-
-.badge-2 {
-	border: 3px solid #FEBF24 !important;
-}
-
-.badge-3 {
-	border: 3px solid #FEBF24 !important;
-}
-
-.badge-4 {
-	border: 3px solid #FEBF24 !important;
-}
-
-.line-1 {
-	background: #FEBF24 
-}
-
-.line-2 {
-	background: #FEBF24 
-}
-
-.line-3 {
-	background: #FEBF24 
-}
-
-.line-4 {
-	background: #FEBF24 
-}
-
 
 .timeline-title {
   margin-top: 0;
