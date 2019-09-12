@@ -7,6 +7,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+ 
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 
@@ -88,7 +92,7 @@ class ComponentController extends AbstractController
 		
 		if($em->getRepository('App:Component')->findOneBy(array('gitId' => $component->getGitId(),'gitType' => $component->getGitType()))){
 			/* @todo ths should be a symfony exeption */
-			throw new \Exception('Component is already connected');
+			throw new ConflictHttpException("Component is already connected to this platform");
 		}
 		
 		//$component->setOrganisation($organisation);
@@ -98,6 +102,10 @@ class ComponentController extends AbstractController
 		
 		/* @todo domein automatisch inladen */
 		// redirects externally
+		
+		if(!$component->getOwner()->getVetted()){			
+			throw new BadRequestHttpException("You have added a component to an organisation that has not yet been vetted for this platform, your organisation and its components wil be visable as soon as the vetting has been completed");
+		}
 		
 		return $this->redirectToRoute('home');
 	}
@@ -111,7 +119,7 @@ class ComponentController extends AbstractController
 		
 		if(!$url){
 			/* @todo ths should be a symfony exeption */
-			throw new \Exception('No url parameter provided');
+			throw new BadRequestHttpException("No url parameter provided");
 		}
 		
 		$host = $url['host'];

@@ -1,0 +1,23 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ 	<div class="main-content container fluid-container">
+    
+	  <h1>Houston, we have a problem</h1>
+      <h5>{% if  exception.code = 0 %}500{% else %}{{ exception.code }}{% endif %}</h5>
+	 <p>
+	 	{{ exception.message }}
+	 </p>
+     <p>
+     	<a href="{{ path('home') }}">Return to the homepage</a>.
+     </p>
+                  
+      <div class="content-area footer">
+        (c) <a href="http://www.conduction.nl" target="_blank">Conduction</a> {{ "now"|date("Y") }}</a>
+      </div>
+    </div> 
+    
+    
+{% endblock %}

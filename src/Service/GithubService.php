@@ -121,8 +121,9 @@ class GithubService
 			$component->setOwner($organisations[0]);
 		}
 		else{
-			$component->addOrganisation($this->getOrganisationFromGitHub($repository['owner']['login']));
-			$component->setOwner($organisations[0]);
+			$organisation = $this->getOrganisationFromGitHub($repository['owner']['login']);
+			$component->addOrganisation($organisation);
+			$component->setOwner($organisation);
 		}
 				
 		return $component;

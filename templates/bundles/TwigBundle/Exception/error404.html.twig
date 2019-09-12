@@ -1,0 +1,22 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ 	<div class="main-content container fluid-container">
+    
+	  <h1>Whoops...., these arn't the droids your looking for?</h1>
+      <h5>404</h5>
+
+      <p>
+      	The requested page couldn't be located. Checkout for any URL
+      	misspelling or <a href="{{ path('home') }}">return to the homepage</a>.
+      </p>
+
+      <div class="content-area footer">
+        (c) <a href="http://www.conduction.nl" target="_blank">Conduction</a> {{ "now"|date("Y") }}</a>
+      </div>
+    </div> 
+    
+    
+{% endblock %}
