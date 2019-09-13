@@ -135,7 +135,12 @@ class GithubService
 		$response = json_decode ($response->getBody(), true);
 		
 		$organisation = New Organisation;
-		$organisation->setName($response['name']);
+		if(array_key_exists ('name',$response) && $response['name']){
+		    $organisation->setName($response['name']);
+		}
+		else{
+		    $organisation->setName($response['login']);		    
+		}
 		$organisation->setDescription($response['description']);
 		$organisation->setLogo($response['avatar_url']);
 		$organisation->setGithub($response['html_url']);
