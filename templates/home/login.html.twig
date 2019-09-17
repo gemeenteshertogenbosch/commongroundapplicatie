@@ -1,0 +1,57 @@
+	 <li>
+            <a name="login"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- Contact Us section -->
+                <h1>Inloggen of Aanmelden</h1>
+                <h5>Om in te loggen of uw organisatie aan te melden voor dit overzicht kunt u gebruikt maken van uw persoonlijke git acount</h5>
+                <div class="row">
+                  <div class="col-sm-12 panel">
+                    <div class="panel-body">
+                      <div class="form-horizontal">
+                        <div class="row">
+                          <div class="col-md-12">
+                          	<p>U hoeft niet in te loggen of een acount aan te maken om componenten en organisaties op dit platform te bekijken, wilt u echter zelf componenten en organisaties toevoegen of bewerken dan kunt u inlogen via de onderstaadne opties.</p>
+                          
+                          
+                          	<p>Let op, u kunt vervolgens organisaties toevoegen of wijzigen waar u via die acount schrijf rechten op heeft. En componenten toevoegen waar u leesrechten op heeft. U kunt geen componenten wijzigen, alle informatie over componenten word ingelezen via de bijbehorende repository. Lees daarover <a href="{{ path('app_home_tutorial') }}">hier</a> meer.</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4">
+                            {% if organisation is defined %}
+                          	 <a href="https://www.common-ground.dev/connect/bitbucket"  class="btn background-bitbucket btn-lg btn-block" type="button"><i class="fab fa-bitbucket"></i> Connect with BitBucket</a>
+                          	{% else %}
+                          	 <a href="{{ path('connect_bitbucket_start') }}"  class="btn background-bitbucket btn-lg btn-block" type="button"><i class="fab fa-bitbucket"></i> Connect with BitBucket</a>
+                          	{% endif %}
+                           
+                          </div>
+                          <div class="col-md-4">
+                            {% if organisation is defined %}
+                          	<a href="https://www.common-ground.dev/connect/github" class="btn background-github btn-lg btn-block" type="button"><i class="fab fa-github"></i> Connect with GitHub</a>
+                          	{% else %}
+                          	<a href="{{ path('connect_github_start') }}" class="btn background-github btn-lg btn-block" type="button"><i class="fab fa-github"></i> Connect with GitHub</a>
+                          	{% endif %}
+                            
+                          </div>
+                          <div class="col-md-4">
+                            {% if organisation is defined %}
+                          	<a href="https://www.common-ground.dev/connect/gitlab"  class="btn background-gitlab btn-lg btn-block" type="button"><i class="fab fa-gitlab"></i> Connect with  GitLab</a>
+                          	{% else %}
+                          	<a href="{{ path('connect_gitlab_start') }}"  class="btn background-gitlab btn-lg btn-block" type="button"><i class="fab fa-gitlab"></i> Connect with  GitLab</a>
+                          	{% endif %}
+                           
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>

@@ -21,19 +21,20 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		composer install --prefer-dist --no-progress --no-suggest --no-interaction
 	fi
 
-	#echo "Waiting for db to be ready..."
-	#until bin/console doctrine:query:sql "SELECT 1" > /dev/null 2>&1; do
-	#	sleep 1
-	#done
+	echo "Waiting for db to be ready..."
+	until bin/console doctrine:query:sql "SELECT 1" > /dev/null 2>&1; do
+		sleep 1
+	done
 
-	#bin/console cache:clear --no-warmup 
-	#if [ "$APP_ENV" != 'prod' ]; then
-	#	bin/console doctrine:cache:clear-metadata 
-	#	bin/console doctrine:cache:clear-query
-	#	bin/console doctrine:cache:clear-result
+	bin/console cache:clear --no-warmup 
+	if [ "$APP_ENV" != 'prod' ]; then
+		bin/console doctrine:cache:clear-metadata 
+		bin/console doctrine:cache:clear-query
+		bin/console doctrine:cache:clear-result
 	#	bin/console doctrine:schema:update --force --no-interaction
-	#	bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3
-	#fi
+	#	bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3		
+	#	bin/console api:swagger:export --output=/srv/api/public/schema/openapi.json --json --spec-version=3
+	fi
 fi
 
 exec docker-php-entrypoint "$@"

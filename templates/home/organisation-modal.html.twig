@@ -1,6 +1,6 @@
 {# templates/home/modal.html.twig #}
  <!--  Modal -->
-    <div class="modal fade" id="porfolio-{{ item.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="organisation-{{ organisation.id }}" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
          <button type="button" class="modal-close-btn" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove"></span></button>
@@ -9,7 +9,7 @@
             <div id="carousel-portfolio-{{ item.id }}" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner" role="listbox">
               	{% for image in item.images %}
-                <div class="item">
+                <div class="item active">
                   <img src="{{ image }}" alt="" />
                 </div>
              	{% endfor %}

@@ -1,0 +1,148 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ 	<div class="main-content container fluid-container">
+        <!-- Main timeline -->
+        <ul id="timeline" class="timeline">
+          <li>
+            <a name="about"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- What We Do section -->
+                <h1>Welkom bij het common ground componenten overzicht</h1>
+                <h5>Waar delen vermenigvuldingen is</h5>
+                <div class="row">
+                  <div class="col-md-4 col-sm-6 service panel">
+                    <div class="panel-heading background-1">
+                      <div class="panel-icon"><span class="glyphicon glyphicon-heart"></span></div>
+                      <div class="panel-title">
+                        <h4>Wat we hier doen</h4>
+                        <p>Delen is vemenigvuldigen.</p>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <p>We proberen op deze pagina overzicht te cre&euml;ren in welke componenten momenteel door wie worden ontwikkeld. Partijen (gemeente en ontwikkelaars) kunnen zelf componenten toevoegen.</p>
+
+					  <p>Daarnaast is het een experiment in data bij de bron en het uitlezen van applicatie documentatie vanuit de applicaties zelf.  </p>
+                      <p><a href="https://vng.nl/samen-organiseren/common-ground">Lees meer</a></p>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-4 col-sm-6 service panel">
+                    <div class="panel-heading background-1">
+                      <div class="panel-icon"><span class="glyphicon glyphicon-link"></span></div>
+                      <div class="panel-title">
+                        <h4>Meer weten?</h4>
+                        <p>Verbinding ipv contact</p>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <p>Deze pagina dient slechts te overzicht. Meer weten over &eacute;&eacute;n component? Neem contact op de ontwikkelaar. Voor zover bij ons bekend vermelden we contactgegevens onder organisaties.</p>
+                      <p><a href="https://commonground.nl/">De commonground pleio</a></p>
+                    </div>
+                  </div>
+                   <div class="col-md-4 col-sm-6 service panel">
+                    <div class="panel-heading background-1">
+                      <div class="panel-icon"><span class="glyphicon glyphicon-repeat"></span></div>
+                      <div class="panel-title">
+                        <h4>Bijdragen?</h4>
+                        <p>Help ons verder te komen</p>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <p>Deze pagina is een bet&aacute; test in het cre&euml;ren van overzicht en dient onder andere als inspiratie voor de in ontwikkeling zijnde VNG appstore. </p>
+					  <p>We horen het dus graag als je idee&euml;n, wensen of een verbeter punt hebt! Deze kan je <a href="https://github.com/ConductionNL/love-common-ground/issues/new/choose" target="_blanck">hier</a> als issue inschieten.</p>
+                     
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a name="organisations"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- Our Work section -->
+                <h1>Organisaties</h1>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p>Welke organisaties hebben hier momenteel componenten beschikbaar gemaakt?</p>
+                    <p>Organisaties worden automatisch aangemaakt aan de hand van aangemelde repositories, je kan onder tutorial terugvinden hoe dat werkt</p>
+                  	<!-- 
+                    <p>Uw organisatie hier? <a href="javascript:void(0);" onclick="scrollToAnchor('login')">meld</a> jezelf aan zodat je organisaties kan aanmaken</p> 
+                    -->
+                  </div>
+                </div>
+                <div class="row">              
+                  	{% for organisation in organisations %}
+                      {% include 'home/organisation-thumb.html.twig' with {'organisation': organisation} %}
+                 	{% endfor %}                   
+                </div>
+              </div>
+            </div>
+          </li>
+                    
+          <li>
+            <a name="components"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- Our Work section -->
+                <h1>Componenten</h1>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p>Bronnen zijn kleine rest-API's, die CRUD-bewerkingen mogelijk maken, validatie toepassen en data beschikbaar maken. Business logica en het toepassen van regels word overgelaten aan de aangesloten applicaties. Die daarbij gebruik kunnen maken van hulp applicaties (tools)</p>
+                  
+                  </div>
+
+                  <!-- See the filterPortfolio(...) function in the javascript block at the bottom of the page for an explanation of how this works. -->
+                  <div class="col-sm-12 portfolio-filters">
+                    <button id="allFilter" type="button" class="btn background-black" onclick="filterPortfolio(['source', 'application', 'tool'], 'allFilter')">Alle</button>
+                    <button id="sourceFilter" type="button" class="btn background-1" onclick="filterPortfolio(['source'], 'sourceFilter')"><i class="fad fa-database"></i> Bronnen</button>
+                    <button id="applicationFilter" type="button" class="btn background-2" onclick="filterPortfolio(['application'], 'applicationFilter')"><i class="fad fa-browser"></i> Applicaties</button>
+                    <button id="toolFilter" type="button" class="btn background-3" onclick="filterPortfolio(['tool'], 'toolFilter')"><i class="fad fa-tools"></i> Tools</button>
+                  </div>
+                </div>
+
+                <div class="row">              
+                  	{% for component in components %}
+                      {% include 'home/component-thumb.html.twig' with {'item': component} %}
+                 	{% endfor %}                   
+                </div>
+              </div>
+            </div>
+          </li>
+             {% include 'home/add.html.twig' %}
+          {# if is_granted('IS_AUTHENTICATED_FULLY') == false  and is_granted('IS_AUTHENTICATED_REMEMBERED')  == false %}
+             {% include 'home/login.html.twig' %}
+          {% endif #}
+        </ul>
+      </div>
+      <div class="content-area footer">
+        (c) <a href="http://www.conduction.nl" target="_blank">Conduction</a> {{ "now"|date("Y") }}</a>
+      </div>
+    </div> 
+    
+    {% for component in components %}
+    	{% include 'home/component-modal.html.twig' with {'component': component} %}
+    {% endfor %} 
+    
+{% endblock %}

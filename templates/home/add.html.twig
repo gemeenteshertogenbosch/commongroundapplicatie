@@ -1,0 +1,43 @@
+	 	<li>
+            <a name="add"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- Contact Us section -->
+                <h1>Component toevoegen</h1>
+                <h5>U kunt componenten toevoegen aan dit overzicht zonder een acount aan te maken</h5>
+                <div class="row">
+                  <div class="col-sm-12 panel">
+                    <div class="panel-body">
+                       <form action="{{ path('app_component_quickadd') }}">	
+                          <div class="form-horizontal">
+                            <div class="row">
+                              <div class="col-md-12">
+                              	<p>U hoeft niet in te loggen of een account aan te maken om componenten toe te voegen aan deze pagina, u kunt hieronder de URL van de desbetreffende repository opgeven. Wij lezen het component dan automatisch in, is de eigenaar van het component reeds bij ons bekend dan wordt het component ook op de overzicht pagina weergegeven. Is de eigenaar nog niet bij ons bekend dan zullen wij deze eerst handmatig valideren.</p>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="https://github.com/ConductionNL/love-common-ground" id="url" name="url">                           
+                              </div>
+                              <div class="col-md-4">
+                                <input type="submit" value="Insturen"  class="btn background-1" type="button"></input>                           
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-12">
+                              	<p>Let op! voor de beta versie van deze pagina ondersteunen wij alleen github.</p>
+                              </div>
+                            </div>
+                          </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>

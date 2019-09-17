@@ -1,0 +1,185 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ 	<div class="main-content container fluid-container">
+        <!-- Main timeline -->
+        <ul id="timeline" class="timeline">
+        <li>
+            <a name="Edit"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div><!-- /.top-link -->
+                <!-- Contact Us section -->
+                <h1>Organisaties</h1>
+                <h5>De huidige organisaties waarje lid van bent</h5>
+                <div class="row">
+                    <div class="col-md-8 panel">
+                      	<div class="panel-body"> 
+                            <div class="row">
+                            	<div class="col-md-12"> 
+                                {% if user.organisations is not empty and user.organisations|length > 0  %}
+                                {% for organisation in user.organisations %}
+                      			<a href="{{ path('app_organisation_view', {slug:organisation.slug}) }}">
+                                <div class="organisation-well">
+                                  	<div class="organisation">             
+                                  		<div class="organisation-portrait">
+                                            <img src="{{ organisation.logo|e }}">
+                                        </div>     	     
+                                  		<div class="organisation-title">
+                                  		{{ organisation.name|e }}
+                                  		</div>
+                                  	</div>
+                                 </div> 	  
+                                 </a>                              
+                                {% endfor %}                       
+                                {% else %}
+                                	U bent nog geen lid van organisaties, kijk hieronder om organisaties toe te voegen of lid van organisaties te worden                         
+                                {% endif %}                                
+                     			</div><!-- /.col -->
+                    		</div><!-- /.row -->
+                      	</div><!-- /.panel-body -->                  
+                      </div><!-- /.col -->
+
+                  
+                  <div class="col-md-4 service panel">
+                    <div class="panel-heading background-1">
+                      <div class="panel-icon"><span class="glyphicon glyphicon-heart"></span></div>
+                      <div class="panel-title">
+                        <h4>Connecties</h4>
+                        <p>Git en Social Acounts</p>
+                      </div><!-- /.panel-title -->
+                    </div><!-- /.panel-heading -->
+                    <div class="panel-body">
+                      <p> Nog te koppelen</p>
+                      <p>
+                        {% if user.bitbucketId is empty %}
+                      	<a href="{{ path('connect_bitbucket_start') }}"  class="btn background-bitbucket btn-block" type="button"><i class="fab fa-bitbucket"></i> Connect BitBucket</a>
+                      {% endif %}
+                        {% if user.githubId is empty %}
+                      	<a href="{{ path('connect_github_start') }}" class="btn background-github btn-block" type="button"><i class="fab fa-github"></i> Connect GitHub</a>
+                      	{% endif %}
+                        {% if user.gitlabId is empty %}
+                      	<a href="{{ path('connect_gitlab_start') }}"  class="btn background-gitlab btn-block" type="button"><i class="fab fa-gitlab"></i> Connect GitLab</a>
+                        {% endif %}
+                      </p>
+                      <p> Reeds gekoppeld</p>
+                      <p>
+                        {% if user.bitbucketToken is not empty %}
+                      	<a href="{{ path('connect_bitbucket_remove') }}"  class="btn background-bitbucket btn-block" type="button"><i class="fab fa-bitbucket"></i> Verwijder BitBucket</a>
+                      	{% endif %}
+                        {% if user.githubToken is not  empty %}
+                      	<a href="{{ path('connect_github_remove') }}" class="btn background-github btn-block" type="button"><i class="fab fa-github"></i> Verwijder GitHub</a>
+                      	{% endif %}
+                        {% if user.gitlabToken is not  empty %}
+                      	<a href="{{ path('connect_gitlab_remove') }}"  class="btn background-gitlab btn-block" type="button"><i class="fab fa-gitlab"></i> Verwijder GitLab</a>
+                      	{% endif %}
+                      </p>
+                      <p>Verlopen</p>
+                      <p>
+                        {% if user.bitbucketToken is empty and user.bitbucketId is not empty%}
+                      	<a href="{{ path('connect_bitbucket_start') }}"  class="btn background-bitbucket btn-block" type="button"><i class="fab fa-bitbucket"></i> Vernieuw BitBucket</a>
+                       {% endif %}
+                        {% if user.githubToken is empty  and user.githubId is not empty %}
+                      	<a href="{{ path('connect_github_start') }}" class="btn background-github btn-block" type="button"><i class="fab fa-github"></i> Vernieuw GitHub</a>
+                      	{% endif %}
+                        {% if user.gitlabToken is empty   and user.gitlabId is not empty%}
+                      	<a href="{{ path('connect_gitlab_start') }}"  class="btn background-gitlab btn-block" type="button"><i class="fab fa-gitlab"></i> Vernieuw GitLab</a>
+                        {% endif %}
+                      </p>
+                    </div><!-- /.panel-body -->
+                  </div><!-- /.col -->
+                </div><!-- /.row -->
+              </div><!-- /.timeline-body -->
+            </div><!-- /.timeline-panel -->
+          </li>
+          <li>
+            <a name="login"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div><!-- /.top-link -->
+                <!-- Contact Us section -->
+                <h1>Organisaties toevoegen</h1>
+                <h5>Vanuit <i class="fab fa-bitbucket"></i> Teams, <i class="fab fa-github"></i>  Organizations, en <i class="fab fa-gitlab"></i>  Groups</h5>
+                
+                <div class="row">
+                  <div class="col-sm-12 panel">
+                    <div class="panel-body">
+                      <div class="form-horizontal">
+                        {% if organisations is not empty and organisations|length > 0  %}
+                        <div class="row">
+                          <div class="col-md-12">  
+                             U kunt de volgende organisaties toevoegen, het toevoegen van extra Git Providers aan een bestaande organisatie gaat via die organisatie zelf. Het kan zijn dat je momenteel minder organisaties ziet omdat je nog niet al je git acounts hebt gekoppeld of omdat &eacute;&eacute;n of meerdere van je koppelingen zijn verlopen.                       
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                        <div class="row">
+                          <div class="col-md-12">  
+                            {% for organisation in organisations %}
+                            <div class="organisation-well">
+                              	<div class="organisation">             
+                              		<div class="organisation-portrait">
+                                        <img src="{{ organisation.avatar|e }}">
+                                    </div>     	                     
+                              		<div class="organisation-type ">
+                                        <span class="fa-stack fa-2x color-{{ organisation.type }}">
+                                          <i class="fas fa-circle fa-stack-2x"></i>
+                                          <i class="fab fa-{{ organisation.type|e }} fa-stack-1x fa-inverse"></i>
+                                        </span>
+                              		</div>
+                              		<div class="organisation-title">
+                              		{{ organisation.name|e }}
+                              		</div>
+                              	</div>
+                              	<div class="organisation-buttons">
+                              	{% if organisation.commonground is not defined or organisation.commonground is empty %}
+                              	<a href="{{ path('app_organisation_add',  {type: organisation.type, id: organisation.id}) }}"  class="btn background-{{ organisation.type }} btn-sm btn-block" type="button">Connect</a>                       	
+                              	{% elseif organisation.commonground is not empty and organisation.isAdmin %}             
+                              	<a href="https://{{ organisation.commonground.slug }}.common-ground.dev"  class="btn background-{{ organisation.type }} btn-sm btn-block" type="button">Beheer</a>    
+                              	{% elseif organisation.commonground is not empty and organisation.isMember %}     
+                              	<a href="https://{{ organisation.commonground.slug }}.common-ground.dev"  class="btn background-{{ organisation.type }} btn-sm btn-block" type="button">Bekijk</a>    
+                              	{% elseif organisation.commonground is not empty  %}                              	
+                              	<a href="{{ path('app_organisation_join',  {organisation: organisation.commonground.id }) }}"  class="btn background-{{ organisation.type }} btn-sm btn-block" type="button">Join</a>    
+                              	{% endif %}
+                              	</div>
+                             </div>                                 
+                            {% endfor %}
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                        <div class="row">
+                          <div class="col-md-12">  
+                            <p>Waarom worden voor verschillende Git Providers verschillende bronnen gebruikt?</p>
+                            <p>Er is nogal wat definitie verschil tussen Bitbucket, GitHub en GitLab rondom organisatie inrichting en gelaagdheid. Bitbucket kent Teams die meerder projecten hebben, GitHub houdt het op organisaties bestaande uit teams en GitLab heeft alleen maar groepen. Voor commonground hanteren we Organisaties bestaande uit Teams (de github methode). Dat betekend dat je commonground organisaties kan aanmaken vanuit (en koppelen aan) Bitbucket Teams, Github Organisaties en GitLab Groups. Lees er <a href="https://about.gitlab.com/2017/09/11/comparing-confusing-terms-in-github-bitbucket-and-gitlab/">hier</a> meer over.</p>                          
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                		{% else %}
+                        <div class="row">
+                        	<div class="col-md-12"> 
+                        	Wij hebben geen organisaties voor u kunnen vinden. Organisaties worden bepaald aan de hand van uw Github, Gitlab of Bitbucket acount. Controleer of u deze goed heeft gekopeld en de koppelingen nog geldig zijn. Controlleer daarna of uw acounts bij uw providers zijn gekoppeld aan de juiste Organisaties, Groepen en Teams.
+                 			</div><!-- /.col -->
+                		</div><!-- /.row -->
+                		{% endif %}
+                      </div>                      
+                    </div><!-- /.panel-body -->
+                  </div><!-- /.col -->
+                </div><!-- /.row -->
+                
+              </div><!-- /.timeline-body -->
+            </div><!-- /.timeline-panel -->
+          </li>
+        </ul>
+      </div>
+      <div class="content-area footer">
+        (c) <a href="http://www.conduction.nl" target="_blank">Conduction</a> {{ "now"|date("Y") }}</a>
+      </div>
+    </div> 
+    
+{% endblock %}

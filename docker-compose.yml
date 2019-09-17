@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:  
-  ## In production, you may want to use a managed database service
+   ## In production, you may want to use a managed database service
   db-website:
     image: mysql:5.7 #Do not use a version 8, until propper pdo support comes out
     environment:
@@ -16,7 +16,6 @@ services:
       #- ./docker/db/data:/var/lib/mysql:rw
     ports:
       - "3306:3306"
-      
   ## The new Syfony Based MVC website
   love-component:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php:latest
@@ -24,31 +23,31 @@ services:
       context: ./
       target: api_platform_php
       cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-website_php
-        - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-website_nginx 
+        - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php
+        - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx 
     depends_on:
       - db-website
     volumes:
       - ./:/srv/api:rw,cached
 
+  ## And its friend the nginx server
   love-nginx:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx:latest
     build:
       context: ./
       target: api_platform_nginx
       cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-website_php
-        - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-website_nginx
+        - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php
+        - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx
     depends_on:
       - love-component
     volumes:
       - ./public:/srv/api/public:ro
     ports:
       - "80:80" 
-       
+      
 ## We use volumes to achieve db (semi) persistancy for developtment purposes, but do not use this in production! volumes are by nature not persistent     
 volumes:
   love-common-gound-db-website: {}  
-      
             
 

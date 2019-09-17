@@ -1,0 +1,116 @@
+{# templates/home/modal.html.twig #}
+ <!--  Modal -->
+    <div class="modal fade" id="component-{{ component.id }}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+         <button type="button" class="modal-close-btn" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove"></span></button>
+         <div class="modal-body container-fluid portfolio web">
+            <!--  Carousel -->
+            <div id="carousel-portfolio-{{ component.id }}" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner" role="listbox">
+              
+              	{# 
+                <div class="item active">
+                  <img src="{{ component.logo  }}" alt="" />
+                </div>
+              for image in item.images %}
+                <div class="item active">
+                  <img src="{{ component.logo  }}" alt="" />
+                </div>
+             	{% endfor #}
+              </div>
+
+              <!-- Controls -->
+              <!--
+                Remove these controls if you are only using one image in the carousel.
+              <a class="left carousel-control" href="#carousel-portfolio-{{ component.id }}" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              </a>
+              <a class="right carousel-control" href="#carousel-portfolio-{{ component.id }}" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              </a>
+              -->
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="portfolio-title">
+                  <div class="portfolio-icon 	{% if component.type == 'source'%}
+                          	background-1
+                          	{% elseif component.type == 'tool' %}
+                           background-3
+                          	{% else %}
+                           background-2                       	
+                          	{% endif %}">
+                 	<div>
+                    	{% if component.type == 'source'%}
+                     	<i class="fad fa-database"></i>
+                        {% elseif component.type == 'tool' %}
+                       	<i class="fad fa-tools"></i>
+                        {% else %}{# lets default to application#}
+                   		<i class="fad fa-browser"></i>                          	
+                        {% endif %}
+                 	</div>
+                  </div>
+                  <div class="title">
+                    <h4>{{ component.name|capitalize|replace({'-': " ", "_" : " "}) }}</h4>
+                    {% if component.version %}Versie <em>{{ component.version }}</em>{% endif %}
+                    {#
+                    Licentie <a href="{{ item.license.url}}">{{ item.license.name}}</a><br />
+                    Ontwikkelaar <a href="{{ item.license.url}}">{{ item.license.name}}</a><br />
+                    Eigenaar <a href="{{ item.license.url}}">{{ item.license.name}}</a><br />
+                    #}
+                  </div>
+                  <br />
+                  {% if component.docs|length > 0 %}  
+                  <p>
+                  	<b>Documentatie</b><br />
+                    {% for key,doc in component.docs if doc %}
+                  		<a href="#" data-toggle="collapse" data-target="#component-{{ component.id }}-collapse-{{ key }}" data-parent="#component-{{ component.id }}" aria-expanded="{% if key == 'readme'%}true{% else %}false{% endif %}" aria-controls="component-{{ component.id }}-collapse-{{ key }}" >{{ key|capitalize|replace({'-': " ", "_" : " "}) }}</a><br />
+                    {% endfor %}
+                  </p>
+                  {% endif %}
+                  {% if component.tags|length > 0 %}  
+                  <p>
+                  	<b>Informatie Model</b><br />   
+                    {% for tag in component.tags %}
+                  		{{ tag.name }}<br />
+                    {% endfor %}
+                  </p>
+                  {% endif %}
+                  {% if component.servers|length > 0 %}  
+                  <p>
+                  	<b>Servers</b> <br />      	
+                    {% for key,server in component.servers if server %}
+                  		<a href="{{ server }}" >{{ key|capitalize|replace({'-': " ", "_" : " "}) }}</a><br />
+                    {% endfor %}
+                  </p>
+                  {% endif %}
+                  {% if component.links|length > 0 %}  
+                  <p>
+                  	<b>Verwijzingen</b><br />           
+                    {% for key,link in component.links if link %}
+                  		<a href="{{ link }}">{{ key|capitalize|replace({'-': " ", "_" : " "}) }}</a><br />
+                    {% endfor %}
+                  </p>
+                  {% endif %}
+                </div>
+                <div >
+                	<a href="{{ path('app_component_refresh',  {'component': component.id}) }}">Refresh</a>
+                </div>
+              </div>
+              <div class="modal-text col-md-7">
+              	<div id="accordion-{{ component.id }}">
+               	  {% if component.docs|length > 0 %}  
+                  {% for key,doc in component.docs if doc  %}
+                  	<div id="component-{{ component.id }}-collapse-{{ key }}" class="{% if key!= 'readme'%}collapse{% endif %}">{{ doc | raw }}</div>
+                  {% endfor %}
+                  {% else %}
+                  Er kon geen documentatie worden gevonden voor dit component, bevat het een readme.md bestand?
+                  {% endif %}
+              	</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

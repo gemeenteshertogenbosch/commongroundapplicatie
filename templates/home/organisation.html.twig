@@ -1,0 +1,227 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ 	<div class="main-content container fluid-container">
+        <!-- Main timeline -->
+        <ul id="timeline" class="timeline">
+          <li>
+            <a name="about"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- What We Do section -->
+                <h1>Over ons</h1>
+                <div class="row">
+                
+                  <div class="col-md-12 col-sm-12 service panel">
+                    <div class="panel-heading background-1">
+                      <div class="panel-icon">
+                      	<div>
+                      		<i class="fad fa-building"></i>
+                      	</div>
+                      </div>
+                      <div class="panel-title">
+                        <h4>{{ organisation.name }}</h4>
+                        <p>Welkom bij het common ground componenten overzicht van {{ organisation.name }}</p>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      {{ organisation.description }}
+                    </div>
+                  </div>
+                     
+         
+                </div>                
+              </div>
+            </div>
+          </li>
+
+                    
+          <li>
+            <a name="components"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- Our Work section -->
+                <h1>Componenten</h1>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p>Common Ground componenten zijn kleine rest-API's, die CRUD-bewerkingen mogelijk maken en regels toepassen. Business logica en geavanceerde validaties worden overgelaten aan de aangesloten applicaties.</p>
+                  
+                    <p></p>
+                  </div>
+
+                  <!-- See the filterPortfolio(...) function in the javascript block at the bottom of the page for an explanation of how this works. -->
+                  <div class="col-sm-12 portfolio-filters">
+                    <button id="allFilter" type="button" class="btn background-black" onclick="filterPortfolio(['source', 'application', 'tool'], 'allFilter')">Alle</button>
+                    <button id="sourceFilter" type="button" class="btn background-1" onclick="filterPortfolio(['source'], 'sourceFilter')"><i class="fad fa-database"></i> Bronnen</button>
+                    <button id="applicationFilter" type="button" class="btn background-2" onclick="filterPortfolio(['application'], 'applicationFilter')"><i class="fad fa-browser"></i> Applicaties</button>
+                    <button id="toolFilter" type="button" class="btn background-3" onclick="filterPortfolio(['tool'], 'toolFilter')"><i class="fad fa-tools"></i> Tools</button>
+                  </div>
+                </div>
+
+                <div class="row">              
+                  	{% for component in components %}
+                      {% include 'home/component-thumb.html.twig' with {'item': component} %}
+                 	{% endfor %}                   
+                </div>
+              </div>
+            </div>
+          </li>
+             {% include 'home/add.html.twig' %}
+          {# if is_granted('IS_AUTHENTICATED_FULLY') == false  and is_granted('IS_AUTHENTICATED_REMEMBERED')  == false %}
+             {% include 'home/login.html.twig' %}
+          {% endif }
+         {% if isAdmin %}       
+          <li>
+            <a name="login"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div><!-- /.top-link -->
+                <!-- Contact Us section -->
+                <h1>Componenten toevoegen</h1>
+                <h5>Vanuit <i class="fab fa-bitbucket"></i>, <i class="fab fa-github"></i>, en <i class="fab fa-gitlab"></i>  Repositories</h5>
+                
+                <div class="row">
+                  <div class="col-sm-12 panel">
+                    <div class="panel-body">
+                      <div class="form-horizontal">
+                        <div class="row">
+                          <div class="col-md-12">  
+                             U kunt de volgende componenten toevoegen, dit zijn publieke repositories van de git acounts gekopeld aan deze organisatie.                        
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                        <div class="row">
+                          <div class="col-md-12">  
+                            {% for repository in repositories %}                            
+                            <div class="organisation-well">
+                              	<div class="organisation">             
+                              		<div class="organisation-portrait">
+                                        <img src="{{ repository.avatar|e }}">
+                                    </div>     	                     
+                              		<div class="organisation-type ">
+                                        <span class="fa-stack fa-2x color-{{ repository.type }}">
+                                          <i class="fas fa-circle fa-stack-2x"></i>
+                                          <i class="fab fa-{{ repository.type|e }} fa-stack-1x fa-inverse"></i>
+                                        </span>
+                              		</div>
+                              		<div class="organisation-title">
+                              		{{ repository.name|e }}
+                              		</div>
+                              	</div>
+                              	<div class="organisation-buttons">
+                                {% if repository.commonGroundId is defined and repository.commonGroundId is not empty %}
+                                	<span  class="btn  background-faded btn-sm btn-block">Already connected</span>
+                                {% else %}
+                              		<a href="{{ path('app_component_add',  {type: repository.type, organisation: organisation.id , id: repository.id}) }}"  class="btn background-{{ repository.type }} btn-sm btn-block" type="button">Connect</a>                       	
+                              	{% endif %}
+                              	</div>
+                             </div>                             
+                            {% endfor %}
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                       
+                      </div>                      
+                    </div><!-- /.panel-body -->
+                  </div><!-- /.col -->
+                </div><!-- /.row -->
+                
+              </div><!-- /.timeline-body -->
+            </div><!-- /.timeline-panel -->
+          </li>    
+          <li>
+            <a name="login"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div><!-- /.top-link -->
+                <!-- Contact Us section -->
+                <h1>Git organisaties toevoegen</h1>
+                <h5>Vanuit <i class="fab fa-bitbucket"></i> Teams, <i class="fab fa-github"></i>  Organizations, en <i class="fab fa-gitlab"></i>  Groups</h5>
+                
+                <div class="row">
+                  <div class="col-sm-12 panel">
+                    <div class="panel-body">
+                      <div class="form-horizontal">
+                        <div class="row">
+                          <div class="col-md-12">  
+                             U kunt de volgende git organisaties kopelen aan deze organisatie.                        
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                        <div class="row">
+                          <div class="col-md-12">  
+                            {% for connectOrganisation in organisations %}
+                            <div class="organisation-well">
+                              	<div class="organisation">             
+                              		<div class="organisation-portrait">
+                                        <img src="{{ connectOrganisation.avatar|e }}">
+                                    </div>     	                     
+                              		<div class="organisation-type ">
+                                        <span class="fa-stack fa-2x color-{{ connectOrganisation.type }}">
+                                          <i class="fas fa-circle fa-stack-2x"></i>
+                                          <i class="fab fa-{{ connectOrganisation.type|e }} fa-stack-1x fa-inverse"></i>
+                                        </span>
+                              		</div>
+                              		<div class="organisation-title">
+                              		{{ connectOrganisation.name|e }}
+                              		</div>
+                              	</div>
+                              	<div class="organisation-buttons">
+                                {% if connectOrganisation.commonground is defined and connectOrganisation.commonground.id is not empty %}
+                                	<span class="btn  background-conduction btn-sm btn-block">Already connected</span>
+                                {% else %}
+                              		<a href="{{ path('app_organisation_connect',  {type: connectOrganisation.type, id: connectOrganisation.id, organisation: organisation.id}) }}"  class="btn background-{{ connectOrganisation.type }} btn-sm btn-block" type="button">Connect</a>                       	
+                        	    {% endif %}    
+                             </div> 
+                        	</div> 	                            
+                            {% endfor %}
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                        <div class="row">
+                          <div class="col-md-12">  
+                            <p>Waarom worden voor verschillende Git Providers verschillende bronnen gebruikt?</p>
+                            <p>Er is nogal wat definitie verschil tussen Bitbucket, GitHub en GitLab rondom organisatie inrichting en gelaagdheid. Bitbucket kent Teams die meerder projecten hebben, GitHub houdt het op organisaties bestaande uit teams en GitLab heeft alleen maar groepen. Voor commonground hanteren we Organisaties bestaande uit Teams (de github methode). Dat betekend dat je commonground organisaties kan aanmaken vanuit (en koppelen aan) Bitbucket Teams, Github Organisaties en GitLab Groups. Lees er <a href="https://about.gitlab.com/2017/09/11/comparing-confusing-terms-in-github-bitbucket-and-gitlab/">hier</a> meer over.</p>                          
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                        <div class="row">
+                        	<div class="col-md-12">  
+                 			</div><!-- /.col -->
+                		</div><!-- /.row -->
+                      </div>                      
+                    </div><!-- /.panel-body -->
+                  </div><!-- /.col -->
+                </div><!-- /.row -->
+                
+              </div><!-- /.timeline-body -->
+            </div><!-- /.timeline-panel -->
+          </li>
+         {% endif #}  
+        </ul>
+      </div>
+      <div class="content-area footer">
+        (c) <a href="http://www.conduction.nl" target="_blank">Conduction</a> {{ "now"|date("Y") }}</a>
+      </div>
+    </div> 
+    
+    {% for component in components %}
+    	{% include 'home/component-modal.html.twig' with {'component': component} %}
+    {% endfor %} 
+    
+{% endblock %}

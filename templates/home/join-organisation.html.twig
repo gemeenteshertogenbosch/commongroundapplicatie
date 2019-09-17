@@ -1,0 +1,115 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ 	<div class="main-content container fluid-container">
+        <!-- Main timeline -->
+        <ul id="timeline" class="timeline">
+          <li>
+            <a name="section-1"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- What We Do section -->
+                <h1>Organisatie {{ subdomain }} niet gevonden</h1>
+                <h5>Het lijkt er op dat {{ subdomain }}  nog geen onder deel is van dit platform</h5>
+                <div class="row">
+                  <div class="col-md-8 col-sm-12 service panel">
+                    <div class="panel-heading background-1">
+                      <div class="panel-icon"><span class="glyphicon glyphicon-heart"></span></div>
+                      <div class="panel-title">
+                        <h4>Maar wat niet is kan nog komen!</h4>
+                        <p>Iedereen die een bijdrage wil leveren aan common ground is immers welkom.</p>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <p>Ben jij een IT'er en beheer je namens {{ subdomain }} reporitories op bitbucket, github of gitlab waar commenground componenten in staan? Dan kan je via je connect knoppen onderaan inloggen met je GIT leverancier. Nadat je bent ingelogd krijg je de mogenlijkheid om organisaties aan te maken en componenten te plaatsen.</p>
+                      <p>Ben je g&eacute;&eacute;n IT'er? Super goed dat je hier bent! Maar om als organisatie deel te nemen aan dit platform heb je een acount nodig bij een GIT leverancier, gellukig kan je deze acount gratis aanmaken bij de git leverancier van je keuze.
+                      </p>
+                      <p>
+                       <div class="row">	
+                  		<div class="col-md-4">
+                  			<a href="https://bitbucket.org/dashboard/overview" class="btn background-bitbucket btn-block btn-small"><i class="fab fa-bitbucket"></i> Bitbucket</a>
+                  			</div>
+                  		<div class="col-md-4">
+                  			<a href="https://github.com/join" class="btn background-github btn-block btn-small"><i class="fab fa-github"></i> Github</a>
+                  			</div>
+                  		<div class="col-md-4">
+                  			<a href="https://gitlab.com/users/sign_in" class="btn background-gitlab btn-block btn-small"><i class="fab fa-gitlab"></i> Gitlab</a>
+                  		</div>
+                      </div>
+                      	
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-4 col-sm-6 service panel">
+                    <div class="panel-heading background-1">
+                      <div class="panel-icon"><span class="glyphicon glyphicon-repeat"></span></div>
+                      <div class="panel-title">
+                        <h4>Organisaties</h4>
+                        <p>Of kijk verder.</p>
+                      </div>
+                    </div>
+                    
+                    <div class="panel-body">
+                      <p>Er zijn natuurlijk ook al organisaties die wel een profiel hebben op dit platform</p>
+                      <p>Kijk <a href="">hier</a> naar wat voor componenten zij te bieden hebben.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a name="login"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- Contact Us section -->
+                <h1>Inloggen of Aanmelden</h1>
+                <h5>Om in te loggen of uw organisatie aan te melden voor dit overzicht kunt u gebruikt maken van uw persoonlijke git acount</h5>
+                <div class="row">
+                  <div class="col-sm-12 panel">
+                    <div class="panel-body">
+                      <div class="form-horizontal">
+                        <div class="row">
+                          <div class="col-md-12">
+                          	<p>Om in te loggen of uw organisatie aan te melden voor dit overzicht kunt u gebruikt maken van uw persoonlijke git acount, u kunt vervolgens organisaties toevoegen of wijzigen waar u via die acount schrijf rechten op heeft. En componenten toevoegen waar u leesrechten op heeft.</p>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <a href="{{ path('connect_github_start') }}" class="btn background-github btn-lg btn-block" type="button"><i class="fab fa-github"></i> Connect with GitHub</a>
+                          </div>
+                          <div class="col-md-4">
+                            <a href="{{ path('connect_gitlab_start') }}"  class="btn background-gitlab btn-lg btn-block" type="button"><i class="fab fa-gitlab"></i> Connect with  GitLab</a>
+                          </div>
+                          <div class="col-md-4">
+                            <a href="{{ path('connect_bitbucket_start') }}"  class="btn background-bitbucket btn-lg btn-block" type="button"><i class="fab fa-bitbucket"></i> Connect with BitBucket</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="content-area footer">
+        (c) <a href="http://www.conduction.nl" target="_blank">Conduction</a> 2019</a>
+      </div>
+    </div> 
+{% endblock %}

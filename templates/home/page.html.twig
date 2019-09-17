@@ -1,0 +1,18 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ 	<div class="main-content container fluid-container">
+ 	
+ 	  <!-- <h1>{{ title }}</h1>  -->
+      <div class="panel-body">
+      	{{ html|raw }}
+      </div>
+      
+      <div class="content-area footer">
+        (c) <a href="http://www.conduction.nl" target="_blank">Conduction</a> {{ "now"|date("Y") }}</a>
+      </div>
+    </div> 
+    
+{% endblock %}

@@ -1,0 +1,223 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ 	<div class="main-content container fluid-container">
+        <!-- Main timeline -->
+        <ul id="timeline" class="timeline">
+          <li>
+            <a name="about"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- What We Do section -->
+                <h1>Welkom bij het common ground componenten overzicht</h1>
+                <h5>Waar delen vermenigvuldingen is</h5>
+                <div class="row">
+                  <div class="col-md-4 col-sm-6 service panel">
+                    <div class="panel-heading background-1">
+                      <div class="panel-icon"><span class="glyphicon glyphicon-heart"></span></div>
+                      <div class="panel-title">
+                        <h4>Wat we hier doen</h4>
+                        <p>Delen is vemenigvuldigen.</p>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <p>Wij publiceren al onze Common Ground code op deze site.</p>
+                      <p><a href="https://vng.nl/samen-organiseren/common-ground">Lees meer</a></p>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-4 col-sm-6 service panel">
+                    <div class="panel-heading background-1">
+                      <div class="panel-icon"><span class="glyphicon glyphicon-link"></span></div>
+                      <div class="panel-title">
+                        <h4>Meedoen?</h4>
+                        <p>Plaats jouw componenten</p>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <p>Zonder verbinding geen contact.</p>
+                      <p><a href="https://nlx.io/">Lees meer</a></p>
+                    </div>
+                  </div>
+                   <div class="col-md-4 col-sm-6 service panel">
+                    <div class="panel-heading background-1">
+                      <div class="panel-icon"><span class="glyphicon glyphicon-repeat"></span></div>
+                      <div class="panel-title">
+                        <h4>Bijdragen?</h4>
+                        <p>Help ons verder te komen</p>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <p>Commonground bouwen we samen, en dat geldt net zo goed voor deze pagina. We zijn dan ook altijd op zoek naar mensen en organisatie die financieel of in tijd willen bijdragen. </p>
+                      <p>Je kan deze pagina "hier" als component terugvinden, daar staat ook meer invormatie over hoe je kan bijdragen.</p>                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <a name="organisations"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- Our Work section -->
+                <h1>Organisaties</h1>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p>Welke organisaties hebben hier momenteel componenten beschikbaar gemaakt?</p>
+                  
+                    <p>Uw organisatie hier? <a href="">meld</a> deze aan</p>
+                  </div>
+
+
+
+                  <!-- See the filterPortfolio(...) function in the javascript block at the bottom of the page for an explanation of how this works.
+                  <div class="col-sm-12 portfolio-filters">
+                    <button id="allFilter" type="button" class="btn background-black" onclick="filterPortfolio(['web', 'mobile', 'print'], 'allFilter')">all</button>
+                    <button id="webFilter" type="button" class="btn background-1" onclick="filterPortfolio(['web'], 'webFilter')">web</button>
+                    <button id="mobileFilter" type="button" class="btn background-2" onclick="filterPortfolio(['mobile'], 'mobileFilter')">mobile</button>
+                    <button id="printFilter" type="button" class="btn background-3" onclick="filterPortfolio(['print'], 'printFilter')">print</button>
+                  </div> -->
+                </div>
+
+                <!-- Thumb -->
+                <!--
+                  Make sure the data-target is set to the id of the modal that you would like to open.
+                -->
+                <div class="row">              
+                  	{% for organisation in organisations %}
+                      {% include 'home/thumb.html.twig' with {'organisation': organisation} %}
+                 	{% endfor %}                   
+                </div>
+              </div>
+            </div>
+          </li>
+                    
+          <li>
+            <a name="components"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- Our Work section -->
+                <h1>Componenten</h1>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p>Common Ground componenten zijn kleine rest-API's, die CRUD-bewerkingen mogelijk maken en regels toepassen. Business logica en geavanceerde validaties worden overgelaten aan de aangesloten applicaties.</p>
+                  
+                    <p></p>
+                  </div>
+
+                  <!-- See the filterPortfolio(...) function in the javascript block at the bottom of the page for an explanation of how this works. -->
+                  <div class="col-sm-12 portfolio-filters">
+                    <button id="allFilter" type="button" class="btn background-black" onclick="filterPortfolio(['component', 'application', 'tool'], 'allFilter')">Alle</button>
+                    <button id="sourceFilter" type="button" class="btn background-1" onclick="filterPortfolio(['source'], 'sourceFilter')">Bronnen</button>
+                    <button id="applicationFilter" type="button" class="btn background-2" onclick="filterPortfolio(['application'], 'applicationFilter')">Applicaties</button>
+                    <button id="toolFilter" type="button" class="btn background-3" onclick="filterPortfolio(['tool'], 'toolFilter')">Hulpmiddelen</button>
+                  </div>
+                </div>
+
+                <div class="row">              
+                  	{% for component in components %}
+                      {% include 'home/thumb.html.twig' with {'item': component} %}
+                 	{% endfor %}                   
+                </div>
+              </div>
+            </div>
+          </li>
+          {% if is_granted('IS_AUTHENTICATED_FULLY') == false  and is_granted('IS_AUTHENTICATED_REMEMBERED')  == false %}
+             {% include 'home/login.html.twig' %}
+         {% else %}         
+          <li>
+            <a name="login"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div><!-- /.top-link -->
+                <!-- Contact Us section -->
+                <h1>Componenten toevoegen</h1>
+                <h5>Vanuit <i class="fab fa-bitbucket"></i>, <i class="fab fa-github"></i>, en <i class="fab fa-gitlab"></i>  Repositories</h5>
+                
+                <div class="row">
+                  <div class="col-sm-12 panel">
+                    <div class="panel-body">
+                      <div class="form-horizontal">
+                        <div class="row">
+                          <div class="col-md-12">  
+                             U kunt de volgende organisaties toevoegen, het toevoegen van extra Git Providers aan een bestaande organisatie gaat via die organisatie zelf.                        
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                        <div class="row">
+                          <div class="col-md-12">  
+                            {% for repository in repositories %}
+                            <div class="organisation-well">
+                              	<div class="organisation">             
+                              		<div class="organisation-portrait">
+                                        <img src="{{ organisation.avatar|e }}">
+                                    </div>     	                     
+                              		<div class="organisation-type ">
+                                        <span class="fa-stack fa-2x color-{{ repository.type }}">
+                                          <i class="fas fa-circle fa-stack-2x"></i>
+                                          <i class="fab fa-{{ repository.type|e }} fa-stack-1x fa-inverse"></i>
+                                        </span>
+                              		</div>
+                              		<div class="organisation-title">
+                              		{{ repository.name|e }}
+                              		</div>
+                              	</div>
+                              	<div class="organisation-buttons">
+                              	{% if repository.commonground is not defined %}
+                              	<a href="{{ path('app_component_add',  {type: repository.type, organisation: organisation.id , id: repository.id}) }}"  class="btn background-{{ repository.type }} btn-sm btn-block" type="button">Connect</a>                       	
+                              	{% endif %}
+                              	</div>
+                             </div> 	
+                                
+                            {% endfor %}
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                        <div class="row">
+                          <div class="col-md-12">  
+                            <p>Waarom worden voor verschillende Git Providers verschillende bronnen gebruikt?</p>
+                            <p>Er is nogal wat definitie verschil tussen Bitbucket, GitHub en GitLab rondom organisatie inrichting en gelaagdheid. Bitbucket kent Teams die meerder projecten hebben, GitHub houdt het op organisaties bestaande uit teams en GitLab heeft alleen maar groepen. Voor commonground hanteren we Organisaties bestaande uit Teams (de github methode). Dat betekend dat je commonground organisaties kan aanmaken vanuit (en koppelen aan) Bitbucket Teams, Github Organisaties en GitLab Groups. Lees er <a href="https://about.gitlab.com/2017/09/11/comparing-confusing-terms-in-github-bitbucket-and-gitlab/">hier</a> meer over.</p>                          
+                           </div><!-- /.col -->
+                		</div><!-- /.row -->
+                        <div class="row">
+                        	<div class="col-md-12">  
+                 			</div><!-- /.col -->
+                		</div><!-- /.row -->
+                      </div>                      
+                    </div><!-- /.panel-body -->
+                  </div><!-- /.col -->
+                </div><!-- /.row -->
+                
+              </div><!-- /.timeline-body -->
+            </div><!-- /.timeline-panel -->
+          </li>    
+         {% endif %}
+        </ul>
+      </div>
+      <div class="content-area footer">
+        (c) <a href="http://www.conduction.nl" target="_blank">Conduction</a> {{ "now"|date("Y") }}</a>
+      </div>
+    </div> 
+    
+{% endblock %}

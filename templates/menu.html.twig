@@ -9,16 +9,53 @@
           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
             <span class="glyphicon glyphicon-menu-hamburger color-1"></span>
           </button>
-          <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
+          <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">   
+            {% if app.request.attributes.get('_route') == 'app_user_index' or app.request.attributes.get('_route') == 'app_home_tutorial'  %}     
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('section-1')">Wat wij doen</a>
+              	<a href="https://www.common-ground.dev#about">Home</a>
             </li>
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('section-3')">Applicaties</a>
+              	<a href="https://www.common-ground.dev#organisations">Organisaties</a>
             </li>
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('section-4')">Componenten</a>
+              	<a href="https://www.common-ground.dev#components">Componenten</a>
             </li>
+            {% else %}                           
+            <li>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('about')">{% if organisation is defined %}Over {{ organisation.name }}{% else %} Home{% endif %}</a>
+            </li>
+            <li>
+                {% if organisation is defined  %}
+              	<a href="https://www.common-ground.dev#organisations">Andere Organisaties</a>
+              	{% else %}
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('organisations')">Organisaties</a>
+              	{% endif %}
+            </li>
+            <li>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('components')">Componenten</a>
+            </li>
+            {% endif %}
+            <li>
+              	<a href="{{ path('app_home_tutorial') }}">Tutorial</a>
+            </li>
+            {% if is_granted('IS_AUTHENTICATED_FULLY')  or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <li>
+              	<a href="{{ path('app_user_index') }}" >Instellingen</a>
+            </li>
+            <li>
+              	<a href="{{ path('app_logout') }}" >Uitloggen</a>
+            </li>
+            {% else %}
+                {% if app.request.attributes.get('_route') == 'app_user_index' or app.request.attributes.get('_route') == 'app_home_tutorial'  %} 
+                <li>
+                  	<a href="https://www.common-ground.dev#add"> Toevoegen</a>
+                </li> 
+                {% else %}   
+                <li>
+                  	<a href="javascript:void(0);" onclick="scrollToAnchor('add')"> Toevoegen</a>
+                </li>
+                {% endif %}
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -29,17 +66,53 @@
           <div class="menu-logo">
             <span class="header-icon glyphicon glyphicon-heart-empty"></span>
           </div>
-          <ul>
-            
+          <ul>            
+            {% if app.request.attributes.get('_route') == 'app_user_index' or app.request.attributes.get('_route') == 'app_home_tutorial'  %}     
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('section-1')">Wat wij doen</a>
+              	<a href="https://www.common-ground.dev#about">Home</a>
             </li>
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('section-3')">Applicaties</a>
+              	<a href="https://www.common-ground.dev#organisations">Organisaties</a>
             </li>
             <li>
-              	<a href="javascript:void(0);" onclick="scrollToAnchor('section-4')">Componenten</a>
+              	<a href="https://www.common-ground.dev#components">Componenten</a>
             </li>
+            {% else %}                           
+            <li>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('about')">{% if organisation is defined %}Over {{ organisation.name }}{% else %} Home{% endif %}</a>
+            </li>
+            <li>
+                {% if organisation is defined  %}
+              	<a href="https://www.common-ground.dev#organisations">Andere Organisaties</a>
+              	{% else %}
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('organisations')">Organisaties</a>
+              	{% endif %}
+            </li>
+            <li>
+              	<a href="javascript:void(0);" onclick="scrollToAnchor('components')">Componenten</a>
+            </li>
+            {% endif %}
+            <li>
+              	<a href="{{ path('app_home_tutorial') }}">Tutorial</a>
+            </li>
+            {% if is_granted('IS_AUTHENTICATED_FULLY')  or is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <li>
+              	<a href="{{ path('app_user_index') }}" >Instellingen</a>
+            </li>
+            <li>
+              	<a href="{{ path('app_logout') }}" >Uitloggen</a>
+            </li>
+            {% else %}
+                {% if app.request.attributes.get('_route') == 'app_user_index' or app.request.attributes.get('_route') == 'app_home_tutorial'  %} 
+                <li>
+                  	<a href="https://www.common-ground.dev#add"> Toevoegen</a>
+                </li> 
+                {% else %}   
+                <li>
+                  	<a href="javascript:void(0);" onclick="scrollToAnchor('add')"> Toevoegen</a>
+                </li>
+                {% endif %}
+            {% endif %}
           </ul>
         </div>
       </div>
