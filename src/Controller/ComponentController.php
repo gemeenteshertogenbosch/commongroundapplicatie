@@ -48,7 +48,7 @@ class ComponentController extends AbstractController
 		
 		if($em->getRepository('App:Component')->findOneBy(array('gitId' => $component->getGitId(),'gitType' => $component->getGitType()))){
 			/* @todo ths should be a symfony exeption */
-			throw new \Exception('Component is already connected');
+		    throw new BadRequestHttpException('Component is already connected');
 		}
 		
 		$component->setOrganisation($organisation);		
