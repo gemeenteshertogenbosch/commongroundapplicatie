@@ -113,7 +113,7 @@ class ComponentController extends AbstractController
 	/**
 	 * @Route("/component/{component}/refresh")
 	 */
-	public function refreshAction(Component $component, ComponentService $componentService, GithubService $githubService)
+	public function refreshAction(Component $component, ComponentService $componentService, GithubService $githubService, EntityManagerInterface $em)
 	{
 		$url = parse_url(urldecode ($component->getGit()));
 		

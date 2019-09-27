@@ -26,6 +26,7 @@ class ComponentRepository extends ServiceEntityRepository
     	->leftJoin('c.owner', 'o')
     	->andWhere('o.vetted = :vetted')
     	->setParameter('vetted', true)
+    	->orderBy('c.name', 'ASC')
     	->getQuery()
     	->getResult()
     	;

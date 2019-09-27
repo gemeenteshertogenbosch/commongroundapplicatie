@@ -218,7 +218,19 @@ Organisation specific overwrites
                 $('html,body').animate({scrollTop: aTag.offset().top-80},'slow');
             }
     
-    
+
+            /*
+            This method takes an modal-id plus the button that was pressed.
+            Sets all the cos to hide and the clicked button to shown.
+            */
+            function showDoc(docs, docId){
+
+                $(docs).removeClass("show");
+                $(docs).addClass("hide");
+                $(docId).removeClass("hide");
+                $(docId).addClass("show");
+            }
+                
             /*
             This method takes an array of filters plus the button that was pressed.
             Change the classes (web, print, mobile) as required.

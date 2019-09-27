@@ -166,7 +166,8 @@ NLX Variables
   --main-text-color: #555;
   --main-link-color: #4376FC;
   
-  --header-background: #FFBC2C url(/images/header-nlx.jpg) no-repeat center center fixed;
+  /* --header-background: #FFBC2C url(/images/header-nlx.jpg) no-repeat center center fixed; */
+  --header-background: #FFBC2C no-repeat center center fixed; 
   --header-text-color: #fff;
   
   --pannel-header-background: #FFBC2C; 
@@ -430,7 +431,11 @@ GENERAL STYLES
 HEADER AND MENU STYLES
 ************/
 .header {
-	background: var(--header-background);
+	background: var(--header-background);  
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
 	color: var(--header-text-color);;
 	width: 100%;
 	padding: 0;
@@ -723,6 +728,10 @@ SERVICES STYLES
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
     padding: 20px;
+}
+
+.panel-body:hover {
+ cursor:pointer;
 }
 
 .service .panel-body {

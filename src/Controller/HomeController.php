@@ -46,7 +46,9 @@ class HomeController extends AbstractController
 			}
 			
 			
-			$variables = ["organisations" => $organisations,"components" => $components];
+			$apis= [];
+			
+			$variables = ["organisations" => $organisations,"components" => $components,"apis" => $apis];
 			return $this->render('home/main.html.twig',$variables);
 		}
 		

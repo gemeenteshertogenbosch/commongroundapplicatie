@@ -86,9 +86,11 @@ class ComponentService
 		
 		foreach ($lookIn as $location){
 			if($responce = $this->github->getFileContent($component, $location.'openapi.yaml')){
+				
 				return Yaml::parse($responce);
 			}
 			if($responce = $this->github->getFileContent($component, $location.'openapi.json')){
+				
 				return json_decode($responce, true);
 			}
 		}
@@ -149,14 +151,19 @@ class ComponentService
 				if($git['docs']['installation']){$git['docs']['installation'] = $reStructuredText->parse($git['docs']['installation'])->render();}
 			}
 			
-			$git['docs']['code-of-conduct'] = $this->github->getFileContent($component, 'CODE_OF_CONDUCT.md');
-			if($git['docs']['code-of-conduct']){$git['docs']['code-of-conduct']	= $this->markdown->transformMarkdown($git['docs']['code-of-conduct']);}
+			$git['docs']['tutorial'] = $this->github->getFileContent($component, 'TUTORIAL.md');
+			if($git['docs']['tutorial']){$git['docs']['tutorial']	= $this->markdown->transformMarkdown($git['docs']['tutorial']);}
 			else{
-				$git['docs']['code-of-conduct'] = $this->github->getFileContent($component, 'CODE_OF_CONDUCT.rst');
-				if($git['docs']['code-of-conduct']){$git['docs']['code-of-conduct']	= $reStructuredText->parse($git['docs']['code-of-conduct']);}
+				$git['docs']['tutorial'] = $this->github->getFileContent($component, 'TUTORIAL.rst');
+				if($git['docs']['tutorial']){$git['docs']['tutorial']	= $reStructuredText->parse($git['docs']['tutorial']);}
 			}			
 			
 		}		
+		
+		// Lets then clear up al the html to mend broken links
+		foreach($git['docs'] as $key => $value){
+			$git['docs'][$key] = $this->parseHTML($component, $value);
+		}
 		
 		// Lets transform das shizle
 				
@@ -175,15 +182,85 @@ class ComponentService
 		$git['gitId'] = $component->getGitId();
 		$git['id'] = $component->getId();
 			
+			
 		// The we need to determine the type of te componet
-		if($git['openapi']){
+		if($git['openapi'] && in_array('x-commonground',$git['openapi'])
+				&& in_array('x-type',$git['openapi']['x-commonground']) ){
+			$git['type'] = $git['openapi']['x-commonground']['type'];			
+		}
+		elseif($git['openapi']){
 			$git['type'] = 'source';
 		}
 		else {
 			$git['type'] = 'application';			
 		}
 		
+		// We need to know the aditional owners
+		if(array_key_exists('openapi', $git) && array_key_exists('x-commonground',$git['openapi']) && array_key_exists('developers',$git['openapi']['x-commonground'])){ 
+			foreach($git['openapi']['x-commonground']['developers'] as $developer){				
+				$organisations = $this->em->getRepository('App:Organisation')->findBy(array('github' => $developer['url']));
+				foreach($organisations as $organisation){
+					$component->addOrganisation($organisation);
+					$this->em->persist($component);
+					$this->em->flush();
+				}
+			}
+		}
+		
+		$git['organisations']= [];
+		foreach($component->getOrganisations() as $organisation){
+			$git['organisations'][] = ['name'=>$organisation->getName(), 'url'=>$organisation->getGithub()];
+			
+		}
+		
 		return $git;
+	}
+	
+	/**
+	 *
+	 *
+	 * @param Component $component The component for wich the html is beings parsed
+	 * @param string $html the html that is bieng parsed
+	 */
+	public function parseHTML(Component $component, $html)
+	{			
+		// The Regular Expression filter for an href url
+		$reg_exUrl = '/<a\s+(?:[^>]*?\s+)?href=(["\'])(.*?)\1/';
+		
+		// Check if there is hhtl href url in the text
+		if(preg_match_all($reg_exUrl, $html, $urls)) {
+			
+			// make the urls hyper links
+			foreach($urls[0] as $key => $value){
+				
+				//var_dump($urls[2][$key]);
+				// is the url is already valid we just continu
+				if (strpos($urls[2][$key], "http") !== false) {
+					continue;
+				}
+				$html = str_replace($urls[0][$key], '<a href="'.$component->getGit()."/blob/master/".$urls[2][$key].'" target="_blank" ', $html);
+				continue;
+			}
+			
+		} 
+		
+		// The Regular Expression filter for an img src
+		$reg_exImage = '/<img\s+(?:[^>]*?\s+)?src=(["\'])(.*?)\1/';
+		
+		// Check if there is hhtl image in the text
+		if(preg_match_all($reg_exImage, $html, $images)) {
+			
+			// make the urls hyper links
+			foreach($images[0] as $key => $value){
+				// is the url is already valid we just continu
+				if (strpos($images[2][$key], "http") !== false) {
+					continue;
+				}
+				$html = str_replace($images[0][$key], '<img src="'.$component->getGit()."/raw/master/".$images[2][$key].'" ', $html);
+			}			
+		} 
+		
+		return $html;
 	}
 	
 	/**

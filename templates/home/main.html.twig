@@ -94,6 +94,32 @@
                 </div>
               </div>
             </div>
+          </li>   
+          <li>
+            <a name="apis"></a>
+            <div class="timeline-badge"></div>
+            <div class="timeline-line"></div>
+            <div class="timeline-panel">
+              <div class="timeline-body">
+                 <div class="top-link">
+                  <a href="javascript:void(0);" onclick="scrollToAnchor('top')"><span class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+                <!-- Our Work section -->
+                <h1>API's</h1>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p>API's zijn (kleine) rest-servicess, die bijvoorbeeld CRUD-bewerkingen mogelijk maken, validatie toepassen en data beschikbaar maken. Business logica en het toepassen van regels word overgelaten aan de aangesloten applicaties. Die daarbij gebruik kunnen maken van hulp applicaties (tools)</p>
+                  </div>
+
+                </div>
+
+                <div class="row">              
+                  	{% for api in apis %}
+                      {% include 'home/api-thumb.html.twig' with {'item': api} %}
+                 	{% endfor %}                   
+                </div>
+              </div>
+            </div>
           </li>
                     
           <li>
@@ -109,7 +135,7 @@
                 <h1>Componenten</h1>
                 <div class="row">
                   <div class="col-sm-12">
-                    <p>Bronnen zijn kleine rest-API's, die CRUD-bewerkingen mogelijk maken, validatie toepassen en data beschikbaar maken. Business logica en het toepassen van regels word overgelaten aan de aangesloten applicaties. Die daarbij gebruik kunnen maken van hulp applicaties (tools)</p>
+                    <p>Componenten zijn de bouwblokken waaruit commonground bestaat, het zijn zelfstandige containers die bijvoorbeeld applicaties of services aanbieden voor het netwerk</p>
                   
                   </div>
 
@@ -118,7 +144,7 @@
                     <button id="allFilter" type="button" class="btn background-black" onclick="filterPortfolio(['source', 'application', 'tool'], 'allFilter')">Alle</button>
                     <button id="sourceFilter" type="button" class="btn background-1" onclick="filterPortfolio(['source'], 'sourceFilter')"><i class="fad fa-database"></i> Bronnen</button>
                     <button id="applicationFilter" type="button" class="btn background-2" onclick="filterPortfolio(['application'], 'applicationFilter')"><i class="fad fa-browser"></i> Applicaties</button>
-                    <button id="toolFilter" type="button" class="btn background-3" onclick="filterPortfolio(['tool'], 'toolFilter')"><i class="fad fa-tools"></i> Tools</button>
+                    <button id="toolFilter" type="button" class="btn background-3" onclick="filterPortfolio(['tool'], 'toolFilter')"><i class="fad fa-tools"></i> Services</button>
                   </div>
                 </div>
 

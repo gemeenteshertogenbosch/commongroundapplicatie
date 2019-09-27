@@ -98,25 +98,13 @@
                   		<a href="{{ externalDoc.url }}" target="_blank">{{ externalDoc.description|capitalize|replace({'-': " ", "_" : " "}) }}</a><br />
                     {% endfor %}
                   </p>
-                  {% endif %} 
+                  {% endif %}
                   <p>
                   	<b>Credits</b><br />           
                     {% for organisation in component.organisations %}
                   		<a href="{{ organisation.url }}" target="_blank">{{ organisation.name }}</a><br />
                     {% endfor %}
                   </p>
-                  {% if  component.openapi.x-commonground is defined and  component.openapi.x-commonground.builds|length > 0 %}  
-                  <p>
-                  	<b>Badges</b><br />           
-                    {% for build in component.openapi.x-commonground.builds if (build.url is defined and build.logo is defined)  %}
-                  		<a href="{{ build.url }}" target="_blank">
-                  		<img alt="{{ build.name }}" 
-                  		src="{{ build.logo }}" 
-                  		data-canonical-src="{{ build.url }}" 
-                  		style="max-width:100%;"></a><br />
-                    {% endfor %}
-                  </p>
-                  {% endif %} 
                 </div>
                 <div >
                 	<a href="{{ path('app_component_refresh',  {'component': component.id}) }}">Refresh</a>

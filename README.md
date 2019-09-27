@@ -24,11 +24,5 @@ Copyright © Conduction 2019
 
 Licensed under [EUPL](https://github.com/ConductionNL/love-common-ground/blob/master/LICENSE.md)
 
-## Credits
-
-[!['s-Hertogenbosch](https://raw.githubusercontent.com/ConductionNL/love-common-ground/master/resources/logo-s-hertogenbosch.svg?sanitize=true "'s-Hertogenbosch")](https://www.s-hertogenbosch.nl/)
-[![Utrecht](https://raw.githubusercontent.com/ConductionNL/love-common-ground/master/resources/logo-utrecht.svg?sanitize=true "Utrecht")](https://www.utrecht.nl/)
-[![Conduction](https://raw.githubusercontent.com/ConductionNL/love-common-ground/master/resources/logo-conduction.svg?sanitize=true "Conduction")](https://www.conduction.nl/)
-
 
 
